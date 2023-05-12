@@ -8,7 +8,7 @@ const app=express()
 dbconnect();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/user',userRoute)
+app.use('/',userRoute)
 app.use('/mechanic',mechanicRoute)
 app.use('/admin',adminRoute)
 
