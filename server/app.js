@@ -3,7 +3,7 @@ const dbconnect = require('./config')
 const userRoute=require('./routes/userRoute')
 const mechanicRoute=require('./routes/mechanicRoute')
 const adminRoute=require('./routes/adminRoute')
-
+require('dotenv').config()
 const app=express()
 dbconnect();
 app.use(express.json());
