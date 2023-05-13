@@ -1,9 +1,9 @@
-const adminModel=require('../model/adminModel')
-const bcrypt=require('bcrypt')
-const jwt=require('jsonwebtoken');
-const mechanicModel = require('../model/mechanicModel');
-module.exports={
-    adminLogin:async(req,res)=>{
+import adminModel from '../model/adminModel.js'
+import mechanicModel from '../model/mechanicModel.js';
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken';
+import {approvedMail} from '../helper/mail.js' 
+   export const  adminLogin=async(req,res)=>{
         try {
             let {email,password}=req.body;
             let account=await adminModel.findOne({email:email})
@@ -29,21 +29,39 @@ module.exports={
             console.log(error);                   
           }     
         
-    },
-    getMechanic:async(req,res)=>{
+    }
+   export const getMechanic=async(req,res)=>{
         try {
             let result=await mechanicModel.find()
             res.json({err:false,result})
         } catch (error) {
             console.log(error);
         }
-    },
-    appliedMechanics:async(req,res)=>{
+    }
+   export const appliedMechanics=async(req,res)=>{
         try {
-            let result=await mechanicModel.find({applicationStatus:false})
+            let result=await mechanicModel.find({applicationStatus:'applied'})
             res.json({err:false,result})
         } catch (error) {
             console.log(error);
         }
     }
-}
+    export const approveApplication=async(req,res)=>{
+        try {
+        let result= await mechanicModel.findByIdAndUpdate({_id:req.params.id},{$set:{applicationStatus:'approved'}})
+        approvedMail()
+        res.json({err:false,result})
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    export const rejectApplication=async(req,res)=>{
+        try {
+            await mechanicModel.updateOne({_id:req.params.id},{$set:{applicationStatus:'rejected'}}).then((result)=>{
+                res.json({err:false,result})
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+      

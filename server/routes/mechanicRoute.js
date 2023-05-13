@@ -1,8 +1,8 @@
-const express=require('express')
-const mechanicController = require('../controller/mechanicController')
+import express  from 'express';
+import { mechanicLogin, mechanicSignup } from '../controller/mechanicController.js'
 const router=express.Router()
 
-router.post('/mechanicSignup',mechanicController.mechanicSignup)
-.post('/mechanicLogin',mechanicController.mechanicLogin)
+router.post('/mechanicSignup',mechanicSignup)
+.post('/mechanicLogin',mechanicLogin)
 
-module.exports=router;                    
+export default router

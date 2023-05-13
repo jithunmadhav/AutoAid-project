@@ -1,9 +1,8 @@
-const mechanicModel=require('../model/mechanicModel')
-const bcrypt=require('bcrypt')
-const jwt=require('jsonwebtoken')
-const helper = require('../helper/signupMail')
-module.exports={
-mechanicSignup:async(req,res)=>{
+import mechanicModel from '../model/mechanicModel.js'
+import bcrypt from 'bcrypt'
+import jwt  from 'jsonwebtoken'
+import { signupMail } from '../helper/mail.js'
+export const mechanicSignup=async(req,res)=>{
     try {
         let {name,email,mobile,experience,location,password,confirmpassword}=req.body
         let oldAccount=await mechanicModel.findOne({email:email})
@@ -20,7 +19,7 @@ mechanicSignup:async(req,res)=>{
                     location,
                     password:bcrypPassword
                 });
-                helper.signupMail(email,name)
+                signupMail(email,name)
                 const token=jwt.sign({
                     id:account._id
                 },
@@ -38,8 +37,8 @@ mechanicSignup:async(req,res)=>{
     } catch (error) {
         console.log(error);
     }
-},
-mechanicLogin:async(req,res)=>{
+}
+export const mechanicLogin=async(req,res)=>{
     try {
         let {email,password}=req.body;
         let account=await mechanicModel.findOne({email:email})
@@ -65,4 +64,3 @@ mechanicLogin:async(req,res)=>{
         console.log(error);
       }        
     }
-}

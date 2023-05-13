@@ -1,6 +1,6 @@
-const mongoose= require('mongoose')
+import mongoose from "mongoose";
 
-function dbconnect(){
+export function dbconnect(){
     mongoose.connect("mongodb://localhost:27017/AutoCARE").then(()=>{
         console.log("DBconnected");
     }).catch((err)=>{
@@ -8,4 +8,3 @@ function dbconnect(){
     })
 }
 
-module.exports=dbconnect;

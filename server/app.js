@@ -1,9 +1,10 @@
-const express = require('express')
-const dbconnect = require('./config')
-const userRoute=require('./routes/userRoute')
-const mechanicRoute=require('./routes/mechanicRoute')
-const adminRoute=require('./routes/adminRoute')
-require('dotenv').config()
+
+import  express  from 'express' 
+import { dbconnect } from './config.js'
+import userRoute from './routes/userRoute.js'
+import mechanicRoute from './routes/mechanicRoute.js'
+import  adminRoute from './routes/adminRoute.js'
+import 'dotenv/config'
 const app=express()
 dbconnect();
 app.use(express.json());

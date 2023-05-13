@@ -1,8 +1,8 @@
-const userModel=require('../model/userModel')
-const bcrypt=require('bcrypt')
-const jwt=require('jsonwebtoken')
-module.exports={
-    userSignup:async(req,res)=>{
+import userModel from '../model/userModel.js'  
+import bcrypt from 'bcrypt'
+import jwt  from 'jsonwebtoken'
+ 
+    export const userSignup=async(req,res)=>{
         try {
 
         let {name,email,mobile,password,confirmpassword}=req.body;
@@ -43,8 +43,8 @@ module.exports={
         } catch (error) {
             console.log(error);
         }
-    },
-    userLogin:async(req,res)=>{
+    }
+    export const userLogin=async(req,res)=>{
       try {
         let {email,password}=req.body;
         let user=await userModel.findOne({email:email})
@@ -71,4 +71,4 @@ module.exports={
       }
     }
     
-}  
+ 

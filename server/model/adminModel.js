@@ -1,5 +1,4 @@
-const mongoose=require('mongoose')
-
+import mongoose from "mongoose"
 const adminSchema=mongoose.Schema({
     email:{
         type:String,
@@ -12,4 +11,4 @@ const adminSchema=mongoose.Schema({
 })
 
 const adminModel=mongoose.model('adminDetails',adminSchema)
-module.exports=adminModel;
+export default adminModel

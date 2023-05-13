@@ -1,5 +1,4 @@
-const mongoose = require('mongoose')
-
+import mongoose from "mongoose";
 const mechanicSchema=mongoose.Schema({
     name:{
         type:String,
@@ -29,8 +28,8 @@ const mechanicSchema=mongoose.Schema({
         type:String
     },
     applicationStatus:{
-        type:Boolean,
-        default:false
+        type:String,
+        default:'applied'
     }
     
     
@@ -38,4 +37,4 @@ const mechanicSchema=mongoose.Schema({
 })
 
 const mechanicModel=mongoose.model('mechanicDetails',mechanicSchema)
-module.exports=mechanicModel;
+export default mechanicModel
