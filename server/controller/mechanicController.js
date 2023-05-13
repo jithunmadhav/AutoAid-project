@@ -1,6 +1,7 @@
 const mechanicModel=require('../model/mechanicModel')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
+const helper = require('../helper/signupMail')
 module.exports={
 mechanicSignup:async(req,res)=>{
     try {
@@ -19,6 +20,7 @@ mechanicSignup:async(req,res)=>{
                     location,
                     password:bcrypPassword
                 });
+                helper.signupMail(email,name)
                 const token=jwt.sign({
                     id:account._id
                 },

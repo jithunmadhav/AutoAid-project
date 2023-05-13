@@ -37,5 +37,13 @@ module.exports={
         } catch (error) {
             console.log(error);
         }
+    },
+    appliedMechanics:async(req,res)=>{
+        try {
+            let result=await mechanicModel.find({applicationStatus:false})
+            res.json({err:false,result})
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

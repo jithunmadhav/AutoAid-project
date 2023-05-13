@@ -15,4 +15,5 @@ app.use('/admin',adminRoute)
 
 app.listen(4000,()=>{
     console.log("localhost running on http://localhost:4000");
+
 })

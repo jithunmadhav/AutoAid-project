@@ -27,6 +27,10 @@ const mechanicSchema=mongoose.Schema({
     },
     confirmpassword:{
         type:String
+    },
+    applicationStatus:{
+        type:Boolean,
+        default:false
     }
     
     
