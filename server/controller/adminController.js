@@ -2,7 +2,7 @@ import adminModel from '../model/adminModel.js'
 import mechanicModel from '../model/mechanicModel.js';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
-import {approvedMail} from '../helper/mail.js' 
+import {approvedMail, rejectMail} from '../helper/mail.js' 
    export const  adminLogin=async(req,res)=>{
         try {
             let {email,password}=req.body;
@@ -49,7 +49,7 @@ import {approvedMail} from '../helper/mail.js'
     export const approveApplication=async(req,res)=>{
         try {
         let result= await mechanicModel.findByIdAndUpdate({_id:req.params.id},{$set:{applicationStatus:'approved'}})
-        approvedMail()
+        approvedMail(result.email,result.name)
         res.json({err:false,result})
         } catch (error) {
             console.log(error);
@@ -57,9 +57,11 @@ import {approvedMail} from '../helper/mail.js'
     }
     export const rejectApplication=async(req,res)=>{
         try {
-            await mechanicModel.updateOne({_id:req.params.id},{$set:{applicationStatus:'rejected'}}).then((result)=>{
-                res.json({err:false,result})
-            })
+           let result= await mechanicModel.findByIdAndUpdate({_id:req.params.id},{$set:{applicationStatus:'rejected'}})
+           if(result){
+            rejectMail(result.email,result.name)
+               res.json({err:false,result})
+           }
         } catch (error) {
             console.log(error);
         }

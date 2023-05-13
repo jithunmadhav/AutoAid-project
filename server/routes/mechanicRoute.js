@@ -3,6 +3,6 @@ import { mechanicLogin, mechanicSignup } from '../controller/mechanicController.
 const router=express.Router()
 
 router.post('/mechanicSignup',mechanicSignup)
-.post('/mechanicLogin',mechanicLogin)
+router.post('/mechanicLogin',mechanicLogin)
 
 export default router

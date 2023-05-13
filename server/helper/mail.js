@@ -65,8 +65,9 @@ import nodemailer from 'nodemailer'
       from:process.env.EMAIL,
       to: email,
       subject: "Application status",
-      html: `   <h1> Dear ${name} <h1>
-                <h2>We are excited to inform you that your application for the mechanic position at AutoCare has been approved. Congratulations and welcome aboard!</h2>
+      html: `   <h5> Dear ${name} <h5><br>
+                <p>We are excited to inform you that your application for the mechanic position at AutoCare has been approved. Congratulations and welcome aboard! <br><br>
+                Autocare Team</p>
                  
                  
                `
