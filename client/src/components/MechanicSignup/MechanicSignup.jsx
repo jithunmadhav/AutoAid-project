@@ -25,7 +25,7 @@ function MechanicSignup() {
       <fieldset className='password'>
         <input type="password" placeholder="confirm password"  required/>
       </fieldset>
-      <button type="submit" className="btn">sign up</button>
+      <button type="submit" className="btn">Next</button>
     </form>
   </div>
 </div>

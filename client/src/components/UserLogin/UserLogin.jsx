@@ -19,7 +19,7 @@ function UserLogin() {
       </fieldset>
       <button type="submit" className="btn">Login</button>
     </form>
-    <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center'}}>signup</Link>
+    <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center'}} to='/userSignup' >signup</Link>
   </div>
 </div></div>
     </div>

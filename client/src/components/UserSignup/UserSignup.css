@@ -92,7 +92,7 @@
     text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
 /*-------------------- Signup --------------------*/
-.Signup {
+.Signup-user {
     position: absolute;
     top: 49%;
     left: 50%;
@@ -126,7 +126,7 @@
     color: orangered;
 }
 @media(max-width:850px) {
-    .Signup{
+    .Signup-user{
         position: absolute;
         top: 49%;
         left: 50%;
@@ -154,7 +154,7 @@
   }
 
 @media(max-width:700px) {
-    .Signup{
+    .Signup-user{
         width: 338px;
         height: 485px;
     }

@@ -4,7 +4,7 @@ import './UserSignup.css'
 function UserSignup() {
   return (
     <div className='signup-background'>
-       <div className='Signup'>
+       <div className='Signup-user'>
   <div className='Signup-connect'>
   </div>
   <div className='Signup-classic'>

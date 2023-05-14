@@ -5,6 +5,7 @@ import AdminLogin from './components/AdminLogin/AdminLogin';
 import MechanicLogin from './components/MechanicLogin/MechanicLogin';
 import UserSignup from './components/UserSignup/UserSignup';
 import MechanicSignup from './components/MechanicSignup/MechanicSignup';
+import MecahnicSignup2 from './components/MechanicSignup/MecahnicSignup2';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route  element={<AdminLogin/>} path='/adminLogin' />
         <Route  element={<MechanicLogin/> } path='/mechanicLogin' />
         <Route  element={<MechanicSignup/> } path='/mechanicSignup' />
+        <Route element={<MecahnicSignup2/>} path='mechanicSignup/next' />
 
       </Routes>
      </Router>
