@@ -4,6 +4,8 @@ import UserLoginPage from './Pages/UserLoginPage';
 import UserSignupPage from './Pages/UserSignupPage';
 import MechanicLoginPage from './Pages/MechanicLoginPage';
 import MechanicSignupPage from './Pages/MechanicSignupPage';
+import MechanicSignupPage2 from './Pages/MechanicSignupPage2';
+import AdminLoginPage from './Pages/AdminLoginPage';
 
 
 function App() {
@@ -13,10 +15,10 @@ function App() {
       <Routes>
         <Route  element={<UserLoginPage/> } path='/userLogin' />
         <Route  element={<UserSignupPage/>} path='/userSignup'/>
-        {/* <Route  element={<AdminLogin/>} path='/adminLogin' /> */}
+        <Route  element={<AdminLoginPage/>} path='/admin/adminLogin' />
         <Route  element={<MechanicLoginPage/> } path='/mechanicLogin' />
         <Route  element={<MechanicSignupPage/> } path='/mechanicSignup' />
-        {/* <Route element={<MecahnicSignup2/>} path='mechanicSignup/next' /> */}
+        <Route element={<MechanicSignupPage2/>} path='mechanicSignup/next' />
 
       </Routes>
      </Router>
