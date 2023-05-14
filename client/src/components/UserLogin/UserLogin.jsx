@@ -1,8 +1,10 @@
 import React from 'react'
 import './UserLogin.css'
+import { Link } from 'react-router-dom'
 function UserLogin() {
   return (
-    <>
+    <div >
+        <div className="gray-background ">
        <div className='signup'>
   <div className='signup-connect'>
    
@@ -17,9 +19,10 @@ function UserLogin() {
       </fieldset>
       <button type="submit" className="btn">Login</button>
     </form>
+    <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center'}}>signup</Link>
   </div>
-</div>
-    </>
+</div></div>
+    </div>
   )
 }
 

@@ -4,7 +4,7 @@
 
 
 
-  .gray-background  {
+  .signup-background  {
     background: linear-gradient(to right, #111111,#0e1136) !important;
     height: 100vh;
     animation: colorChange 10s ease-in-out infinite;
@@ -63,13 +63,13 @@
 
 
 /*-------------------- Form --------------------*/
-.form fieldset {
+.Form fieldset {
     border: none;
     padding: 0;
     margin: 20px 0;
     position: relative;
 }
-.form fieldset input {
+.Form fieldset input {
     width: 100%;
     height: 48px;
     color: #333;
@@ -81,7 +81,7 @@
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
     vertical-align: top;
 }
-.form button {
+.Form button {
     width: 100%;
     outline: none !important;
     background: linear-gradient(-5deg,  #111111,#0e1136);
@@ -92,7 +92,7 @@
     text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
 /*-------------------- Signup --------------------*/
-.signup {
+.Signup {
     position: absolute;
     top: 49%;
     left: 50%;
@@ -107,11 +107,11 @@
     height: 500px ;
 }
 
-.signup-connect, .signup-classic {
+.Signup-connect, .Signup-classic {
     width: 50%;
-    padding: 127px 50px ; 
+    padding: 45px 50px ; 
 }
-.signup-connect  {
+.Signup-connect  {
     
     margin-top: 54px ;
     background-image: url("https://img.freepik.com/premium-vector/roadside-assistance-service-concept-man-calling-car-mechanic-vector-illustration_357257-1178.jpg?w=1380") ; 
@@ -126,7 +126,7 @@
     color: orangered;
 }
 @media(max-width:850px) {
-    .signup{
+    .Signup{
         position: absolute;
         top: 49%;
         left: 50%;
@@ -138,24 +138,27 @@
         box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
         overflow: hidden;
         display: flex;
-        height: 439px;
+        height: 475px;
     }
-    .signup-connect,   .signup-classic{
+    .Signup-connect,   .Signup-classic{
         width: 50%;
-        padding: 94px 50px ; 
+        padding: 26px 50px ; 
         
     
+    }
+    .Signup-connect{
+        margin-top: 99px ;
     }
     
     
   }
 
 @media(max-width:700px) {
-    .signup{
-        width: 360px;
-        height: 330px;
+    .Signup{
+        width: 338px;
+        height: 485px;
     }
-    .signup-connect{
+    .Signup-connect{
         width: 0%;
         padding: 0 -0;
         margin-top: 0 ;
@@ -163,7 +166,7 @@
         background-size: contain ;
         background-repeat: no-repeat  ;
     }
-     .signup-classic {
+     .Signup-classic {
        width: 101%;
        padding: 38px 50px;
     }
