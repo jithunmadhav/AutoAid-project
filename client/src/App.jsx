@@ -1,23 +1,22 @@
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
-import UserLogin from './components/UserLogin/UserLogin';
-import AdminLogin from './components/AdminLogin/AdminLogin';
-import MechanicLogin from './components/MechanicLogin/MechanicLogin';
-import UserSignup from './components/UserSignup/UserSignup';
-import MechanicSignup from './components/MechanicSignup/MechanicSignup';
-import MecahnicSignup2 from './components/MechanicSignup/MecahnicSignup2';
+import UserLoginPage from './Pages/UserLoginPage';
+import UserSignupPage from './Pages/UserSignupPage';
+import MechanicLoginPage from './Pages/MechanicLoginPage';
+import MechanicSignupPage from './Pages/MechanicSignupPage';
+
 
 function App() {
   return (
     <div >
      <Router>
       <Routes>
-        <Route  element={<UserLogin/> } path='/userLogin' />
-        <Route  element={<UserSignup/>} path='/userSignup'/>
-        <Route  element={<AdminLogin/>} path='/adminLogin' />
-        <Route  element={<MechanicLogin/> } path='/mechanicLogin' />
-        <Route  element={<MechanicSignup/> } path='/mechanicSignup' />
-        <Route element={<MecahnicSignup2/>} path='mechanicSignup/next' />
+        <Route  element={<UserLoginPage/> } path='/userLogin' />
+        <Route  element={<UserSignupPage/>} path='/userSignup'/>
+        {/* <Route  element={<AdminLogin/>} path='/adminLogin' /> */}
+        <Route  element={<MechanicLoginPage/> } path='/mechanicLogin' />
+        <Route  element={<MechanicSignupPage/> } path='/mechanicSignup' />
+        {/* <Route element={<MecahnicSignup2/>} path='mechanicSignup/next' /> */}
 
       </Routes>
      </Router>

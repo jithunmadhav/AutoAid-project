@@ -1,0 +1,154 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+
+
+  .gray-background  {
+    background: linear-gradient(to right, #111111,#0e1136) !important;
+    height: 91vh;
+    animation: colorChange 10s ease-in-out infinite;
+  }
+  
+  
+  
+  
+  
+ 
+/*-------------------- Buttons --------------------*/
+.btn {
+    display: block;
+    background: #4e4e4d;
+    color: #fff;
+    text-decoration: none;
+    margin: 20px 0;
+    padding: 15px 15px;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+.btn::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+    box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0), 0 3px 3px rgba(0, 0, 0, .2);
+    border-radius: 5px;
+}
+.btn:hover::after {
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+/*-------------------- Form --------------------*/
+.form fieldset {
+    border: none;
+    padding: 0;
+    margin: 20px 0;
+    position: relative;
+}
+.form fieldset input {
+    width: 100%;
+    height: 48px;
+    color: #333;
+    padding: 15px 40px 15px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+    vertical-align: top;
+}
+.form button {
+    width: 100%;
+    outline: none !important;
+    background: linear-gradient(-5deg,  #111111,#0e1136);
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    box-shadow: 0 3px 0px rgba(115, 136, 89, 0.2);
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+/*-------------------- Signup --------------------*/
+.signup {
+    position: absolute;
+    top: 49%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 900px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    height: 500px ;
+}
+
+.signup-connect-mechanicLogin, .signup-classic {
+    width: 50%;
+    padding: 127px 50px ; 
+}
+.signup-connect-mechanicLogin  {
+    
+    margin-top: 65px ;
+    background-image: url("https://st2.depositphotos.com/1157310/8702/v/450/depositphotos_87024270-stock-illustration-mechanic-holding-spanner.jpg") ; 
+    background-size: contain ;
+    background-repeat: no-repeat ;
+}
+ 
+.errorMessage{
+    margin-top: -15px;
+    height: 20px;
+    text-align: center;
+    color: orangered;
+}
+@media(max-width:850px) {
+    .signup{
+        position: absolute;
+        top: 49%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        width: 681px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        display: flex;
+        height: 439px;
+    }
+    .signup-connect-mechanicLogin,   .signup-classic{
+        width: 50%;
+        padding: 94px 50px ; 
+        
+    
+    }
+    
+    
+  }
+
+@media(max-width:700px) {
+    .signup{
+        width: 360px;
+        height: 330px;
+    }
+    .signup-connect-mechanicLogin{
+        width: 0%;
+        padding: 0 -0;
+        margin-top: 0 ;
+        background-image: none; 
+        background-size: contain ;
+        background-repeat: no-repeat  ;
+    }
+     .signup-classic {
+       width: 101%;
+       padding: 38px 50px;
+    }
+    
+  }

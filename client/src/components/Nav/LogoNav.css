@@ -1,0 +1,19 @@
+.LogoNav{
+    background: linear-gradient(to right, #111111,#0e1136) !important;
+height: 88px;
+}
+.Logo{
+    height: 88px;
+    position: relative;
+    left: 50%;
+    top: 41px;
+}
+@media(max-width:700px) {
+   .Logo{
+   height: 36px;
+    position: relative;
+    left: 50%;
+    top: 10%;
+   }
+    
+  }

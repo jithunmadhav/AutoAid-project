@@ -6,7 +6,7 @@
 
   .signup-background  {
     background: linear-gradient(to right, #111111,#0e1136) !important;
-    height: 100vh;
+    height: 91vh;
     animation: colorChange 10s ease-in-out infinite;
   }
   
@@ -109,12 +109,12 @@
 
 .Signup-connect-mechanic , .Signup-classic {
     width: 50%;
-    padding: 45px 50px ; 
+    padding: 50px 50px ; 
 }
 .Signup-connect-mechanic  {
     
-    margin-top: 21px ;
-    background-image: url("https://img.freepik.com/free-vector/car-service-abstract-concept-illustration_335657-1842.jpg?w=826&t=st=1684070944~exp=1684071544~hmac=4c60b175e4867d2f1ce03395ce1f126835b3e720ffa837995f63e1a276efe075") ; 
+    margin-top: 50px ;
+    background-image: url("https://st2.depositphotos.com/1157310/8702/v/450/depositphotos_87024270-stock-illustration-mechanic-holding-spanner.jpg") ; 
     background-size: contain ;
     background-repeat: no-repeat ;
 }
