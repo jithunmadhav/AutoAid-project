@@ -150,6 +150,12 @@
     
     
   }
+  .errorMessage{
+    margin-top: -15px;
+    height: 20px;
+    text-align: center;
+    color: orangered;
+}
 
 @media(max-width:700px) {
     .signup-admin{
