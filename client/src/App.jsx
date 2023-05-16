@@ -7,9 +7,20 @@ import MechanicSignupPage from './Pages/MechanicSignupPage';
 import MechanicSignupPage2 from './Pages/MechanicSignupPage2';
 import AdminLoginPage from './Pages/AdminLoginPage';
 import axios from './axios'
+import { useEffect } from 'react';
+import PlaceAPI from './components/PlaceAPI/PlaceAPI';
 
 
 function App() {
+  useEffect(() => {
+    axios.get('/admin/auth').then((response)=>{
+      console.log(response.data);
+    })
+    axios.get('/user/auth').then((response)=>{
+      console.log(response.data);
+    })
+
+  }, [])
   axios.defaults.withCredentials = true;
   return (
     <div >
@@ -20,12 +31,14 @@ function App() {
         <Route  element={<AdminLoginPage/>} path='/admin/login' />
         <Route  element={<MechanicLoginPage/> } path='/mechanic/login' />
         <Route  element={<MechanicSignupPage/> } path='/mechanic/signup' />
-        <Route  element={<MechanicSignupPage2/>} path='mechanic/signup/next' />
+        <Route  element={<MechanicSignupPage2/>} path='/mechanic/signup/next' />
+        <Route  element={<PlaceAPI/>} path='place' />
+
 
       </Routes>
      </Router>
     </div>
-  );
+  ); 
 }
-
+ 
 export default App;

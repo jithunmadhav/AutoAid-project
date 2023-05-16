@@ -21,13 +21,12 @@ import jwt  from 'jsonwebtoken'
                     password:bcrypPassword
                 });
                  
-                console.log(user);
-                const token=jwt.sign({
+                const userToken=jwt.sign({
                     id:user._id
                 },
                 "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
                 console.log(token);
-                return res.cookie("token", token, {
+                return res.cookie("userToken", userToken, {
                     httpOnly: true,
                     secure: true,
                     maxAge: 1000 * 60 * 60 * 24 * 7,
@@ -51,10 +50,10 @@ import jwt  from 'jsonwebtoken'
         if(user){
             let status= await bcrypt.compare(password,user.password)
             if(status){
-                const token=jwt.sign({
+                const userToken=jwt.sign({
                     id:user._id
                 },"00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
-                return res.cookie("token", token, {
+                return res.cookie("userToken", userToken, {
                     httpOnly: true,
                     secure: true,
                     maxAge: 1000 * 60 * 60 * 24 * 7,

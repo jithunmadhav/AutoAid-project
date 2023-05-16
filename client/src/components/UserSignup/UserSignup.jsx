@@ -3,20 +3,30 @@ import React, { useState } from 'react'
 import './UserSignup.css'
 
 function UserSignup() {
-  const [username, setusername] = useState('')
+  const [name, setname] = useState('')
   const [email, setemail] = useState('')
   const [mobile, setmobile] = useState('')
   const [password, setpassword] = useState('')
   const [confirmpassword, setconfirmpassword] = useState('')
+  const [err, seterr] = useState('')
 
   const handleSubmit=(e)=>{
     e.preventDefault();
-    if(username.trim() && email.trim() && mobile.trim() && password.trim() && confirmpassword.trim() ){
+    if(name.trim() && email.trim() && mobile.trim() && password.trim() && confirmpassword.trim() ){
       if(password===confirmpassword){
-        axios.post('/user/signup',{username,email,mobile,password,confirmpassword}).then((response)=>{
-          console.log(response.data);
-        })
+        console.log(mobile.length);
+        if(mobile.length===10){
+          axios.post('/user/signup',{name,email,mobile,password,confirmpassword}).then((response)=>{
+            console.log(response.data);
+          })
+        }else{
+          seterr('Enter valid mobile number')
+        }
+      }else{
+        seterr('Password are not same')
       }
+    }else{
+      seterr('All fields are required')
     }
   }
   return (
@@ -25,10 +35,10 @@ function UserSignup() {
   <div className='Signup-connect'>
   </div>
   <div className='Signup-classic'>
-    
+  <p className='errorMessage'>{err}</p>
     <form className='Form' onSubmit={handleSubmit}>
       <fieldset className='username'>
-        <input type="text" placeholder="username" value={username} onChange={(e)=>setusername(e.target.value)} required/>
+        <input type="text" placeholder="username" value={name} onChange={(e)=>setname(e.target.value)} required/>
       </fieldset>
       <fieldset className='email'>
         <input type="email" placeholder="email" value={email} onChange={(e)=>setemail(e.target.value)} required/>

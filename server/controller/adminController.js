@@ -10,10 +10,10 @@ import {approvedMail, rejectMail} from '../helper/mail.js'
             if(account){
                 let status= await bcrypt.compare(password,account.password)
                 if(status){
-                    const token=jwt.sign({
+                    const adminToken=jwt.sign({
                         id:account._id
                     },"00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
-                    return res.cookie("token", token, {
+                    return res.cookie("adminToken", adminToken, {
                         httpOnly: true,
                         secure: true,
                         maxAge: 1000 * 60 * 60 * 24 * 7,
