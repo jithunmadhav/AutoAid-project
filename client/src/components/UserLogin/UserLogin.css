@@ -6,7 +6,7 @@
 
   .gray-background  {
     background: linear-gradient(to right, #111111,#0e1136) !important;
-    height: 88.9vh;
+    height: 91vh;
     animation: colorChange 10s ease-in-out infinite;
   }
   

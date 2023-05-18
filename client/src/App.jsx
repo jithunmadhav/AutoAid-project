@@ -9,6 +9,7 @@ import AdminLoginPage from './Pages/AdminLoginPage';
 import axios from './axios'
 import { useEffect } from 'react';
 import PlaceAPI from './components/PlaceAPI/PlaceAPI';
+import Home from './components/HomePage/Home';
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
         <Route  element={<MechanicSignupPage/> } path='/mechanic/signup' />
         <Route  element={<MechanicSignupPage2/>} path='/mechanic/signup/next' />
         <Route  element={<PlaceAPI/>} path='place' />
-
+        <Route element={<Home/>} path='/' />
 
       </Routes>
      </Router>
