@@ -1,6 +1,6 @@
 .background{
     background: linear-gradient(to right, #111111,#0e1136) !important;
-    height: 90vh;
+    height: 80vh;
     display: flex;
 }
 .background-img{
@@ -33,7 +33,7 @@
     color: white;
     font-family: monospace;
     position: absolute;
-    top: 46%;
+    top: 62%;
     left: 20%;
     line-height: 55px;
     font-size: 36px;
@@ -46,6 +46,6 @@
       width: 0;
     }
     to {
-      width: 60%;
+      width: 80%;
     }
   }
