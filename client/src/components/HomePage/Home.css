@@ -7,7 +7,7 @@
     width: 250px;
     position: absolute;
     left: 25%;
-    top: 20%;
+    top: 27%;
 }
 .quotesStyle{
     color: white;
@@ -21,13 +21,13 @@
 }
 .secondPage{
     background-color: #f6ad55 ;
-    height: 30vh;
+    height:80vh;
 }
 .home-quotes{
-  margin-top: 160px;
-  color: #fff;
-  font-size: 72px;
-  font-family: initial;
+  margin-top: 230px;
+  color: #f8f9fa;
+  font-size: 68px;
+  font-family: 'Merriweather', serif;
   line-height: 150%;
 }
 .animated-text {
@@ -39,7 +39,7 @@
     color: white;
     font-family: monospace;
     position: absolute;
-    top: 62%;
+    top: 72%;
     left: 11%;
     line-height: 55px;
     font-size: 36px;
@@ -54,4 +54,10 @@
     to {
       width: 80%;
     }
+  }
+  .services{
+    color: black;
+    text-align: center;
+    padding-top: 30px;
+    font-family: 'Mogra', cursive;
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Home.css';
-import { Carousel } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import { Carousel } from 'react-bootstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function Home() {
@@ -19,29 +19,7 @@ function Home() {
         </div>
       </div>
       <div className='secondPage'>
-      {/* <Carousel fade className="carousel-container">
-            <Carousel.Item>
-              <img
-                className="d-block w-100 carousel-image"
-                src="https://mdbootstrap.com/img/new/slides/041.jpg"
-                alt="First slide"
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100 carousel-image"
-                src="https://mdbootstrap.com/img/new/slides/042.jpg"
-                alt="Second slide"
-              />
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                className="d-block w-100 carousel-image"
-                src="https://mdbootstrap.com/img/new/slides/043.jpg"
-                alt="Third slide"
-              />
-            </Carousel.Item>
-          </Carousel> */}
+      <h1 className='services'>Our Services</h1>
       </div>
     </>
   );
