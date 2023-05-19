@@ -3,6 +3,13 @@
  
    
 }
+.LogoName{
+    margin-left: 62px;
+    color: #f8f9fa;
+    font-size: 28px;
+    font-family: monospace;
+    font-weight: bolder;
+}
 .navbar {
     transition: all 0.3s;
   }
@@ -19,6 +26,9 @@
   .navbar-nav {
     margin-top: 10px;
     margin-bottom: 10px;
+    font-weight: bolder;
+    font-family: monospace;
+
   }
   
   .nav-item {

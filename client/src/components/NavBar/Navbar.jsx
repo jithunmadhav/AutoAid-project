@@ -16,9 +16,11 @@ function Navbar() {
     };
   
     return (
-      <nav className="navbar navBG navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navBG navbar-expand-lg navbar-light bg-light" style={{position:'fixed',width:'100%', zIndex:'10'}}>
+            {/* <img src="/images/autoaid.png" alt="" /> */}
+            <h1 className='LogoName'>AUTO AID</h1>
         <div className="container">
-          <Link style={{ color:'white' }} className="navbar-brand" to="/" onClick={closeNavbar}>
+          <Link   className="navbar-brand" to="/" onClick={closeNavbar}>
             
           </Link>
           <button
@@ -29,7 +31,7 @@ function Navbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div  className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
+          <div  style={{ justifyContent:'flex-end' }}  className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
             <ul  className="navbar-nav ml-auto ">
               <li  className="nav-item">
                 <Link className="nav-link" to="/" onClick={closeNavbar}>
@@ -43,12 +45,12 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/blog" onClick={closeNavbar}>
-                  Blog
+                Contact
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/contact" onClick={closeNavbar}>
-                  Contact
+                  Login / signup
                 </Link>
               </li>
             </ul>

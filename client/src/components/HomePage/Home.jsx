@@ -15,11 +15,11 @@ function Home() {
           </h1>
         </div>
         <div style={{ width: '50%' }}>
-        
+        <h1 className='home-quotes'>&emsp;Any Time <br/> &nbsp; &nbsp;Any Where <br/> Aid For Vehicle</h1>
         </div>
       </div>
       <div className='secondPage'>
-      <Carousel fade className="carousel-container">
+      {/* <Carousel fade className="carousel-container">
             <Carousel.Item>
               <img
                 className="d-block w-100 carousel-image"
@@ -41,7 +41,7 @@ function Home() {
                 alt="Third slide"
               />
             </Carousel.Item>
-          </Carousel>
+          </Carousel> */}
       </div>
     </>
   );

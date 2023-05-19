@@ -1,6 +1,6 @@
 .background{
     background: linear-gradient(to right, #111111,#0e1136) !important;
-    height: 80vh;
+    height: 90vh;
     display: flex;
 }
 .background-img{
@@ -23,7 +23,13 @@
     background-color: #f6ad55 ;
     height: 30vh;
 }
-
+.home-quotes{
+  margin-top: 160px;
+  color: #fff;
+  font-size: 72px;
+  font-family: initial;
+  line-height: 150%;
+}
 .animated-text {
     display: inline-block;
     overflow: hidden;
@@ -34,7 +40,7 @@
     font-family: monospace;
     position: absolute;
     top: 62%;
-    left: 20%;
+    left: 11%;
     line-height: 55px;
     font-size: 36px;
     font-weight: bolder;
