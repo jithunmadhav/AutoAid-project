@@ -20,8 +20,11 @@
     font-weight: bolder;
 }
 .secondPage{
-    background-color: #f6ad55 ;
-    height:70vh;
+  background: #f6ad55;
+  height:70vh;
+}
+.Third-page{
+  height:70vh;
 }
 .home-quotes{
   margin-top: 230px;
@@ -34,7 +37,7 @@
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
-    animation: showText 15s steps(40, end) infinite;
+    animation: showText 10s steps(40, end) infinite;
     border-right: 0.15em solid #f3e7e700;
     color: white;
     font-family: monospace;
@@ -59,7 +62,7 @@
     color: black;
     text-align: center;
     padding-top: 30px;
-    font-family: 'Mogra', cursive;
+    font-family: 'Rajdhani', sans-serif;
   }
   .cards{
     display: flex;
@@ -69,3 +72,6 @@
     margin-top: 100px;
     border-radius: 30px;
   }
+  /* .cards:hover{
+    transform: scale(1.03);
+  } */

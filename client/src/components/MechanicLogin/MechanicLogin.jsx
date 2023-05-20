@@ -17,7 +17,7 @@ function MechanicLogin() {
       <fieldset className='password'>
         <input type="password" placeholder="password"   required/>
       </fieldset>
-      <button type="submit" className="btn">Login</button>
+      <button type="submit" style={{ color:'white' }}  className="btn">Login</button>
     </form>
     <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center'}} to='/userSignup' >signup</Link>
   </div>

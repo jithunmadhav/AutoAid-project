@@ -49,7 +49,7 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/contact" onClick={closeNavbar}>
+                <Link className="nav-link" to="/user/login" onClick={closeNavbar}>
                   Login / signup
                 </Link>
               </li>

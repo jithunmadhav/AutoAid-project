@@ -32,7 +32,7 @@ function UserLogin() {
       <fieldset className='password'>
         <input type="password" placeholder="password" value={password} onChange={(e)=>setpassword(e.target.value)}   required/>
       </fieldset>
-      <button type="submit" className="btn">Login</button>
+      <button type="submit" style={{ color:'white' }} className="btn">Login</button>
     </form>
     <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center',fontFamily: 'monospace'}} to='/user/signup' >signup</Link>
   </div>

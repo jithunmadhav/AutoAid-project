@@ -31,7 +31,7 @@ function AdminLogin() {
       <fieldset className='password'>
         <input type="password" placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)} required/>
       </fieldset>
-      <button type="submit" className="btn">Login</button>
+      <button type="submit" style={{ color:'white' }}  className="btn">Login</button>
     </form>
   </div>
 </div></div>

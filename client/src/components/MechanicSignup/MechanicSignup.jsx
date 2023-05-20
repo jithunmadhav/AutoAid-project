@@ -25,7 +25,7 @@ function MechanicSignup() {
       <fieldset className='password'>
         <input type="password" placeholder="confirm password"  required/>
       </fieldset>
-      <button type="submit" className="btn">Next</button>
+      <button type="submit" style={{ color:'white' }}  className="btn">Next</button>
     </form>
   </div>
 </div>

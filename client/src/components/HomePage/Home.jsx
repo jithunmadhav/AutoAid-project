@@ -63,6 +63,7 @@ function Home() {
         ))}
         </div>
       </div>
+      <div className='Third-page'></div>
     </>
   );
 }

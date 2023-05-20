@@ -52,7 +52,7 @@ function UserSignup() {
       <fieldset className='password'>
         <input type="password" placeholder="confirm password" value={confirmpassword} onChange={(e)=>setconfirmpassword(e.target.value)}  required/>
       </fieldset>
-      <button type="submit" className="btn">sign up</button>
+      <button type="submit" style={{ color:'white' }}  className="btn">sign up</button>
     </form>
   </div>
 </div>

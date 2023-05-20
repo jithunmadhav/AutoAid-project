@@ -20,7 +20,7 @@ function MecahnicSignup2() {
         <label style={{ fontSize:'14px' }}>Resume</label>
         <input type="file" required/>
       </fieldset>
-      <button type="submit" className="btn">Signup</button>
+      <button type="submit" style={{ color:'white' }}  className="btn">Signup</button>
     </form>
   </div>
 </div>
