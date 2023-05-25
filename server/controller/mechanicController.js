@@ -4,6 +4,7 @@ import jwt  from 'jsonwebtoken'
 import { signupMail } from '../helper/mail.js'
 export const mechanicSignup=async(req,res)=>{
     try {
+        console.log(req.body);
         let {name,email,mobile,experience,location,password,confirmpassword}=req.body
         let oldAccount=await mechanicModel.findOne({email:email})
         if(oldAccount){
@@ -19,6 +20,7 @@ export const mechanicSignup=async(req,res)=>{
                     location,
                     password:bcrypPassword
                 });
+                console.log(name);
                 signupMail(email,name)
                 const token=jwt.sign({
                     id:account._id
@@ -40,7 +42,6 @@ export const mechanicSignup=async(req,res)=>{
 }
 export const mechanicLogin=async(req,res)=>{
     try {
-        console.log(req.body);
         let {email,password}=req.body;
         let account=await mechanicModel.findOne({email:email})
         if(account){
