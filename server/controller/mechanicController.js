@@ -40,6 +40,7 @@ export const mechanicSignup=async(req,res)=>{
 }
 export const mechanicLogin=async(req,res)=>{
     try {
+        console.log(req.body);
         let {email,password}=req.body;
         let account=await mechanicModel.findOne({email:email})
         if(account){
