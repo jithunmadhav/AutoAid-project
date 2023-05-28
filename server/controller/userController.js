@@ -1,6 +1,8 @@
 import userModel from '../model/userModel.js'  
 import bcrypt from 'bcrypt'
 import jwt  from 'jsonwebtoken'
+import { sentOTP } from '../helper/mail.js';
+import { mobileOTP } from '../helper/twilioOT.js';
  
     export const userSignup=async(req,res)=>{
         try {
@@ -10,28 +12,22 @@ import jwt  from 'jsonwebtoken'
         if(oldUser){
             res.json({err:true,message:'User already exsist'})
         }else{
-            console.log(password);
-            console.log(confirmpassword);
+             
             if(password==confirmpassword){
-                let bcrypPassword=await bcrypt.hash(password,10)
-                let user= await userModel.create({
-                    name,
-                    email,
-                    mobile,
-                    password:bcrypPassword
-                });
-                 
+               let otp=Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+               sentOTP(email,otp);
+               mobileOTP(mobile,otp)
                 const userToken=jwt.sign({
-                    id:user._id
+                    otp:otp,
+
                 },
                 "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
-                console.log(token);
                 return res.cookie("userToken", userToken, {
                     httpOnly: true,
                     secure: true,
                     maxAge: 1000 * 60 * 60 * 24 * 7,
                     sameSite: "none",
-                }).json({ err: false ,message:'User registration success'});
+                }).json({ err: false ,message:'Otp send successfull'});
                 
             }else{
                 res.json({err:true,message:'password entered are not same'})
@@ -43,6 +39,34 @@ import jwt  from 'jsonwebtoken'
             console.log(error);
         }
     }
+    export const verifyUserSignup=async(req,res)=>{
+        const {name,email,mobile,password,otp}=req.body
+         const OtpToken = req.cookies.userToken;
+        let bcrypPassword=await bcrypt.hash(password,10)
+        if(otp==OtpToken){
+
+            let user= await userModel.create({
+                name,
+                email,
+                mobile,
+                password:bcrypPassword
+            });
+            const userToken=jwt.sign({
+                id:user._id
+            },
+            "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+            return res.cookie("userToken", userToken, {
+                httpOnly: true,
+                secure: true,
+                maxAge: 1000 * 60 * 60 * 24 * 7,
+                sameSite: "none",
+            }).json({ err: false ,message:'User registration success'});
+        }else{
+            res.json({err:true,message:'something went wrong'})
+        }
+
+    }
+
     export const userLogin=async(req,res)=>{
       try {
         let {email,password}=req.body;

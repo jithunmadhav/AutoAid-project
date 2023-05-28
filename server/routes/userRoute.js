@@ -1,10 +1,11 @@
 import  express  from 'express';
-import { userLogin, userSignup } from '../controller/userController.js';
+import { userLogin, userSignup, verifyUserSignup } from '../controller/userController.js';
 import { userCheckAuth } from '../middleware/userAuth.js';
 const router=express.Router()
 
 router.get('/auth',userCheckAuth)
-router.post('/signup',userSignup)
+router.post('/signup',userSignup).post('/verifySignup',verifyUserSignup)
+
 router.post('/login',userLogin)
 
 

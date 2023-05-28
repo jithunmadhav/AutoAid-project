@@ -3,7 +3,7 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 import twilio from 'twilio';
 
-export const mobileOTP1 = (number, otp) => {
+export const mobileOTP = (number, otp) => {
   const client = twilio(accountSid, authToken);
 
   client.messages

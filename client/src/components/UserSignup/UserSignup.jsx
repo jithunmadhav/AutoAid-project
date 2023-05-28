@@ -1,6 +1,7 @@
 import axios from '../../axios'
 import React, { useState } from 'react'
 import './UserSignup.css'
+import OtpVerification from '../OTPverification/OtpVerification'
 
 function UserSignup() {
   const [name, setname] = useState('')
@@ -18,6 +19,9 @@ function UserSignup() {
         if(mobile.length===10){
           axios.post('/user/signup',{name,email,mobile,password,confirmpassword}).then((response)=>{
             console.log(response.data);
+            if(!response.data.err){
+              
+            }
           })
         }else{
           seterr('Enter valid mobile number')
@@ -53,9 +57,11 @@ function UserSignup() {
         <input type="password" placeholder="confirm password" value={confirmpassword} onChange={(e)=>setconfirmpassword(e.target.value)}  required/>
       </fieldset>
       <button type="submit" style={{ color:'white' }}  className="btn">sign up</button>
+      
     </form>
   </div>
 </div>
+<OtpVerification data={{name,email,mobile,password}}/>
     </div>
   )
 }
