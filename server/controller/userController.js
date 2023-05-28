@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt  from 'jsonwebtoken'
 import { sentOTP } from '../helper/mail.js';
 import { mobileOTP } from '../helper/twilioOT.js';
+import { randomNumber } from '../helper/randomNum.js';
  
     export const userSignup=async(req,res)=>{
         try {
@@ -14,9 +15,9 @@ import { mobileOTP } from '../helper/twilioOT.js';
         }else{
              
             if(password==confirmpassword){
-               let otp=Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+               let otp=randomNumber()
                sentOTP(email,otp);
-               mobileOTP(mobile,otp)
+            //    mobileOTP(mobile,otp)
                 const userToken=jwt.sign({
                     otp:otp,
 
@@ -40,10 +41,14 @@ import { mobileOTP } from '../helper/twilioOT.js';
         }
     }
     export const verifyUserSignup=async(req,res)=>{
-        const {name,email,mobile,password,otp}=req.body
-         const OtpToken = req.cookies.userToken;
+        console.log(req.body);
+        console.log(req.cookies.userToken);
+        const {name,email,mobile,password}=req.body.data
+        let otp=req.body.OTP;
+        let userToken=req.cookies.userToken;
+         const OtpToken = jwt.verify(userToken,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa')
         let bcrypPassword=await bcrypt.hash(password,10)
-        if(otp==OtpToken){
+        if(otp==OtpToken.otp){
 
             let user= await userModel.create({
                 name,
@@ -65,6 +70,23 @@ import { mobileOTP } from '../helper/twilioOT.js';
             res.json({err:true,message:'something went wrong'})
         }
 
+    }
+    export const resendOtp=(req,res)=>{
+        const {email}=req.body;
+        let otp=randomNumber()
+               sentOTP(email,otp);
+            //    mobileOTP(mobile,otp)
+                const userToken=jwt.sign({
+                    otp:otp,
+
+                },
+                "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+                return res.cookie("userToken", userToken, {
+                    httpOnly: true,
+                    secure: true,
+                    maxAge: 1000 * 60 * 60 * 24 * 7,
+                    sameSite: "none",
+                }).json({ err: false ,message:'Otp send successfull'});
     }
 
     export const userLogin=async(req,res)=>{

@@ -13,9 +13,9 @@ export const sentOTP=(email, otp)=> {
   var mailOptions = {
       from:process.env.EMAIL,
       to: email,
-      subject: "GADGETZON Email verification",
+      subject: "AUTOAID Email verification",
       html: `
-                <h1>Verify Your Email For GADGETZON</h1>
+                <h1>Verify Your Email For AUTOAID</h1>
                   <h3>use this code <h2>${otp}</h2> to verify your email</h3>
                  
                `

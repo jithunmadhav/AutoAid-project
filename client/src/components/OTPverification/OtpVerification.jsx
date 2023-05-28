@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './OtpVerification.css';
 import OTPInput from 'otp-input-react';
-
+import axios from '../../axios'
 function OtpVerification(props) {
   const [OTP, setOTP] = useState('');
   const [timer, setTimer] = useState(60);
@@ -23,8 +23,10 @@ function OtpVerification(props) {
 
  const handleSubmit=(e)=>{
   e.preventDefault()
-  console.log(OTP);
-  console.log(props);
+  axios.post('/user/verifySignup',{OTP,...props}).then((response)=>{
+
+  })
+
  }
 
   const handleResendOTP = () => {

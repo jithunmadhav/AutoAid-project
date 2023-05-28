@@ -7,23 +7,31 @@ import MechanicSignupPage from './Pages/MechanicSignupPage';
 import MechanicSignupPage2 from './Pages/MechanicSignupPage2';
 import AdminLoginPage from './Pages/AdminLoginPage';
 import axios from './axios'
+import {useSelector,useDispatch} from 'react-redux'
 import { useEffect } from 'react';
 import PlaceAPI from './components/PlaceAPI/PlaceAPI';
 import HomePage from './Pages/HomePage';
-import OTPverification from './Pages/OTPverification';
 
 
 function App() {
+  const {user,admin,refresh}=useSelector((state)=>{
+    return state
+   });
+   const dispatch = useDispatch()
+   axios.defaults.withCredentials = true;
   useEffect(() => {
     axios.get('/admin/auth').then((response)=>{
       console.log(response.data);
+      dispatch({type:'admin',payload:{adminLog:response.data.logged,details:response.data.details}})
+
     })
     axios.get('/user/auth').then((response)=>{
       console.log(response.data);
+      dispatch({type:'user',payload:{login: response.data.logged,details:response.data.details}});
+
     })
 
-  }, [])
-  axios.defaults.withCredentials = true;
+  }, [refresh])
   return (
     <div >
      <Router>
@@ -36,7 +44,7 @@ function App() {
         <Route  element={<MechanicSignupPage2/>} path='/mechanic/signup/next' />
         <Route  element={<PlaceAPI/>} path='/place' />
         <Route element={<HomePage/>} path='/' />
-        <Route  element={<OTPverification/>} path='/user/otp' />
+     
 
       </Routes>
      </Router>

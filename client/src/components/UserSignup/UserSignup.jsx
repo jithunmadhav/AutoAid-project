@@ -2,14 +2,19 @@ import axios from '../../axios'
 import React, { useState } from 'react'
 import './UserSignup.css'
 import OtpVerification from '../OTPverification/OtpVerification'
+import { useNavigate } from 'react-router-dom'
+import {useDispatch } from 'react-redux'
 
 function UserSignup() {
+  const dispatch = useDispatch()
+  const navigate=useNavigate()
   const [name, setname] = useState('')
   const [email, setemail] = useState('')
   const [mobile, setmobile] = useState('')
   const [password, setpassword] = useState('')
   const [confirmpassword, setconfirmpassword] = useState('')
   const [err, seterr] = useState('')
+  const [showOtpPage,setShowOtpPage]=useState(false)
 
   const handleSubmit=(e)=>{
     e.preventDefault();
@@ -20,7 +25,10 @@ function UserSignup() {
           axios.post('/user/signup',{name,email,mobile,password,confirmpassword}).then((response)=>{
             console.log(response.data);
             if(!response.data.err){
-              
+              dispatch({type:'refresh'})
+              setShowOtpPage(true)
+            }else{
+              seterr(response.data.message)
             }
           })
         }else{
@@ -34,6 +42,7 @@ function UserSignup() {
     }
   }
   return (
+    !showOtpPage?
     <div className='signup-background'>
        <div className='Signup-user'>
   <div className='Signup-connect'>
@@ -59,10 +68,12 @@ function UserSignup() {
       <button type="submit" style={{ color:'white' }}  className="btn">sign up</button>
       
     </form>
+
   </div>
 </div>
-<OtpVerification data={{name,email,mobile,password}}/>
     </div>
+    :<OtpVerification data={{name,email,mobile,password}}/>
+    
   )
 }
 
