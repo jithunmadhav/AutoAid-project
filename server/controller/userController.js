@@ -86,7 +86,7 @@ import { randomNumber } from '../helper/randomNum.js';
                     secure: true,
                     maxAge: 1000 * 60 * 60 * 24 * 7,
                     sameSite: "none",
-                }).json({ err: false ,message:'Otp send successfull'});
+                }).json({ err: false ,message:'Otp Resend successfull'});
     }
 
     export const userLogin=async(req,res)=>{
