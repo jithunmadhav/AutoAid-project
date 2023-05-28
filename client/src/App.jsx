@@ -11,6 +11,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import { useEffect } from 'react';
 import PlaceAPI from './components/PlaceAPI/PlaceAPI';
 import HomePage from './Pages/HomePage';
+import ProfilePage from './Pages/ProfilePage';
 
 
 function App() {
@@ -58,7 +59,8 @@ function App() {
         <Route  element={<MechanicSignupPage/> } path='/mechanic/signup' />
         <Route  element={<MechanicSignupPage2/>} path='/mechanic/signup/next' />
         <Route  element={<PlaceAPI/>} path='/place' />
-        <Route element={<HomePage/>} path='/' />
+        <Route  element={<HomePage/>} path='/' />
+        <Route  element={<ProfilePage/>} path='/user/profile' />
      
 
       </Routes>
