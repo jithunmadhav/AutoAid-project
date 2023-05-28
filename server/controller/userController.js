@@ -72,8 +72,10 @@ import { randomNumber } from '../helper/randomNum.js';
 
     }
     export const resendOtp=(req,res)=>{
-        const {email}=req.body;
+        const {email}=req.body.data;
+        console.log(email);
         let otp=randomNumber()
+        console.log(otp);
                sentOTP(email,otp);
             //    mobileOTP(mobile,otp)
                 const userToken=jwt.sign({

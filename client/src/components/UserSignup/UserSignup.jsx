@@ -2,12 +2,10 @@ import axios from '../../axios'
 import React, { useState } from 'react'
 import './UserSignup.css'
 import OtpVerification from '../OTPverification/OtpVerification'
-import { useNavigate } from 'react-router-dom'
 import {useDispatch } from 'react-redux'
 
 function UserSignup() {
   const dispatch = useDispatch()
-  const navigate=useNavigate()
   const [name, setname] = useState('')
   const [email, setemail] = useState('')
   const [mobile, setmobile] = useState('')

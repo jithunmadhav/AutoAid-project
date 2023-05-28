@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import './UserLogin.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from '../../axios'
+import { useDispatch } from 'react-redux'
 function UserLogin() {
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('')
   const [err, seterr] = useState('')
@@ -11,6 +14,12 @@ function UserLogin() {
     if(email.trim() && password.trim()){
       axios.post('/user/login',{email,password}).then((response)=>{
         console.log(response.data);
+        if(!response.data.err){
+          dispatch({type:'refresh'})
+          return navigate('/')
+        }else{
+          console.log(response.data.message);
+        }
       })
     }else{
       seterr('All fields are required')

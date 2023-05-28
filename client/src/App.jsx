@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom'
 import UserLoginPage from './Pages/UserLoginPage';
 import UserSignupPage from './Pages/UserSignupPage';
 import MechanicLoginPage from './Pages/MechanicLoginPage';
@@ -21,12 +21,12 @@ function App() {
    axios.defaults.withCredentials = true;
   useEffect(() => {
     axios.get('/admin/auth').then((response)=>{
-      console.log(response.data);
+      console.log("ADMIN : ",response.data);
       dispatch({type:'admin',payload:{adminLog:response.data.logged,details:response.data.details}})
 
     })
     axios.get('/user/auth').then((response)=>{
-      console.log(response.data);
+      console.log("USER :",response.data);
       dispatch({type:'user',payload:{login: response.data.logged,details:response.data.details}});
 
     })
@@ -35,6 +35,7 @@ function App() {
   return (
     <div >
      <Router>
+      {user.login===false &&
       <Routes>
         <Route  element={<UserLoginPage/> } path='/user/login' />
         <Route  element={<UserSignupPage/>} path='/user/signup'/>
@@ -47,6 +48,21 @@ function App() {
      
 
       </Routes>
+      }
+        {user.login===true &&
+      <Routes>
+        <Route  element={<Navigate to={'/'}/> } path='/user/login' />
+        <Route  element={<Navigate to={'/'}/>} path='/user/signup'/>
+        <Route  element={<AdminLoginPage/>} path='/admin/login' />
+        <Route  element={<MechanicLoginPage/> } path='/mechanic/login' />
+        <Route  element={<MechanicSignupPage/> } path='/mechanic/signup' />
+        <Route  element={<MechanicSignupPage2/>} path='/mechanic/signup/next' />
+        <Route  element={<PlaceAPI/>} path='/place' />
+        <Route element={<HomePage/>} path='/' />
+     
+
+      </Routes>
+      }
      </Router>
     </div>
   ); 

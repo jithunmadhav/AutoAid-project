@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Navbar.css';
+import { useSelector } from 'react-redux';
 
 
 function Navbar() {
+  const {user}=useSelector((state)=>{
+    return state
+   });
     const [isOpen, setIsOpen] = useState(false);
   
     const toggleNavbar = () => {
@@ -49,9 +53,13 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/user/login" onClick={closeNavbar}>
+                {user.login ?(<Link className="nav-link" to="/user/login" onClick={closeNavbar}>
+                  {user.details[0].name}
+                </Link>)
+                :(<Link className="nav-link" to="/user/login" onClick={closeNavbar}>
                   Login / signup
-                </Link>
+                </Link>) }
+                
               </li>
             </ul>
           </div>
