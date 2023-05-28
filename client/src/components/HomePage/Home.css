@@ -24,7 +24,7 @@
   height:70vh;
 }
 .Third-page{
-  height:70vh;
+  height:45vh;
 }
 .home-quotes{
   margin-top: 230px;
@@ -75,3 +75,9 @@
   /* .cards:hover{
     transform: scale(1.03);
   } */
+  .whyAutoAid{
+    text-align: center;
+    margin-top: 50px;
+    font-family: 'Merienda', cursive;
+  }
+   

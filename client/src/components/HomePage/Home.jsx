@@ -63,7 +63,15 @@ function Home() {
         ))}
         </div>
       </div>
-      <div className='Third-page'></div>
+      <div className='Third-page'>
+        <h2 className='whyAutoAid'> Why AutoAid ?</h2>
+        <p className='whyAutoAid' style={{ fontSize:'20px' }}> Auto Aid, as the name suggests, acts as a helping hand for Automobile users. 
+          It is an app to help users connect to Automotive Service Providing firms and skilled mechanics.</p>
+          <p className='whyAutoAid' style={{ fontSize:'20px' }}>Using Auto Aid, users can search for the best and reasonable, timely service provider at their desired locations.
+             They need to choose their nearby area from the Active Service <br/> Providers List.</p>
+          <p className='whyAutoAid' style={{ fontSize:'20px' }}>In short, the user can carry a garage on his phone. 
+              Helping our users to enjoy a hassle-free voyage across Kerala is the primary intention behind the development of Auto Aid.</p>
+      </div>
     </>
   );
 }
