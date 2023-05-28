@@ -10,6 +10,7 @@ import axios from './axios'
 import { useEffect } from 'react';
 import PlaceAPI from './components/PlaceAPI/PlaceAPI';
 import HomePage from './Pages/HomePage';
+import OTPverification from './Pages/OTPverification';
 
 
 function App() {
@@ -33,8 +34,9 @@ function App() {
         <Route  element={<MechanicLoginPage/> } path='/mechanic/login' />
         <Route  element={<MechanicSignupPage/> } path='/mechanic/signup' />
         <Route  element={<MechanicSignupPage2/>} path='/mechanic/signup/next' />
-        <Route  element={<PlaceAPI/>} path='place' />
+        <Route  element={<PlaceAPI/>} path='/place' />
         <Route element={<HomePage/>} path='/' />
+        <Route  element={<OTPverification/>} path='/user/otp' />
 
       </Routes>
      </Router>
