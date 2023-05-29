@@ -10,20 +10,20 @@ function Home() {
   // Define an array of data for the cards
   const cardData = [
     {
-      title: 'Card 1',
-      image: 'https://img.freepik.com/premium-photo/mechanic-works-engine-car-garage-repair-service-concept-car-inspection-service-car-repair-service_545582-3.jpg?w=1380',
+      title: 'Breakdown support',
+      image: 'https://img.freepik.com/free-vector/car-crash-concept-illustration_114360-7980.jpg?w=1380&t=st=1685293661~exp=1685294261~hmac=461a8e29e0b5d90f3bf7f69d81dd4c142e3d42101352d3169a41e96d7ccfaa9d',
     },
     {
-      title: 'Card 2',
-      image: 'https://img.freepik.com/premium-photo/mechanic-works-engine-car-garage-repair-service-concept-car-inspection-service-car-repair-service_545582-3.jpg?w=1380',
+      title: '2 wheeler support',
+      image: 'https://img.freepik.com/premium-vector/bearded-hipster-guy-motorcycle-customization-service-vector-flat-illustration-mechanic-man-assemble-parts-motorbike-garage-isolated-white-male-biker-enjoying-hobby-work-with-transport_198278-8929.jpg?w=996',
     },
     {
-      title: 'Card 3',
-      image: 'https://img.freepik.com/premium-photo/mechanic-works-engine-car-garage-repair-service-concept-car-inspection-service-car-repair-service_545582-3.jpg?w=1380',
+      title: '4,6 wheeler support',
+      image: 'https://img.freepik.com/free-vector/auto-mechanic-repairing-vehicle-engine-isolated-flat-vector-illustration-cartoon-man-fixing-checking-car-with-open-hood-garage_74855-8227.jpg?size=626&ext=jpg',
     },
     {
-      title: 'Card 4',
-      image: 'https://img.freepik.com/premium-photo/mechanic-works-engine-car-garage-repair-service-concept-car-inspection-service-car-repair-service_545582-3.jpg?w=1380',
+      title: 'Washing',
+      image: 'https://img.freepik.com/premium-vector/car-wash-service-flat-design-illustration-workers-washing-automobile-using-sponges-soap-water-background-poster-banner_2175-1980.jpg?size=626&ext=jpg',
     },
   ];
 
@@ -54,8 +54,9 @@ function Home() {
                 alt={card.title}
               />
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h5" component="div" style={{ fontFamily:'Monomaniac One, sans-serif',textAlign:'center'}}>
                   {card.title}
+                  
                 </Typography>
               </CardContent>
             </CardActionArea>

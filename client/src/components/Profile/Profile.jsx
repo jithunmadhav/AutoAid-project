@@ -1,15 +1,28 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './Profile.css'
+import axios from '../../axios'
+import { useNavigate } from 'react-router-dom'
 function Profile() {
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
   const {user} =useSelector((state)=>{
     return state
   })
+  const handleLogout=()=>{
+    axios.get('/user/logout').then((response)=>{
+      if(!response.data.err){
+        console.log(response.data);
+        dispatch({type:'refresh'})
+        return navigate('/')
+      }
+    })
+  }
   return (
     <div className='profile-background'>
       <div className='inner-div'>
         <h3 className='heading'>Profile</h3>
-        <button className='logout-btn'>Logout</button>
+        <button className='logout-btn' onClick={handleLogout} >Logout</button>
         <div className='inner-div2'>
           <div className='div2-sub1'>
             <div className='profile-img'>
