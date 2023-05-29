@@ -117,17 +117,43 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
         console.log(error);
       }
     }
+
+
     export const forgotPassword=async(req,res)=>{
         const {email}=req.body
         let oldUser=await userModel.findOne({email:email})
         if(oldUser){
             let otp=randomNumber()
             sentOTP(email,otp)
-            res.json({err:false,message:'otp sent successfull'})
+               const userToken=jwt.sign({
+                    otp:otp,
+
+                },
+                "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+                return res.cookie("resetToken", userToken, {
+                    httpOnly: true,
+                    secure: true,
+                    maxAge: 1000 * 60 * 60 * 24 * 7,
+                    sameSite: "none",
+                }).json({ err: false ,message:'Otp send successfull'});
+                
+            
         }else{
             res.json({err:true,message:'Email is not registered'})
         }
     }
+    export const VerifyResetOtp=async(req,res)=>{
+        let otp=req.body.OTP;
+        let userToken=req.cookies.resetToken;
+        console.log(userToken);
+         const OtpToken = jwt.verify(userToken,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa')
+        if(otp==OtpToken.otp){
+            res.json({err:false})
+        }else{
+            res.json({err:true})
+        }
+    }
+
     export const resetpassword=async(req,res)=>{
         const {email,newPassword}=req.body;
         let bcrypPassword=await bcrypt.hash(newPassword,10)

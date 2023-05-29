@@ -8,8 +8,9 @@ function ForgotPassword() {
     const [email, setemail] = useState('')
     const handleSubmit=(e)=>{
         e.preventDefault()
+        console.log("hello");
         axios.post('/user/forgotPassword',{email}).then((response)=>{
-            if(response.data.errr){
+            if(!response.data.errr){
                 SetOtp(true)
             }
         })

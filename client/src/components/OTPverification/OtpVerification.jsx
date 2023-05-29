@@ -27,11 +27,12 @@ function OtpVerification(props) {
 
  const handleSubmit=(e)=>{
   e.preventDefault()
-  if(props.reset){
-    axios.post('/user/resetPassword',{OTP,...props}).then((response)=>{
+  console.log(props.data.reset);
+  if(props.data.reset){
+    axios.post('/user/verifyResetOtp',{OTP}).then((response)=>{
       if(!response.data.err){
         dispatch({type:'refresh'})
-        navigate('/user/resetPassword')
+        navigate('/resetPassword')
       }else{
         console.log(response.data.message);
       }

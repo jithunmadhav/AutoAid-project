@@ -7,7 +7,9 @@ function ResetPassword() {
     const [rePassword, setrePassword] = useState('')
     const handleSubmit=(e)=>{
         e.preventDefault()
-        axios.post()
+        axios.post('/user/resetPassword',{newPassword}).then((response)=>{
+            
+        })
     }
   return (
     <div>

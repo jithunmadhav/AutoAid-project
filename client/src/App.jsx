@@ -13,6 +13,7 @@ import PlaceAPI from './components/PlaceAPI/PlaceAPI';
 import HomePage from './Pages/HomePage';
 import ProfilePage from './Pages/ProfilePage';
 import ForgotPasswordPage from './Pages/ForgotPasswordPage';
+import ResetPasswordPage from './Pages/ResetPasswordPage';
 
 function App() {
   const { user, admin, refresh } = useSelector((state) => {
@@ -48,6 +49,7 @@ function App() {
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<HomePage />} path="/" />
               <Route element={<ForgotPasswordPage/>} path={'/forgotPassword'}/>
+              <Route element={<ResetPasswordPage/>} path={'/resetPassword'}/>
             </>
           )}
 

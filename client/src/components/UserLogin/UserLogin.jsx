@@ -72,6 +72,17 @@ function UserLogin() {
             >
               Signup
             </Link>
+            <Link
+              style={{
+                textDecoration: 'none',
+                display: 'flex',
+                justifyContent: 'center',
+                fontFamily: 'monospace',
+              }}
+              to="/forgotPassword"
+            >
+              Forgot password ?
+            </Link>
           </div>
         </div>
       </div>
