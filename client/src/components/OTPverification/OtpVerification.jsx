@@ -27,14 +27,25 @@ function OtpVerification(props) {
 
  const handleSubmit=(e)=>{
   e.preventDefault()
-  axios.post('/user/verifySignup',{OTP,...props}).then((response)=>{
-    if(!response.data.err){
-      dispatch({type:'refresh'})
-      navigate('/')
-    }else{
-      console.log(response.data.message);
-    }
-  })
+  if(props.reset){
+    axios.post('/user/resetPassword',{OTP,...props}).then((response)=>{
+      if(!response.data.err){
+        dispatch({type:'refresh'})
+        navigate('/user/resetPassword')
+      }else{
+        console.log(response.data.message);
+      }
+    })
+  }else{
+    axios.post('/user/verifySignup',{OTP,...props}).then((response)=>{
+      if(!response.data.err){
+        dispatch({type:'refresh'})
+        navigate('/')
+      }else{
+        console.log(response.data.message);
+      }
+    })
+  }
 
  }
 

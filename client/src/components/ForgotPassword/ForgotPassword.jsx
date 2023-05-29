@@ -8,7 +8,7 @@ function ForgotPassword() {
     const [email, setemail] = useState('')
     const handleSubmit=(e)=>{
         e.preventDefault()
-        axios.post('/user/forgotOtp',{email}).then((response)=>{
+        axios.post('/user/forgotPassword',{email}).then((response)=>{
             if(response.data.errr){
                 SetOtp(true)
             }
@@ -40,7 +40,7 @@ function ForgotPassword() {
         </div>
     </div>
   </div>
-:<OtpVerification data={{email}}/>
+:<OtpVerification data={{email,reset:true}}/>
    
   )
 }
