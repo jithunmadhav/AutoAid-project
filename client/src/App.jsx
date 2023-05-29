@@ -16,12 +16,12 @@ import ForgotPasswordPage from './Pages/ForgotPasswordPage';
 import ResetPasswordPage from './Pages/ResetPasswordPage';
 
 function App() {
-  const { user, admin, refresh } = useSelector((state) => {
+  const { user, refresh } = useSelector((state) => {
     return state;
   });
-  const dispatch = useDispatch();
   axios.defaults.withCredentials = true;
-
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     axios.get('/admin/auth').then((response) => {
       console.log("ADMIN : ", response.data);
@@ -32,7 +32,7 @@ function App() {
       console.log("USER :", response.data);
       dispatch({ type: 'user', payload: { login: response.data.logged, details: response.data.details } });
     });
-  }, [refresh]);
+  }, [refresh,dispatch]);
 
   return (
     <div>

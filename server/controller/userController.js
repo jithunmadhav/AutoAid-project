@@ -155,6 +155,7 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
     }
 
     export const resetpassword=async(req,res)=>{
+        console.log(req.body);
         const {email,newPassword}=req.body;
         let bcrypPassword=await bcrypt.hash(newPassword,10)
         await userModel.updateOne({email:email},{$set:{

@@ -1,26 +1,39 @@
 import React, { useState } from 'react'
 import './ResetPassword.css'
 import axios from '../../axios'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 
-function ResetPassword() {
+function ResetPassword(props) {
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
     const [newPassword, setnewPassword] = useState('')
     const [rePassword, setrePassword] = useState('')
+    const [err, seterr] = useState('')
     const handleSubmit=(e)=>{
         e.preventDefault()
-        axios.post('/user/resetPassword',{newPassword}).then((response)=>{
-            
-        })
+        if(newPassword===rePassword){
+            axios.post('/user/resetPassword',{newPassword,props}).then((response)=>{
+                if(!response.data.err){
+                    dispatch({type:'refresh'})
+                    navigate('/user/login')
+                }
+            })
+        }else{
+            seterr('password are not same')
+        }
     }
   return (
     <div>
       <div className='forgot-bg'>
     <div className='inner-Div'>
-    <div className="signup-connect-forgot"></div>
+    <div className="signup-connect-reset"></div>
         <div className="signup-classic">
+        <p className="errorMessage">{err}</p>
           <form onSubmit={handleSubmit} className="form">
             <fieldset className="email">
               <input
-                type="text"
+                type="password"
                 placeholder="New password"
                  value={newPassword}
                  onChange={(e)=>setnewPassword(e.target.value)}
@@ -29,7 +42,7 @@ function ResetPassword() {
             </fieldset>
             <fieldset className="email">
               <input
-                type="text"
+                type="password"
                 placeholder="Re-enter password"
                  value={rePassword}
                  onChange={(e)=>setrePassword(e.target.value)}

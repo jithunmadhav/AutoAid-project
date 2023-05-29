@@ -4,6 +4,7 @@ import OTPInput from 'otp-input-react';
 import axios from '../../axios'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import ResetPassword from '../ResetPassword/ResetPassword';
 function OtpVerification(props) {
   const dispatch=useDispatch();
   const navigate=useNavigate()
@@ -31,6 +32,7 @@ function OtpVerification(props) {
   if(props.data.reset){
     axios.post('/user/verifyResetOtp',{OTP}).then((response)=>{
       if(!response.data.err){
+        <ResetPassword data={{props}}/>
         dispatch({type:'refresh'})
         navigate('/resetPassword')
       }else{
