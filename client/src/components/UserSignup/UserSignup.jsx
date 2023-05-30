@@ -70,7 +70,7 @@ function UserSignup() {
   </div>
 </div>
     </div>
-    :<OtpVerification data={{name,email,mobile,password}}/>
+    :<OtpVerification data={{name,email,mobile,password,reset:false}}/>
     
   )
 }

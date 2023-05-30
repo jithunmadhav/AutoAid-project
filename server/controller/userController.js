@@ -18,7 +18,7 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
             if(password==confirmpassword){
                let otp=randomNumber()
                sentOTP(email,otp);
-               mobileOTP(mobile,otp)
+            //    mobileOTP(mobile,otp)
                 //   mobileOTP2(mobile,otp)
                 const userToken=jwt.sign({
                     otp:otp,
@@ -43,7 +43,7 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
         }
     }
     export const verifyUserSignup=async(req,res)=>{
-        const {name,email,mobile,password}=req.body.data
+        const {name,email,mobile,password}=req.body
         let otp=req.body.OTP;
         let userToken=req.cookies.signupToken;
          const OtpToken = jwt.verify(userToken,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa')
@@ -76,7 +76,7 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
         let otp=randomNumber()
         console.log(otp);
                sentOTP(email,otp);
-               mobileOTP(mobile,otp)
+            //    mobileOTP(mobile,otp)
             //    mobileOTP2(mobile,otp)
                 const userToken=jwt.sign({
                     otp:otp,

@@ -54,6 +54,7 @@ function App() {
           {user.login === true && (
             <>
               <Route element={<HomePage />} path="/" />
+              <Route element={<PlaceAPI />} path="/place" />
               <Route element={<ProfilePage />} path="/user/profile" />
             </>
           )}

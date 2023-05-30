@@ -1,96 +1,44 @@
-// import React, { useRef } from 'react'
-// import { StandaloneSearchBox, LoadScript } from '@react-google-maps/api';
+import React, { useState } from 'react';
+import { AddressAutofill } from '@mapbox/search-js-react';
 
-// function PlaceComponent() {
-//   const inputRef = useRef({});
+function PlaceAPI() {
+  const [value, setValue] = useState('');
 
-//   const handlePlaceChanged = () => {
-//     const [place] = inputRef.current.getPlaces();
-//     if (place) {
-//       console.log(place.formatted_address);
-//     }
-//   }
+  const handleSuggestionSelected = (suggestion) => {
+    setValue(suggestion.place_name);
+  };
 
-//   return (
-//     <LoadScript
-//       googleMapsApiKey="AIzaSyCFx5QRL3qDCzW9pN5g_3bxalk-SojrtaM"
-//       libraries={['places']}
-//     >
-//       <StandaloneSearchBox
-//         onLoad={(ref) => (inputRef.current = ref)}
-//         onPlacesChanged={handlePlaceChanged}
-//       >
-//         <input type='text' placeholder='search' />
-//       </StandaloneSearchBox>
-//     </LoadScript>
-//   )
-// }
-
-// export default PlaceComponent;
-
-import React, { useRef, useCallback } from 'react';
-import { GoogleMap, LoadScript, StandaloneSearchBox } from '@react-google-maps/api';
-
-const containerStyle = {
-  width: '100%',
-  height: '800px'
-};
-
-const center = {
-  lat: 10.1632,
-  lng: 76.6413
-};
-
-function MyComponent() {
-  const mapRef = useRef(null);
-  const searchBoxRef = useRef(null);
-
-  const onLoad = useCallback((map) => {
-    mapRef.current = map;
-  }, []);
-
-  const onPlacesChanged = useCallback(() => {
-    const place = searchBoxRef.current.getPlaces()[0];
-    if (place) {
-      mapRef.current.panTo(place.geometry.location);
-      mapRef.current.setZoom(5);
-    }
-  }, []);
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
 
   return (
-    <LoadScript
-      googleMapsApiKey="AIzaSyCFx5QRL3qDCzW9pN5g_3bxalk-SojrtaM"
-      libraries={['places']}
-    >
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={15}
-        onLoad={onLoad}
+    <form>
+      <AddressAutofill
+        accessToken="pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw"
+        onSuggestionSelected={handleSuggestionSelected}
       >
-        <StandaloneSearchBox
-          onLoad={(ref) => (searchBoxRef.current = ref)}
-          onPlacesChanged={onPlacesChanged}
-        >
-          <input type="text" placeholder="Search" style={{
-            boxSizing: `border-box`,
-            border: `1px solid transparent`,
-            width: `240px`,
-            height: `32px`,
-            padding: `0 12px`,
-            borderRadius: `3px`,
-            boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-            fontSize: `14px`,
-            outline: `none`,
-            textOverflow: `ellipses`,
-            position: "absolute",
-            left: "50%",
-            marginLeft: "-120px"
-          }} />
-        </StandaloneSearchBox>
-      </GoogleMap>
-    </LoadScript>
-  )
+        {({ getInputProps, suggestions, loading }) => (
+          <div>
+            <input
+              {...getInputProps({
+                placeholder: 'City',
+                name: 'city',
+                type: 'text',
+                autoComplete: 'address-level2',
+                value: value,
+                onChange: handleChange,
+              })}
+            />
+            {loading && <div>Loading...</div>}
+            {suggestions.map((suggestion) => (
+              <div key={suggestion.place_name}>{suggestion.place_name}</div>
+            ))}
+          </div>
+        )}
+      </AddressAutofill>
+    </form>
+  );
 }
 
-export default React.memo(MyComponent);
+export default PlaceAPI;

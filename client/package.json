@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@mapbox/search-js-react": "^1.0.0-beta.16",
     "@mui/material": "^5.13.0",
     "@react-google-maps/api": "^2.18.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -14,6 +15,7 @@
     "bootstrap": "^5.2.3",
     "carousel": "^0.0.3",
     "mdb-react-ui-kit": "^6.0.0",
+    "mui-address-autocomplete": "^3.0.4",
     "mui-one-time-password-input": "^1.1.0",
     "otp-input-react": "^0.3.0",
     "react": "^18.2.0",
