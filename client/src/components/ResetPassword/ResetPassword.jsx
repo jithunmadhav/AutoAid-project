@@ -13,8 +13,10 @@ function ResetPassword(props) {
     const handleSubmit=(e)=>{
         e.preventDefault()
         if(newPassword===rePassword){
-            axios.post('/user/resetPassword',{newPassword,props}).then((response)=>{
+            axios.post('/user/resetPassword',{newPassword,...props.data}).then((response)=>{
+                console.log(response.data);
                 if(!response.data.err){
+
                     dispatch({type:'refresh'})
                     navigate('/user/login')
                 }

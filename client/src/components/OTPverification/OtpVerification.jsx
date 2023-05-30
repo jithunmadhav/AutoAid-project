@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './OtpVerification.css';
 import OTPInput from 'otp-input-react';
-import axios from '../../axios'
+import axios from '../../axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ResetPassword from '../ResetPassword/ResetPassword';
+
 function OtpVerification(props) {
-  const dispatch=useDispatch();
-  const navigate=useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [OTP, setOTP] = useState('');
   const [timer, setTimer] = useState(60);
   const [resendAttempts, setResendAttempts] = useState(0);
+  const [showReset, setshowReset] = useState(false)
 
   useEffect(() => {
     let intervalId;
@@ -26,45 +28,41 @@ function OtpVerification(props) {
     };
   }, [timer]);
 
- const handleSubmit=(e)=>{
-  e.preventDefault()
-  console.log(props.data.reset);
-  if(props.data.reset){
-    axios.post('/user/verifyResetOtp',{OTP}).then((response)=>{
-      if(!response.data.err){
-        <ResetPassword data={{props}}/>
-        dispatch({type:'refresh'})
-        navigate('/resetPassword')
-      }else{
-        console.log(response.data.message);
-      }
-    })
-  }else{
-    axios.post('/user/verifySignup',{OTP,...props}).then((response)=>{
-      if(!response.data.err){
-        dispatch({type:'refresh'})
-        navigate('/')
-      }else{
-        console.log(response.data.message);
-      }
-    })
-  }
-
- }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(props.data.reset);
+    if (props.data.reset) {
+      axios.post('/user/verifyResetOtp', { OTP }).then((response) => {
+        if (!response.data.err) {
+          setshowReset(true)
+        } else {
+          console.log(response.data.message);
+        }
+      });
+    } else {
+      axios.post('/user/verifySignup', { OTP, ...props.data }).then((response) => {
+        if (!response.data.err) {
+          dispatch({ type: 'refresh' });
+          navigate('/');
+        } else {
+          console.log(response.data.message);
+        }
+      });
+    }
+  };
 
   const handleResendOTP = () => {
-
     if (resendAttempts < 3) {
       setResendAttempts((prevAttempts) => prevAttempts + 1);
       setTimer(60);
-      axios.post('/user/resendOtp',{...props}).then((response)=>{
+      axios.post('/user/resendOtp', { ...props.data }).then((response) => {
         console.log(response.data);
-      })
-      // Perform resend OTP logic here
-    } 
+      });
+    }
   };
 
   return (
+    !showReset ?
     <div>
       <div className="gray-background">
         <div className="signup">
@@ -98,7 +96,7 @@ function OtpVerification(props) {
                 <button
                   type="submit"
                   className="resend-btn"
-                  style={{ color:'white' }} 
+                  style={{ color: 'white' }}
                   onClick={handleResendOTP}
                 >
                   Resend OTP
@@ -114,7 +112,10 @@ function OtpVerification(props) {
           </div>
         </div>
       </div>
+     
     </div>
+    :<ResetPassword data={{...props.data}}/>
+
   );
 }
 

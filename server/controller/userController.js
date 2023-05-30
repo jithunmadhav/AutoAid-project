@@ -160,8 +160,8 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
         let bcrypPassword=await bcrypt.hash(newPassword,10)
         await userModel.updateOne({email:email},{$set:{
             password:bcrypPassword
-        }}).then(()=>{
-            res.json({err:false,message:'Reset password successfull'})
+        }}).then((result)=>{
+            res.json({err:false,result,message:'Reset password successfull'})
         }).catch(err=>{
             res.json({err:true,message:'something went wrong'})
         })
