@@ -173,3 +173,24 @@
     
   }
 
+  .suggestion-box {
+    position: absolute;
+    top: 100%;
+    width: 352px;
+    left: 0;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    font-size: 15px;
+    max-height: 187px;
+    overflow-y: auto;
+  }
+  
+  .suggestion-box > div {
+    padding: 5px;
+  }
+  
+  .suggestion-box > div:hover {
+    background-color: #f1f1f1;
+  }

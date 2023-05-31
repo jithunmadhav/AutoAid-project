@@ -41,7 +41,7 @@ function ForgotPassword() {
         </div>
     </div>
   </div>
-:<OtpVerification data={{email,reset:true}}/>
+:<OtpVerification data={{email,reset:'reset'}}/>
    
   )
 }

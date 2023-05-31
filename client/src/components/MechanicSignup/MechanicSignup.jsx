@@ -14,8 +14,9 @@ function MechanicSignup() {
     e.preventDefault()
     if(name.trim() && email.trim()&&mobile.trim()&&password.trim()&&confirmPassword.trim){
       if(password===confirmPassword){
-        axios.post('/mechanic/signup',{email}).then((response)=>{
+        axios.post('/mechanic/signup',{email,password,confirmPassword,mobile}).then((response)=>{
           if(!response.data.err){
+            console.log(response.data);
             setshowSignup2(true)
           }
         })
@@ -58,7 +59,7 @@ function MechanicSignup() {
 </div>
     </div>
     </div>
-    :<MecahnicSignup2 data={{name,email,mobile,password}}/>
+    :<MecahnicSignup2 data={{name,email,mobile,password,confirmPassword}}/>
   )
 }
 

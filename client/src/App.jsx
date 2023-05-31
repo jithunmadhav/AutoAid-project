@@ -41,8 +41,8 @@ function App() {
               <Route element={<UserLoginPage />} path="/user/login" />
               <Route element={<UserSignupPage />} path="/user/signup" />
               <Route element={<AdminLoginPage />} path="/admin/login" />
-              <Route element={<MechanicLoginPage />} path="/mechanic/login" />
-              <Route element={<MechanicSignupPage />} path="/mechanic/signup" />
+              {/* <Route element={<MechanicLoginPage />} path="/mechanic/login" />
+              <Route element={<MechanicSignupPage />} path="/mechanic/signup" /> */}
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<HomePage />} path="/" />
               <Route element={<ForgotPasswordPage/>} path={'/forgotPassword'}/>

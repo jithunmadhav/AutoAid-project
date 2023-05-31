@@ -19,7 +19,7 @@ function MechanicLogin() {
       </fieldset>
       <button type="submit" style={{ color:'white' }}  className="btn">Login</button>
     </form>
-    <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center'}} to='/userSignup' >signup</Link>
+    <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center'}} to='/mechanic/signup' >signup</Link>
   </div>
 </div></div>
     </>

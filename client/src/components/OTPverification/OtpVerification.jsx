@@ -31,7 +31,7 @@ function OtpVerification(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(props.data.reset);
-    if (props.data.reset) {
+    if (props.data.reset==='reset') {
       axios.post('/user/verifyResetOtp', { OTP }).then((response) => {
         if (!response.data.err) {
           setshowReset(true)
@@ -39,11 +39,20 @@ function OtpVerification(props) {
           console.log(response.data.message);
         }
       });
-    } else {
+    } else if(props.data.reset==='signup') {
       axios.post('/user/verifySignup', { OTP, ...props.data }).then((response) => {
         if (!response.data.err) {
           dispatch({ type: 'refresh' });
           navigate('/');
+        } else {
+          console.log(response.data.message);
+        }
+      });
+    }else if(props.data.reset==='mechanicsignup'){
+      axios.post('/mechanic/verifySignup', { OTP, ...props.data }).then((response) => {
+        if (!response.data.err) {
+          dispatch({ type: 'refresh' });
+          navigate('/mechanic/login');
         } else {
           console.log(response.data.message);
         }
