@@ -128,7 +128,6 @@ export const verifyMechanicSignup=async(req,res)=>{
 }
 export const mechanicLogin=async(req,res)=>{
     try {
-        console.log(req.body);
         let {email,password}=req.body;
         let account=await mechanicModel.findOne({email:email})
         if(account){
@@ -138,7 +137,7 @@ export const mechanicLogin=async(req,res)=>{
                     const token=jwt.sign({
                         id:account._id
                     },"00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
-                    return res.cookie("token", token, {
+                    return res.cookie("mechanictoken", token, {
                         httpOnly: true,
                         secure: true,
                         maxAge: 1000 * 60 * 60 * 24 * 7,

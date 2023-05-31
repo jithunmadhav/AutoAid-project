@@ -14,10 +14,13 @@ function MechanicLogin() {
     e.preventDefault()
     if(email.trim() && password.trim()){
       axios.post('/mechanic/login',{email,password}).then((response)=>{
+        console.log(response.data);
         if(!response.data.err){
           dispatch({type:'refresh'})
           navigate('/mechanic/dashboard')
         }
+      }).catch(error=>{
+        console.log(error);
       })
     }else{
       seterr('All fields are required')
@@ -41,8 +44,8 @@ function MechanicLogin() {
       </fieldset>
       <button type="submit" style={{ color:'white' }}  className="btn">Login</button>
     </form>
-    <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center'}} to='/mechanic/signup' >signup</Link>
-    <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center'}} to='/forgotMechanicPassword' >forgot password</Link>
+    <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center' ,fontFamily:'monospace'}} to='/mechanic/signup' >signup</Link>
+    <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center',fontFamily:'monospace'}} to='/forgotMechanicPassword' >Forgot password</Link>
   </div>
 </div></div>
     </>
