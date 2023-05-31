@@ -20,6 +20,7 @@ function MechanicLogin() {
       <button type="submit" style={{ color:'white' }}  className="btn">Login</button>
     </form>
     <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center'}} to='/mechanic/signup' >signup</Link>
+    <Link style={{textDecoration:'none',display:'flex' ,justifyContent:'center'}} to='/forgotMechanicPassword' >forgot password</Link>
   </div>
 </div></div>
     </>

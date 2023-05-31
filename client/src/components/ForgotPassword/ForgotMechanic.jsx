@@ -3,7 +3,7 @@ import './ForgotPassword.css'
 import axios from '../../axios'
 import OtpVerification from '../OTPverification/OtpVerification'
 
-function ForgotPassword() {
+function ForgotMechanic() {
     const [Otp, SetOtp] = useState(false)
     const [email, setemail] = useState('')
     const handleSubmit=(e)=>{
@@ -41,9 +41,9 @@ function ForgotPassword() {
         </div>
     </div>
   </div>
-:<OtpVerification data={{email,reset:'forgotpassword',mechReset:false}}/>
+:<OtpVerification data={{email,reset:'forgotmechanic',mechReset:true}}/>
    
   )
 }
 
-export default ForgotPassword
+export default ForgotMechanic

@@ -12,6 +12,7 @@ import PlaceAPI from './components/PlaceAPI/PlaceAPI';
 import HomePage from './Pages/HomePage';
 import ProfilePage from './Pages/ProfilePage';
 import ForgotPasswordPage from './Pages/ForgotPasswordPage';
+import ForgotMechanicPage from './Pages/ForgotMechanicPage';
 
 function App() {
   const { user, refresh } = useSelector((state) => {
@@ -41,11 +42,12 @@ function App() {
               <Route element={<UserLoginPage />} path="/user/login" />
               <Route element={<UserSignupPage />} path="/user/signup" />
               <Route element={<AdminLoginPage />} path="/admin/login" />
-              {/* <Route element={<MechanicLoginPage />} path="/mechanic/login" />
-              <Route element={<MechanicSignupPage />} path="/mechanic/signup" /> */}
+              <Route element={<MechanicLoginPage />} path="/mechanic/login" />
+              <Route element={<MechanicSignupPage />} path="/mechanic/signup" />
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<HomePage />} path="/" />
               <Route element={<ForgotPasswordPage/>} path={'/forgotPassword'}/>
+              <Route element={<ForgotMechanicPage/>} path={'/forgotMechanicPassword'}/>
             </>
           )}
 

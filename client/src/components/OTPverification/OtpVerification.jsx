@@ -31,7 +31,7 @@ function OtpVerification(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(props.data.reset);
-    if (props.data.reset==='reset') {
+    if (props.data.reset==='forgotpassword') {
       axios.post('/user/verifyResetOtp', { OTP }).then((response) => {
         if (!response.data.err) {
           setshowReset(true)
@@ -53,6 +53,14 @@ function OtpVerification(props) {
         if (!response.data.err) {
           dispatch({ type: 'refresh' });
           navigate('/mechanic/login');
+        } else {
+          console.log(response.data.message);
+        }
+      });
+    }else if(props.data.reset==='forgotmechanic'){
+      axios.post('/mechanic/mechVerifyReset', { OTP }).then((response) => {
+        if (!response.data.err) {
+          setshowReset(true)
         } else {
           console.log(response.data.message);
         }

@@ -128,6 +128,7 @@ export const verifyMechanicSignup=async(req,res)=>{
 }
 export const mechanicLogin=async(req,res)=>{
     try {
+        console.log(req.body);
         let {email,password}=req.body;
         let account=await mechanicModel.findOne({email:email})
         if(account){
@@ -155,4 +156,27 @@ export const mechanicLogin=async(req,res)=>{
       } catch (error) {
         console.log(error);
       }        
+    }
+    export const mechVerifyResetOtp=async(req,res)=>{
+        let otp=req.body.OTP;
+        let userToken=req.cookies.resetToken;
+        console.log(userToken);
+         const OtpToken = jwt.verify(userToken,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa')
+        if(otp==OtpToken.otp){
+            res.json({err:false})
+        }else{
+            res.json({err:true})
+        }
+    }
+    export const mechResetpassword=async(req,res)=>{
+        console.log(req.body);
+        const {email,newPassword}=req.body;
+        let bcrypPassword=await bcrypt.hash(newPassword,10)
+        await mechanicModel.updateOne({email:email},{$set:{
+            password:bcrypPassword
+        }}).then((result)=>{
+            res.json({err:false,result,message:'Reset password successfull'})
+        }).catch(err=>{
+            res.json({err:true,message:'something went wrong'})
+        })
     }

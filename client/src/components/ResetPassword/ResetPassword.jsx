@@ -13,6 +13,16 @@ function ResetPassword(props) {
     const handleSubmit=(e)=>{
         e.preventDefault()
         if(newPassword===rePassword){
+          if(props.data.mechReset){
+            axios.post('/mechanic/resetPassword',{newPassword,...props.data}).then((response)=>{
+              console.log(response.data);
+              if(!response.data.err){
+
+                  dispatch({type:'refresh'})
+                  navigate('/mechanic/login')
+              }
+          })
+          }else{
             axios.post('/user/resetPassword',{newPassword,...props.data}).then((response)=>{
                 console.log(response.data);
                 if(!response.data.err){
@@ -21,6 +31,7 @@ function ResetPassword(props) {
                     navigate('/user/login')
                 }
             })
+          }
         }else{
             seterr('password are not same')
         }
