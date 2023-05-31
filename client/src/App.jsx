@@ -4,7 +4,6 @@ import UserLoginPage from './Pages/UserLoginPage';
 import UserSignupPage from './Pages/UserSignupPage';
 import MechanicLoginPage from './Pages/MechanicLoginPage';
 import MechanicSignupPage from './Pages/MechanicSignupPage';
-import MechanicSignupPage2 from './Pages/MechanicSignupPage2';
 import AdminLoginPage from './Pages/AdminLoginPage';
 import axios from './axios';
 import { useSelector, useDispatch } from 'react-redux';
@@ -44,7 +43,6 @@ function App() {
               <Route element={<AdminLoginPage />} path="/admin/login" />
               <Route element={<MechanicLoginPage />} path="/mechanic/login" />
               <Route element={<MechanicSignupPage />} path="/mechanic/signup" />
-              <Route element={<MechanicSignupPage2 />} path="/mechanic/signup/next" />
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<HomePage />} path="/" />
               <Route element={<ForgotPasswordPage/>} path={'/forgotPassword'}/>
@@ -56,6 +54,8 @@ function App() {
               <Route element={<HomePage />} path="/" />
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<ProfilePage />} path="/user/profile" />
+              <Route element={<MechanicLoginPage />} path="/mechanic/login" />
+              <Route element={<MechanicSignupPage />} path="/mechanic/signup" />
             </>
           )}
         </Routes>

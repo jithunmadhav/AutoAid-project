@@ -1,44 +1,53 @@
+
 import React, { useState } from 'react';
-import { AddressAutofill } from '@mapbox/search-js-react';
+import axios from 'axios';
 
-function PlaceAPI() {
-  const [value, setValue] = useState('');
+const PlaceAPI = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
 
-  const handleSuggestionSelected = (suggestion) => {
-    setValue(suggestion.place_name);
+  const handleSearchChange = (e) => {
+    const { value } = e.target;
+    setSearchValue(value);
+    fetchSuggestions(value);
   };
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
+  const fetchSuggestions = async (value) => {
+    try {
+      const response = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(value)}.json?access_token=pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw`
+      );
+      const suggestions = response.data.features.map((feature) => feature.place_name);
+      setSuggestions(suggestions);
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchValue(suggestion);
+    setSuggestions([]);
   };
 
   return (
-    <form>
-      <AddressAutofill
-        accessToken="pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw"
-        onSuggestionSelected={handleSuggestionSelected}
-      >
-        {({ getInputProps, suggestions, loading }) => (
-          <div>
-            <input
-              {...getInputProps({
-                placeholder: 'City',
-                name: 'city',
-                type: 'text',
-                autoComplete: 'address-level2',
-                value: value,
-                onChange: handleChange,
-              })}
-            />
-            {loading && <div>Loading...</div>}
-            {suggestions.map((suggestion) => (
-              <div key={suggestion.place_name}>{suggestion.place_name}</div>
-            ))}
+    <div>
+      <div>
+        <input
+          type="text"
+          placeholder="Search"
+          value={searchValue}
+          onChange={handleSearchChange}
+        />
+      </div>
+      <div>
+        {suggestions.map((suggestion) => (
+          <div key={suggestion} onClick={() => handleSuggestionClick(suggestion)}>
+            {suggestion.substring(0, 20)}
           </div>
-        )}
-      </AddressAutofill>
-    </form>
+        ))}
+      </div>
+    </div>
   );
-}
+};
 
 export default PlaceAPI;
