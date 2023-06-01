@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import UserLoginPage from './Pages/UserLoginPage';
 import UserSignupPage from './Pages/UserSignupPage';
 import MechanicLoginPage from './Pages/MechanicLoginPage';
@@ -18,7 +18,7 @@ import MechanicProfilePage from './Pages/MechanicProfilePage';
 import AdminDashboardPage from './Pages/AdminDashboardPage';
 
 function App() {
-  const { user, refresh, mechanic } = useSelector((state) => state);
+  const { user, refresh, mechanic,admin } = useSelector((state) => state);
   axios.defaults.withCredentials = true;
   const dispatch = useDispatch();
 
@@ -42,14 +42,30 @@ function App() {
     <div>
       <Router>
         <Routes>
+        {
+            admin.adminLog===false && (
+              <>
+              <Route element={<Navigate to={'/admin/login'} />} path={'/admin/dashboard'}/>
+              <Route element={<AdminLoginPage />} path="/admin/login" />
+              </>
+            )
+          }
+          {
+            admin.adminLog && (
+              <>
+              <Route element={<Navigate to={'/admin/dashboard'} />} path="/admin/login" />
+              <Route element={<AdminDashboardPage/>} path={'/admin/dashboard'}/>
+              </>
+            )
+          }
           {user.login === false && (
             <>
               <Route element={<UserLoginPage />} path="/user/login" />
               <Route element={<UserSignupPage />} path="/user/signup" />
-              <Route element={<AdminLoginPage />} path="/admin/login" />
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<HomePage />} path="/" />
-              <Route element={<ForgotPasswordPage />} path="/forgotPassword" />
+              <Route element={<ForgotPasswordPage />} path={"/forgotPassword"}/>
+              
             </>
           )}
 
@@ -58,7 +74,6 @@ function App() {
               <Route element={<HomePage />} path="/" />
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<ProfilePage />} path="/user/profile" />
-              <Route element={<AdminDashboardPage/>} path={'/admin/dashboard'}/>
             </>
           )}
 

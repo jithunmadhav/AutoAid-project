@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import  './AdminLogin.css'
 import axios from '../../axios'
+import { useNavigate } from 'react-router-dom'
 function AdminLogin() {
+  const navigate= useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [err, setErr] = useState('')
@@ -10,6 +12,11 @@ function AdminLogin() {
     if(email.trim() && password.trim()){
       axios.post('/admin/login',{email,password}).then((response)=>{
         console.log(response.data);
+        if(!response.data.err){
+        return navigate('/admin/dashboard')
+        }else{
+          setErr(response.data.message)
+        }
       })
     }else{
       setErr('All fields are required')
