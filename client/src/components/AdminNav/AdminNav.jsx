@@ -48,10 +48,10 @@ function AdminNav() {
         >
           <Box sx={{ padding: '10px', display: showLinks ? 'block' : 'none' }}>
             <Button color="inherit" sx={{ display: 'block', my: 1 }}>
-              <Link style={{ textDecoration:'none',color:'white' }} to={'/'}>DASHBOARD</Link>
+              <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/dashboard'}>DASHBOARD</Link>
             </Button>
             <Button color="inherit" sx={{ display: 'block', my: 1 }}>
-              <Link style={{ textDecoration:'none',color:'white' }} to={'/'}>USER MANAGEMENT</Link>
+              <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/userMangement'}>USER MANAGEMENT</Link>
             </Button>
             <Button color="inherit" sx={{ display: 'block', my: 1 }}>
               <Link style={{ textDecoration:'none',color:'white' }} to={'/'}>MECHANICS MANAGEMENT</Link>

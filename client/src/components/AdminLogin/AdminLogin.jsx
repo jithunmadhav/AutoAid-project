@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import  './AdminLogin.css'
 import axios from '../../axios'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 function AdminLogin() {
   const navigate= useNavigate()
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [err, setErr] = useState('')
@@ -13,6 +15,7 @@ function AdminLogin() {
       axios.post('/admin/login',{email,password}).then((response)=>{
         console.log(response.data);
         if(!response.data.err){
+          dispatch({type:'refresh'})
         return navigate('/admin/dashboard')
         }else{
           setErr(response.data.message)
