@@ -18,6 +18,8 @@ function MechanicLogin() {
         if(!response.data.err){
           dispatch({type:'refresh'})
           navigate("/mechanic/dashboard")
+        }else{
+          seterr(response.data.message)
         }
       }).catch(error=>{
         console.log(error);

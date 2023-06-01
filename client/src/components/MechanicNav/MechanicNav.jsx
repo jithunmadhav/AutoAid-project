@@ -17,7 +17,7 @@ function MechanicNav() {
         };
       
   return (
-    <nav className="navbar navBG navbar-expand-lg navbar-light bg-light" style={{position:'fixed',width:'100%', zIndex:'10'}}>
+    <nav className="navbar navBG navbar-expand-lg navbar-light bg-light" style={{position:'fixed',width:'100%', zIndex:'10',marginTop:'-1px'}}>
             {/* <img src="/images/autoaid.png" alt="" /> */}
             <h1 className='LogoName'>AUTO AID</h1>
         <div className="container">

@@ -65,7 +65,7 @@ function MechanicDashboard() {
   return (
    <>
   <div className='dashboard-background'>
-    <div className='first-div'>
+ 
     <div className='cards-mechanics'>
         {cardData.map((card, index) => (
           <Card key={index} sx={{ maxWidth: 345 }} style={{ borderRadius:'15px' ,width:'280px'}}>
@@ -113,7 +113,7 @@ function MechanicDashboard() {
     </TableContainer>
         </div>
     </div>
-  </div>
+ 
    </>
   )
 }

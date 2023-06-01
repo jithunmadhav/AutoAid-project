@@ -45,7 +45,7 @@ import { randomNumber } from '../helper/randomNum.js'
 
 export const mechanicSignup1=async(req,res)=>{
     try {
-        let {email,mobile,password,confirmPassword}=req.body;
+        let {email,mobile}=req.body;
         const oldUser=await mechanicModel.findOne({email})
         if(oldUser){
             res.json({err:true,message:'mechanic already exsist'})
@@ -115,7 +115,7 @@ export const verifyMechanicSignup=async(req,res)=>{
             id:user._id
         },
         "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");    
-        return res.cookie("userToken", mechanicToken, {
+        return res.cookie("mechanicSignupToken", mechanicToken, {
             httpOnly: true,
             secure: true,
             maxAge: 1000 * 60 * 60 * 24 * 7,
@@ -179,3 +179,21 @@ export const mechanicLogin=async(req,res)=>{
             res.json({err:true,message:'something went wrong'})
         })
     }
+    export const mechanicLogout = (req, res) => {
+        console.log("sdfds");
+        return res
+          .cookie('mechanictoken', '', {
+            httpOnly: true,
+            secure: true,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+            sameSite: 'none',
+          })
+          .cookie('mechanicSignupToken', '', {
+            httpOnly: true,
+            secure: true,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+            sameSite: 'none',
+          })
+          .json({ err: false, message: 'Logged out successfully' });
+      };
+      

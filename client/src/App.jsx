@@ -14,6 +14,7 @@ import ProfilePage from './Pages/ProfilePage';
 import ForgotPasswordPage from './Pages/ForgotPasswordPage';
 import ForgotMechanicPage from './Pages/ForgotMechanicPage';
 import MechanicDashboardPage from './Pages/MechanicDashboardPage';
+import MechanicProfilePage from './Pages/MechanicProfilePage';
 
 function App() {
   const { user, refresh, mechanic } = useSelector((state) => state);
@@ -62,6 +63,7 @@ function App() {
           {mechanic.mechLog && (
             <>
               <Route element={<MechanicDashboardPage />} path="/mechanic/dashboard" />
+              <Route element={<MechanicProfilePage/>} path={'/mechanic/profile'} />
             </>
           )}
 
