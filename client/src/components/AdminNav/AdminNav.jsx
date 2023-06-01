@@ -17,7 +17,7 @@ function AdminNav() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar  position="static" sx={{ backgroundColor: 'black',minHeight:'70px' }}>
+      <AppBar  position="static" sx={{ backgroundColor: 'black',minHeight:'70px' }} style={{ position:'fixed' ,marginTop:'-150px' }}>
         <Toolbar>
           <Typography variant="h6" component="div" style={{ fontFamily:'monospace' }}>
             AUTO AID
