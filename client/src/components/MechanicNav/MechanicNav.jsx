@@ -50,7 +50,7 @@ function MechanicNav() {
                 </Link>
               </li>
               <li className="nav-item">
-                {user.login ?(<Link className="nav-link" to="/user/profile" onClick={closeNavbar}>
+                {user.login ?(<Link className="nav-link" to="/mechanic/profile" onClick={closeNavbar}>
                   {user.details[0].name}
                 </Link>)
                 :(<Link className="nav-link" to="/mechanic/profile" onClick={closeNavbar}>

@@ -16,24 +16,26 @@ import ForgotMechanicPage from './Pages/ForgotMechanicPage';
 import MechanicDashboardPage from './Pages/MechanicDashboardPage';
 
 function App() {
-  const { user, refresh } = useSelector((state) => {
-    return state;
-  });
+  const { user, refresh, mechanic } = useSelector((state) => state);
   axios.defaults.withCredentials = true;
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     axios.get('/admin/auth').then((response) => {
-      console.log("ADMIN : ", response.data);
+      console.log("ADMIN: ", response.data);
       dispatch({ type: 'admin', payload: { adminLog: response.data.logged, details: response.data.details } });
     });
-    
+
     axios.get('/user/auth/').then((response) => {
-      console.log("USER :", response.data);
+      console.log("USER:", response.data);
       dispatch({ type: 'user', payload: { login: response.data.logged, details: response.data.details } });
     });
-  }, [refresh,dispatch]);
 
+    axios.get('/mechanic/auth').then((response) => {
+      console.log("MECHANICS:", response.data);
+      dispatch({ type: 'mechanic', payload: { mechLog: response.data.logged, details: response.data.details } });
+    });
+  }, [refresh, dispatch]);
   return (
     <div>
       <Router>
@@ -43,23 +45,31 @@ function App() {
               <Route element={<UserLoginPage />} path="/user/login" />
               <Route element={<UserSignupPage />} path="/user/signup" />
               <Route element={<AdminLoginPage />} path="/admin/login" />
-              <Route element={<MechanicLoginPage />} path="/mechanic/login" />
-              <Route element={<MechanicSignupPage />} path="/mechanic/signup" />
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<HomePage />} path="/" />
-              <Route element={<ForgotPasswordPage/>} path={'/forgotPassword'}/>
-              <Route element={<ForgotMechanicPage/>} path={'/forgotMechanicPassword'}/>
-              <Route element={<MechanicDashboardPage/>} path={'/mechanic/dashboard'} />
+              <Route element={<ForgotPasswordPage />} path="/forgotPassword" />
             </>
           )}
 
-          {user.login === true && (
+          {user.login && (
             <>
               <Route element={<HomePage />} path="/" />
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<ProfilePage />} path="/user/profile" />
+            </>
+          )}
+
+          {mechanic.mechLog && (
+            <>
+              <Route element={<MechanicDashboardPage />} path="/mechanic/dashboard" />
+            </>
+          )}
+
+          {!mechanic.mechLog && (
+            <>
               <Route element={<MechanicLoginPage />} path="/mechanic/login" />
               <Route element={<MechanicSignupPage />} path="/mechanic/signup" />
+              <Route element={<ForgotMechanicPage />} path="/forgotMechanicPassword" />
             </>
           )}
         </Routes>

@@ -4,8 +4,8 @@
 }
 .first-div{
     position: absolute;
-    top: 52%;
-    left: 58%;
+    top: 53%;
+    left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
     width: 1400px;
