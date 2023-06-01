@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Slide from '@mui/material/Slide';
+import { Link } from 'react-router-dom';
 
 function AdminNav() {
   const [showLinks, setShowLinks] = React.useState(false);
@@ -47,13 +48,13 @@ function AdminNav() {
         >
           <Box sx={{ padding: '10px', display: showLinks ? 'block' : 'none' }}>
             <Button color="inherit" sx={{ display: 'block', my: 1 }}>
-              Link 1
+              <Link style={{ textDecoration:'none',color:'white' }} to={'/'}>DASHBOARD</Link>
             </Button>
             <Button color="inherit" sx={{ display: 'block', my: 1 }}>
-              Link 2
+              <Link style={{ textDecoration:'none',color:'white' }} to={'/'}>USER MANAGEMENT</Link>
             </Button>
             <Button color="inherit" sx={{ display: 'block', my: 1 }}>
-              Link 3
+              <Link style={{ textDecoration:'none',color:'white' }} to={'/'}>MECHANICS MANAGEMENT</Link>
             </Button>
           </Box>
         </Slide>
