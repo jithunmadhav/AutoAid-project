@@ -18,7 +18,7 @@ function AdminNav() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar  position="static" sx={{ backgroundColor: 'black',minHeight:'70px' }} style={{ position:'fixed' ,marginTop:'-150px' }}>
+      <AppBar  position="static" sx={{ backgroundColor: 'black',minHeight:'70px' }} >
         <Toolbar>
           <Typography variant="h6" component="div" style={{ fontFamily:'monospace' }}>
             AUTO AID
@@ -51,7 +51,7 @@ function AdminNav() {
               <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/dashboard'}>DASHBOARD</Link>
             </Button>
             <Button color="inherit" sx={{ display: 'block', my: 1 }}>
-              <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/userMangement'}>USER MANAGEMENT</Link>
+              <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/usermanagement'}>USER MANAGEMENT</Link>
             </Button>
             <Button color="inherit" sx={{ display: 'block', my: 1 }}>
               <Link style={{ textDecoration:'none',color:'white' }} to={'/'}>MECHANICS MANAGEMENT</Link>

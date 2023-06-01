@@ -48,7 +48,7 @@ function App() {
               <>
               <Route element={<AdminLoginPage />} path="/admin/login" />
               <Route element={<Navigate to={'/admin/login'} />} path={'/admin/dashboard'}/>
-              <Route element={<Navigate to={'/admin/login'} />} path={'admin/userManagement'} />
+              <Route element={<Navigate to={'/admin/login'} />} path={'admin/usermanagement'} />
               </>
             )
           }
@@ -57,7 +57,7 @@ function App() {
               <>
               <Route element={<Navigate to={'/admin/dashboard'} />} path="/admin/login" />
               <Route element={<AdminDashboardPage/>} path={'/admin/dashboard'}/>
-              <Route element={<UserManagementPage/>} path={'/admin/userManagement'} />
+              <Route element={<UserManagementPage/>} path={'/admin/usermanagement'} />
               </>
             )
           }
