@@ -13,6 +13,7 @@ import HomePage from './Pages/HomePage';
 import ProfilePage from './Pages/ProfilePage';
 import ForgotPasswordPage from './Pages/ForgotPasswordPage';
 import ForgotMechanicPage from './Pages/ForgotMechanicPage';
+import MechanicDashboardPage from './Pages/MechanicDashboardPage';
 
 function App() {
   const { user, refresh } = useSelector((state) => {
@@ -48,6 +49,7 @@ function App() {
               <Route element={<HomePage />} path="/" />
               <Route element={<ForgotPasswordPage/>} path={'/forgotPassword'}/>
               <Route element={<ForgotMechanicPage/>} path={'/forgotMechanicPassword'}/>
+              <Route element={<MechanicDashboardPage/>} path={'/mechanic/dashboard'} />
             </>
           )}
 
