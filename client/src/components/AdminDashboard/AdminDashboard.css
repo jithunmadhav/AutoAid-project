@@ -1,0 +1,12 @@
+.chart{
+    margin-top: 0px;
+}
+.cards-admin{
+    display: flex;
+    justify-content: space-around;
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-top: 70px;
+    border-radius: 30px;
+    margin-bottom: 150px;
+  }

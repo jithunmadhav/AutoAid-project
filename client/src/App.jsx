@@ -15,6 +15,7 @@ import ForgotPasswordPage from './Pages/ForgotPasswordPage';
 import ForgotMechanicPage from './Pages/ForgotMechanicPage';
 import MechanicDashboardPage from './Pages/MechanicDashboardPage';
 import MechanicProfilePage from './Pages/MechanicProfilePage';
+import AdminDashboardPage from './Pages/AdminDashboardPage';
 
 function App() {
   const { user, refresh, mechanic } = useSelector((state) => state);
@@ -57,6 +58,7 @@ function App() {
               <Route element={<HomePage />} path="/" />
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<ProfilePage />} path="/user/profile" />
+              <Route element={<AdminDashboardPage/>} path={'/admin/dashboard'}/>
             </>
           )}
 

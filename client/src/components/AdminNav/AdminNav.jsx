@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Slide from '@mui/material/Slide';
 
-export default function ButtonAppBar() {
+function AdminNav() {
   const [showLinks, setShowLinks] = React.useState(false);
 
   const handleMenuClick = () => {
@@ -61,3 +61,5 @@ export default function ButtonAppBar() {
     </Box>
   );
 }
+
+export default AdminNav
