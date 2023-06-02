@@ -9,7 +9,7 @@ router.get('/AllMechanics',getMechanic)
 router.get('/applied',appliedMechanics)
 router.get('/approve/:id',approveApplication)
 router.get('/reject/:id',rejectApplication)
-router.get('/allUsers',getAllUsers)
+router.get('/users',getAllUsers)
 
 
 export default router
