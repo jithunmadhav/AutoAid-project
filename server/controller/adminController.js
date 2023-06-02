@@ -3,6 +3,7 @@ import mechanicModel from '../model/mechanicModel.js';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import {approvedMail, rejectMail} from '../helper/mail.js' 
+import userModel from '../model/userModel.js'
    export const  adminLogin=async(req,res)=>{
         try {
             let {email,password}=req.body;
@@ -61,9 +62,23 @@ import {approvedMail, rejectMail} from '../helper/mail.js'
            if(result){
             rejectMail(result.email,result.name)
                res.json({err:false,result})
+           }else{
+            res.json({err:true,message:'something went wrong'})
            }
         } catch (error) {
             console.log(error);
         }
     }
-      
+    export const getAllUsers=async(req,res)=>{
+     try {
+        let result = await userModel.find().lean()
+        if(result){
+            res.json({err:false,result})
+        }else{
+            res.json({err:true,message:'something went wrong'})
+        }
+            
+     } catch (error) {
+        console.log(error);
+     }
+    }
