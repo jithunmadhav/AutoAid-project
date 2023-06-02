@@ -9,6 +9,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import axios from '../../axios';
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Typography from '@mui/material/Typography';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,25 +35,26 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 function UserManagement() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [result, setResult] = useState([])
   useEffect(() => {
    axios.get('/admin/users').then((response)=>{
-    console.log("-------------------------",response.data);
     setResult(response.data.result)
    })
   }, [])
-
-    // function createData(name, calories, fat, carbs, protein) {
-    //     return { name, calories, fat, carbs, protein };
-    //   }
-    //   const rows = [
-    //     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    //     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    //     createData('Eclair', 262, 16.0, 24, 6.0),
-    //     createData('Cupcake', 305, 3.7, 67, 4.3),
-    //     createData('Gingerbread', 356, 16.0, 49, 3.9),
-    //   ];
-    console.log("********",result);
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
   return (
     <div>
 
@@ -71,12 +77,36 @@ function UserManagement() {
               </StyledTableCell>
               <StyledTableCell align="center">{row.email}</StyledTableCell>
               <StyledTableCell align="center">{row.mobile}</StyledTableCell>
-              <StyledTableCell align="center"><Button>Ban</Button></StyledTableCell>
+              <StyledTableCell align="center"><Button onClick={handleOpen} variant="outlined" color="error"> Ban</Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={open}>
+          <Box sx={style}>
+            <Typography id="transition-modal-title" variant="h6" component="h2">
+              Text in a modal
+            </Typography>
+            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </Typography>
+          </Box>
+        </Fade>
+      </Modal>
         </div>
     </div>
   )
