@@ -32,14 +32,7 @@ import { response } from 'express';
           }     
         
     }
-   export const getMechanic=async(req,res)=>{
-        try {
-            let result=await mechanicModel.find()
-            res.json({err:false,result})
-        } catch (error) {
-            console.log(error);
-        }
-    }
+
    export const appliedMechanics=async(req,res)=>{
         try {
             let result=await mechanicModel.find({applicationStatus:'applied'})
@@ -114,3 +107,48 @@ import { response } from 'express';
             res.json({err:true,err,message:"something went wrong"})
         })
     }
+    export const allMechanics=async(req,res)=>{
+        try {
+           let result = await mechanicModel.find({ban:false}).lean()
+           if(result){
+               res.json({err:false,result})
+            }else{
+                res.json({err:true,message:'something went wrong'})
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+    export const banMechanic=async(req,res)=>{
+        const {id} = req.body
+        await mechanicModel.updateOne({_id:id},{$set:{ban:true}}).then((result)=>{
+            res.json({err:false,result})
+        }).catch((err)=>{
+            res.json({err:true,err,message:"something went wrong"})
+        })
+    }
+    export const bannedMechanics=async(req,res)=>{
+        try {
+            let result = await mechanicModel.find({ban:true}).lean()
+            console.log(result);
+              if(result){
+                  res.json({err:false,result})
+              }else{
+                  res.json({err:true,message:'something went wrong'})
+              }
+                  
+           } catch (error) {
+              console.log(error);
+           }
+          }
+   
+       export const unbanMechanic=async(req,res)=>{
+           const {id} = req.body
+           await mechanicModel.updateOne({_id:id},{$set:{ban:false}}).then((result)=>{
+               res.json({err:false,result})
+           }).catch((err)=>{
+               res.json({err:true,err,message:"something went wrong"})
+           })
+       }

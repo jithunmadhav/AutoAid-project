@@ -30,6 +30,18 @@ const mechanicSchema=mongoose.Schema({
     applicationStatus:{
         type:String,
         default:'applied'
+    },
+    ban:{
+        type:Boolean,
+        default:false
+    },
+    review:{
+        type:Array,
+        default:[]
+    },
+    rating:{
+        type:Array,
+        default:[]
     }
     
     

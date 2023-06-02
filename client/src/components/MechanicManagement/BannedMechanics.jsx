@@ -45,7 +45,7 @@ function BannedMechanics() {
   const [result, setResult] = useState([]);
 
   const handleunBan = (id) => {
-    axios.post('/admin/unbanuser', { id }).then((response) => {
+    axios.post('/admin/unbanmechanic', { id }).then((response) => {
       if (!response.data.err) {
         setOpen(false);
       } else {
@@ -55,7 +55,7 @@ function BannedMechanics() {
   };
 
   useEffect(() => {
-    axios.get('/admin/bannedusers').then((response) => {
+    axios.get('/admin/bannedmechnics').then((response) => {
       setResult(response.data.result);
     });
   }, [open]);
@@ -85,7 +85,7 @@ function BannedMechanics() {
         <div className="table-div">
           {result.length === 0 ? (
             <Typography variant="h5" component="div" align="center" sx={{ mt: 4 }}>
-              No banned users
+              No banned mechanics
             </Typography>
           ) : (
             <TableContainer component={Paper}>

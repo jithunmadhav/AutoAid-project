@@ -46,7 +46,7 @@ function MechanicManagement() {
   const [result, setResult] = useState([]);
 
   const handleBan = (id) => {
-    axios.post('/admin/banuser', { id }).then((response) => {
+    axios.post('/admin/banmechanic', { id }).then((response) => {
       if (!response.data.err) {
         setOpen(false);
       } else {
@@ -56,7 +56,7 @@ function MechanicManagement() {
   };
 
   useEffect(() => {
-    axios.get('/admin/users').then((response) => {
+    axios.get('/admin/mechanics').then((response) => {
       setResult(response.data.result);
     });
   }, [open]);
