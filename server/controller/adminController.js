@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import {approvedMail, rejectMail} from '../helper/mail.js' 
 import userModel from '../model/userModel.js'
+import { response } from 'express';
    export const  adminLogin=async(req,res)=>{
         try {
             let {email,password}=req.body;
@@ -71,7 +72,7 @@ import userModel from '../model/userModel.js'
     }
     export const getAllUsers=async(req,res)=>{
      try {
-        let result = await userModel.find().lean()
+        let result = await userModel.find({ban:false}).lean()
         if(result){
             res.json({err:false,result})
         }else{
@@ -81,4 +82,13 @@ import userModel from '../model/userModel.js'
      } catch (error) {
         console.log(error);
      }
+    }
+
+    export const banUser=async(req,res)=>{
+        const {id} = req.body
+        await userModel.updateOne({_id:id},{$set:{ban:true}}).then((result)=>{
+            res.json({err:false,result})
+        }).catch((err)=>{
+            res.json({err:true,err,message:"something went wrong"})
+        })
     }

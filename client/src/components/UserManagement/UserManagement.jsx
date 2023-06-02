@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
+import { useDispatch } from 'react-redux';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,6 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 function UserManagement() {
+  const dispatch = useDispatch()
   const handleCancel=()=>setOpen(false)
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -44,6 +46,7 @@ function UserManagement() {
     axios.post('/admin/banuser',{id}).then((response)=>{
       if(!response.data.err){
         console.log("successfull");
+        setOpen(false)
       }else{
         console.log(response.data.message);
       }
@@ -53,7 +56,7 @@ function UserManagement() {
    axios.get('/admin/users').then((response)=>{
     setResult(response.data.result)
    })
-  }, [])
+  }, [open])
   const style = {
     position: 'absolute',
     top: '50%',
