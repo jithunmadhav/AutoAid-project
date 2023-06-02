@@ -1,5 +1,6 @@
 
 import  express  from 'express' 
+import path from 'path'
 import { dbconnect } from './config.js'
 import userRoute from './routes/userRoute.js'
 import mechanicRoute from './routes/mechanicRoute.js'
@@ -10,6 +11,7 @@ import cookieparser from 'cookie-parser'
 const app=express()
 dbconnect();
 app.use( cors({ origin: ["http://localhost:3000", ], credentials: true, }));
+app.use(express.static(path.resolve()+"/public"))
 app.use(express.json());
 app.use(cookieparser())
 app.use(express.urlencoded({ extended: true }));

@@ -16,7 +16,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import BannedMechanics from './BannedMechanics';
-import { Link } from 'react-router-dom';
+import MechanicDetails from './MechanicDetails';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,11 +40,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function MechanicManagement() {
   const [showBannedusers, setshowBannedusers] = useState(false);
+  const [viewDetials, setviewDetials] = useState(false)
   const handleCancel = () => setOpen(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [result, setResult] = useState([]);
+  const [details, setdetails] = useState([])
 
   const handleBan = (id) => {
     axios.post('/admin/banmechanic', { id }).then((response) => {
@@ -75,7 +77,11 @@ function MechanicManagement() {
   };
 
   return (
-    !showBannedusers ? (
+    showBannedusers ?   (
+      <BannedMechanics /> 
+    ) : viewDetials ? (<MechanicDetails data={{details}} />)
+
+    :(
       <div>
         <Button
           style={{ position: 'absolute', right: '101px', top: '105px' }}
@@ -123,7 +129,7 @@ function MechanicManagement() {
                       </Button>
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                     <Link>View Details</Link>
+                     <Button onClick={()=>{setviewDetials(true); setdetails(row);}}>view details</Button>
                     </StyledTableCell>
                     <Modal
                       aria-labelledby="transition-modal-title"
@@ -169,8 +175,6 @@ function MechanicManagement() {
           </TableContainer>
         </div>
       </div>
-    ) : (
-      <BannedMechanics />
     )
   );
 }

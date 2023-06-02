@@ -13,7 +13,6 @@ router.get('/reject/:id',rejectApplication)
 router.get('/users',getAllUsers).get('/bannedusers',bannedUsers)
 router.post('/banuser',banUser).post('/unbanuser',unBanUser)
 
-
 export default router
 
 

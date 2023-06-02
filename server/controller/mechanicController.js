@@ -3,44 +3,9 @@ import bcrypt from 'bcrypt'
 import jwt  from 'jsonwebtoken'
 import { sentOTP, signupMail } from '../helper/mail.js'
 import { randomNumber } from '../helper/randomNum.js'
+import convertPDFToImages from 'pdf-img-convert'
 
 
-// export const mechanicSignup=async(req,res)=>{
-//     try {
-//         let {name,email,mobile,experience,location,password,confirmpassword}=req.body
-//         let oldAccount=await mechanicModel.findOne({email:email})
-//         if(oldAccount){
-//             res.json({err:true,message:'Account already excist'})
-//         }else{
-//             if(password==confirmpassword){
-//                 let bcrypPassword=await bcrypt.hash(password,10)
-//                 let account= await mechanicModel.create({
-//                     name,
-//                     email,
-//                     mobile,
-//                     experience,
-//                     location,
-//                     password:bcrypPassword
-//                 });
-//                 signupMail(email,name)
-//                 const token=jwt.sign({
-//                     id:account._id
-//                 },
-//                 "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
-//                 return res.cookie("token", token, {
-//                     httpOnly: true,
-//                     secure: true,
-//                     maxAge: 1000 * 60 * 60 * 24 * 7,
-//                     sameSite: "none",
-//                 }).json({ err: false ,message:'mechanic registration success'});
-//             }else{
-//                 res.json({err:true,message:'Entered password are not same'})
-//             }
-//         }
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 
 
 export const mechanicSignup1=async(req,res)=>{
@@ -96,6 +61,22 @@ export const mechanicSignup2=async(req,res)=>{
 export const verifyMechanicSignup=async(req,res)=>{
     const {name,email,mobile,password,searchValue,experience}=req.body
     let otp=req.body.OTP;
+
+    const { path } = req.file;
+
+    // Convert the PDF to images
+    const imagePaths = await convertPDFToImages(path);
+
+    // Read the converted images as base64
+    const imageBase64 = [];
+    for (const imagePath of imagePaths) {
+      const image = fs.readFileSync(imagePath, "base64");
+      imageBase64.push(`data:image/png;base64,${image}`);
+    }
+
+    // Respond with the image paths or base64 data
+    res.json({ imagePaths, imageBase64 });
+
     let mechanicToken=req.cookies.mechanicSignupToken;
      const OtpToken = jwt.verify(mechanicToken,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa')
     let bcrypPassword=await bcrypt.hash(password,10)

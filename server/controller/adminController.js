@@ -4,7 +4,11 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import {approvedMail, rejectMail} from '../helper/mail.js' 
 import userModel from '../model/userModel.js'
-import { response } from 'express';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import fs from 'fs';
+import PDFImage from 'pdf-image';
+
    export const  adminLogin=async(req,res)=>{
         try {
             let {email,password}=req.body;
@@ -152,3 +156,5 @@ import { response } from 'express';
                res.json({err:true,err,message:"something went wrong"})
            })
        }
+
+      
