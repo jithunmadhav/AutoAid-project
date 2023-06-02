@@ -19,6 +19,18 @@ const userSchema=mongoose.Schema({
     },
     confirmpassword:{
         type:String
+    },
+    ban:{
+        type:Boolean,
+        default:false
+    },
+    address:{
+        type:Array,
+        default:[]
+    },
+    vehicle:{
+        type:Array,
+        default:[]
     }
     
     

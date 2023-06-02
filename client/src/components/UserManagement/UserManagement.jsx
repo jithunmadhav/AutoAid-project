@@ -35,10 +35,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 function UserManagement() {
+  const handleCancel=()=>setOpen(false)
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [result, setResult] = useState([])
+  const handleBan=(id)=>{
+    axios.post('/admin/banuser',{id}).then((response)=>{
+      if(!response.data.err){
+        console.log("successfull");
+      }else{
+        console.log(response.data.message);
+      }
+    })
+  }
   useEffect(() => {
    axios.get('/admin/users').then((response)=>{
     setResult(response.data.result)
@@ -51,10 +61,11 @@ function UserManagement() {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    borderRadius: 2,
     boxShadow: 24,
     p: 4,
   };
+  
   return (
     <div>
 
@@ -78,11 +89,6 @@ function UserManagement() {
               <StyledTableCell align="center">{row.email}</StyledTableCell>
               <StyledTableCell align="center">{row.mobile}</StyledTableCell>
               <StyledTableCell align="center"><Button onClick={handleOpen} variant="outlined" color="error"> Ban</Button></StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
     <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -98,15 +104,23 @@ function UserManagement() {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
+            <Typography style={{ textAlign:'center',fontFamily:'monospace',fontSize:'25px',fontWeight:'bolder' }} id="transition-modal-title" variant="h6" component="h6">
+              Are you sure to ban ?
             </Typography>
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              <div style={{ display:'flex',justifyContent:'space-around' }}>
+            <Button variant="outlined" onClick={handleCancel} > Cancel</Button>
+            <Button variant="outlined" onClick={()=>handleBan(row._id)} color="error"> Confirm</Button>
+              </div>
             </Typography>
           </Box>
         </Fade>
       </Modal>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
         </div>
     </div>
   )
