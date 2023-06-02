@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -14,7 +15,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
-import BannedUser from './BannedUsers';
+import BannedMechanics from './BannedMechanics';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,7 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function UserManagement() {
+function MechanicManagement() {
   const [showBannedusers, setshowBannedusers] = useState(false);
   const handleCancel = () => setOpen(false);
   const [open, setOpen] = useState(false);
@@ -80,7 +81,7 @@ function UserManagement() {
           onClick={() => setshowBannedusers(true)}
           variant="outlined"
         >
-          Banned users
+          Banned Mechanics
         </Button>
 
         <div className="table-div">
@@ -160,9 +161,9 @@ function UserManagement() {
         </div>
       </div>
     ) : (
-      <BannedUser />
+      <BannedMechanics />
     )
   );
 }
 
-export default UserManagement;
+export default MechanicManagement;

@@ -54,7 +54,7 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 {user.login ?(<Link className="nav-link" to="/user/profile" onClick={closeNavbar}>
-                  {user.details[0].name}
+                  {user.details.name}
                 </Link>)
                 :(<Link className="nav-link" to="/user/login" onClick={closeNavbar}>
                   Login / signup

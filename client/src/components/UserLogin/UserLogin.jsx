@@ -21,7 +21,7 @@ function UserLogin() {
           dispatch({type:'refresh'})        
          return navigate('/');
         } else {
-          console.log(response.data.message);
+          seterr(response.data.message)
         }
       } catch (error) {
         console.log(error);

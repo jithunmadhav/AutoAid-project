@@ -44,7 +44,7 @@ function AdminNav() {
           in={showLinks}
           mountOnEnter
           unmountOnExit
-          timeout={{ enter: 300, exit: 0 }} // Adjust animation duration as needed
+          timeout={{ enter: 300, exit: 100 }} // Adjust animation duration as needed
         >
           <Box sx={{ padding: '10px', display: showLinks ? 'block' : 'none' }}>
             <Button color="inherit" sx={{ display: 'block', my: 1 }}>
@@ -54,7 +54,7 @@ function AdminNav() {
               <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/usermanagement'}>USER MANAGEMENT</Link>
             </Button>
             <Button color="inherit" sx={{ display: 'block', my: 1 }}>
-              <Link style={{ textDecoration:'none',color:'white' }} to={'/'}>MECHANICS MANAGEMENT</Link>
+              <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/mechanicmanagement'}>MECHANICS MANAGEMENT</Link>
             </Button>
           </Box>
         </Slide>

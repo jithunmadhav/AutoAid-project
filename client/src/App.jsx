@@ -17,6 +17,7 @@ import MechanicDashboardPage from './Pages/MechanicDashboardPage';
 import MechanicProfilePage from './Pages/MechanicProfilePage';
 import AdminDashboardPage from './Pages/AdminDashboardPage';
 import UserManagementPage from './Pages/UserManagementPage';
+import MechanicManagement from './Pages/MechanicManagementPage';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -49,6 +50,7 @@ function App() {
               <Route element={<AdminLoginPage />} path="/admin/login" />
               <Route element={<Navigate to={'/admin/login'} />} path={'/admin/dashboard'}/>
               <Route element={<Navigate to={'/admin/login'} />} path={'admin/usermanagement'} />
+              <Route element={<Navigate to={'/admin/login'} />} path={'/admin/mechanicmanagement'} />
               </>
             )
           }
@@ -58,6 +60,7 @@ function App() {
               <Route element={<Navigate to={'/admin/dashboard'} />} path="/admin/login" />
               <Route element={<AdminDashboardPage/>} path={'/admin/dashboard'}/>
               <Route element={<UserManagementPage/>} path={'/admin/usermanagement'} />
+              <Route element={<MechanicManagement/>} path={'/admin/mechanicmanagement'} />
               </>
             )
           }
@@ -68,6 +71,7 @@ function App() {
               <Route element={<PlaceAPI />} path="/place" />
               <Route element={<HomePage />} path="/" />
               <Route element={<ForgotPasswordPage />} path={"/forgotPassword"}/>
+              <Route element={<Navigate to={'/user/login'} />} path="/user/profile" />
               
             </>
           )}

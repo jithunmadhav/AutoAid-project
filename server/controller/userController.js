@@ -91,33 +91,6 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
                 }).json({ err: false ,message:'Otp Resend successfull'});
     }
 
-    export const userLogin=async(req,res)=>{
-      try {
-        let {email,password}=req.body;
-        let user=await userModel.findOne({email:email})
-        if(user){
-            let status= await bcrypt.compare(password,user.password)
-            if(status){
-                const userToken=jwt.sign({
-                    id:user._id
-                },"00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
-                return res.cookie("userToken", userToken, {
-                    httpOnly: true,
-                    secure: true,
-                    maxAge: 1000 * 60 * 60 * 24 * 7,
-                    sameSite: "none",
-                }).json({ err: false ,message:'User login success',user}); 
-            }else{
-                res.json({err:true,message:"Invalid email or password"})
-            }
-        }else{
-            res.json({err:true,message:'No user found, please signup.'})
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
 
     export const forgotPassword=async(req,res)=>{
         const {email}=req.body
@@ -166,6 +139,39 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
             res.json({err:true,message:'something went wrong'})
         })
     }
+
+    export const userLogin=async(req,res)=>{
+        try {
+          let {email,password}=req.body;
+          let user=await userModel.findOne({email:email})
+          if(user ){
+            if(user.ban==false){
+                let status= await bcrypt.compare(password,user.password)
+                if(status){
+                    const userToken=jwt.sign({
+                        id:user._id
+                    },"00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+                    return res.cookie("userToken", userToken, {
+                        httpOnly: true,
+                        secure: true,
+                        maxAge: 1000 * 60 * 60 * 24 * 7,
+                        sameSite: "none",
+                    }).json({ err: false ,message:'User login success',user}); 
+                }else{
+                    res.json({err:true,message:"Invalid email or password"})
+                }
+            }else{
+                res.json({err:true,message:'User banned.'})
+            }
+          }else{
+              res.json({err:true,message:'No user found, please signup.'})
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+  
+  
     
     export const userLogout = (req, res) => {
         return res

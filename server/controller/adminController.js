@@ -92,3 +92,25 @@ import { response } from 'express';
             res.json({err:true,err,message:"something went wrong"})
         })
     }
+    export const bannedUsers=async(req,res)=>{
+        try {
+           let result = await userModel.find({ban:true}).lean()
+           if(result){
+               res.json({err:false,result})
+           }else{
+               res.json({err:true,message:'something went wrong'})
+           }
+               
+        } catch (error) {
+           console.log(error);
+        }
+       }
+
+    export const unBanUser=async(req,res)=>{
+        const {id} = req.body
+        await userModel.updateOne({_id:id},{$set:{ban:false}}).then((result)=>{
+            res.json({err:false,result})
+        }).catch((err)=>{
+            res.json({err:true,err,message:"something went wrong"})
+        })
+    }

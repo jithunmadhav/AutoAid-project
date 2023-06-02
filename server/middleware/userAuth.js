@@ -6,8 +6,12 @@ export const userCheckAuth=async(req,res)=>{
     if(token){
     const verifyJwt= jwt.verify(token,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa');
     let ID=verifyJwt.id;
-    const user=await userModel.find({_id:ID})
-    res.json({logged:true,details:user})
+    const user=await userModel.findOne({_id:ID})
+    if(user.ban==true){
+        res.json({logged:false,err:true,message:'user banned'})
+    }else{
+        res.json({logged:true,details:user})
+    }
     }else{
      res.json({logged:false,err:true,message:'No token'})
     }
