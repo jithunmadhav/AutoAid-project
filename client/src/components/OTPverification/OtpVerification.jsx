@@ -49,7 +49,9 @@ function OtpVerification(props) {
         }
       });
     }else if(props.data.reset==='mechanicsignup'){
-      axios.post('/mechanic/verifySignup', { OTP, ...props.data }).then((response) => {
+      axios.post('/mechanic/verifySignup', { OTP, ...props.data },{headers: {
+        'content-type': 'multipart/form-data'
+    }}).then((response) => {
         if (!response.data.err) {
           dispatch({ type: 'refresh' });
           navigate('/mechanic/login');

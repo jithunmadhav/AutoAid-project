@@ -16,6 +16,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import BannedMechanics from './BannedMechanics';
+import { Link } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -92,7 +93,9 @@ function MechanicManagement() {
                   <StyledTableCell>Name</StyledTableCell>
                   <StyledTableCell align="center">Email</StyledTableCell>
                   <StyledTableCell align="center">Mobile</StyledTableCell>
+                  <StyledTableCell align="center">App Status</StyledTableCell>
                   <StyledTableCell align="center">Action</StyledTableCell>
+                  <StyledTableCell align="center"></StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -108,6 +111,9 @@ function MechanicManagement() {
                       {row.mobile}
                     </StyledTableCell>
                     <StyledTableCell align="center">
+                      {row.applicationStatus }
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
                       <Button
                         onClick={handleOpen}
                         variant="outlined"
@@ -115,6 +121,9 @@ function MechanicManagement() {
                       >
                         Ban
                       </Button>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                     <Link>View Details</Link>
                     </StyledTableCell>
                     <Modal
                       aria-labelledby="transition-modal-title"

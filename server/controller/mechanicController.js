@@ -95,7 +95,6 @@ export const mechanicSignup2=async(req,res)=>{
 }
 export const verifyMechanicSignup=async(req,res)=>{
     const {name,email,mobile,password,searchValue,experience}=req.body
-    console.log(typeof(req.body.location));
     let otp=req.body.OTP;
     let mechanicToken=req.cookies.mechanicSignupToken;
      const OtpToken = jwt.verify(mechanicToken,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa')
@@ -108,7 +107,8 @@ export const verifyMechanicSignup=async(req,res)=>{
             mobile,
             password:bcrypPassword,
             searchValue,
-            experience
+            experience,
+            pdf:req.file
         });
         signupMail(email,name)
         const mechanicToken=jwt.sign({

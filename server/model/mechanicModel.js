@@ -42,6 +42,10 @@ const mechanicSchema=mongoose.Schema({
     rating:{
         type:Array,
         default:[]
+    },
+    pdf:{
+        type:Object,
+        required:true
     }
     
     

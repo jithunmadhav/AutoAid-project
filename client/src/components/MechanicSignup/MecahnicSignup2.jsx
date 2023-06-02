@@ -10,6 +10,7 @@ function MechanicSignup2(props) {
   const [experience, setExperience] = useState('');
   const [err, setErr] = useState('');
   const [showOtp, setShowOtp] = useState(false);
+  const [file, setfile] = useState('')
 
   const handleSearchChange = (e) => {
     const { value } = e.target;
@@ -91,7 +92,7 @@ function MechanicSignup2(props) {
             </fieldset>
             <fieldset className="username">
               <label style={{ fontSize: '14px' }}>Resume</label>
-              <input type="file" />
+              <input type="file" onChange={(e)=>setfile(e.target.files[0])} accept='pdf/*' required />
             </fieldset>
             <button type="submit" style={{ color: 'white' }} className="btn">
               Signup
@@ -100,7 +101,7 @@ function MechanicSignup2(props) {
         </div>
       </div>
       {showOtp && (
-        <OtpVerification data={{ ...props.data, searchValue, experience, reset: 'mechanicsignup' }} />
+        <OtpVerification data={{ ...props.data,file, searchValue, experience, reset: 'mechanicsignup' }} />
       )}
     </div>
   );
