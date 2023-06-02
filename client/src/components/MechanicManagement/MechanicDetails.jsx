@@ -7,8 +7,20 @@ function MechanicDetails(props) {
   console.log(props.data.details);
   const [showUserManagement, setShowUserManagement] = useState(false);
   const imgURL='http://localhost:4000/uploads/'
+  const id=props.data.details._id;
   const handleApprove=()=>{
-    
+    axios.post('/admin/approve',{id}).then((response)=>{
+      if(!response.data.err){
+        setShowUserManagement(true)
+      }
+    })
+  }
+  const handleReject=()=>{
+    axios.post('/admin/reject',{id}).then((response)=>{
+      if(!response.data.err){
+        setShowUserManagement(true)
+      }
+    })
   }
 
   return (
@@ -29,7 +41,7 @@ function MechanicDetails(props) {
         <div style={{ marginTop:'22px',display:'flex' ,justifyContent:'center' }}>
           <Button variant='outlined' onClick={handleApprove} color='success'> Approve</Button>
           <Button></Button>
-          <Button variant='outlined' color='error'> Reject</Button>
+          <Button variant='outlined' onClick={handleReject} color='error'> Reject</Button>
         </div>
       </div>
     )

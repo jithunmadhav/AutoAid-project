@@ -47,7 +47,7 @@ import PDFImage from 'pdf-image';
     }
     export const approveApplication=async(req,res)=>{
         try {
-        let result= await mechanicModel.findByIdAndUpdate({_id:req.params.id},{$set:{applicationStatus:'approved'}})
+        let result= await mechanicModel.findByIdAndUpdate({_id:req.body.id},{$set:{applicationStatus:'approved'}})
         approvedMail(result.email,result.name)
         res.json({err:false,result})
         } catch (error) {
@@ -56,7 +56,7 @@ import PDFImage from 'pdf-image';
     }
     export const rejectApplication=async(req,res)=>{
         try {
-           let result= await mechanicModel.findByIdAndUpdate({_id:req.params.id},{$set:{applicationStatus:'rejected'}})
+           let result= await mechanicModel.findByIdAndUpdate({_id:req.body.id},{$set:{applicationStatus:'rejected'}})
            if(result){
             rejectMail(result.email,result.name)
                res.json({err:false,result})
