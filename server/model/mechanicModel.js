@@ -43,7 +43,7 @@ const mechanicSchema=mongoose.Schema({
         type:Array,
         default:[]
     },
-    pdf:{
+    proof:{
         type:Object,
         required:true
     }

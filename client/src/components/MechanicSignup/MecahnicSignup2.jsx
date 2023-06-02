@@ -92,7 +92,7 @@ function MechanicSignup2(props) {
             </fieldset>
             <fieldset className="username">
               <label style={{ fontSize: '14px' }}>Resume</label>
-              <input type="file" onChange={(e)=>setfile(e.target.files[0])} accept='pdf/*' required />
+              <input type="file" onChange={(e)=>setfile(e.target.files[0])} accept='image/*' required />
             </fieldset>
             <button type="submit" style={{ color: 'white' }} className="btn">
               Signup

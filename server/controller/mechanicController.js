@@ -4,7 +4,7 @@ import jwt  from 'jsonwebtoken'
 import { sentOTP, signupMail } from '../helper/mail.js'
 import { randomNumber } from '../helper/randomNum.js'
 import convertPDFToImages from 'pdf-img-convert'
-
+import fs from 'fs';
 
 
 
@@ -57,56 +57,50 @@ export const mechanicSignup2=async(req,res)=>{
     } catch (error) {
         console.log(error);
     }
-}
-export const verifyMechanicSignup=async(req,res)=>{
-    const {name,email,mobile,password,searchValue,experience}=req.body
-    let otp=req.body.OTP;
+    
+  }
 
-    const { path } = req.file;
+ 
 
-    // Convert the PDF to images
-    const imagePaths = await convertPDFToImages(path);
+export const verifyMechanicSignup = async (req, res) => {
+  const { name, email, mobile, password, searchValue, experience } = req.body;
+  let otp = req.body.OTP;
+  let mechanicToken = req.cookies.mechanicSignupToken;
+  const OtpToken = jwt.verify(
+    mechanicToken,
+    '00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa'
+  );
+  let bcrypPassword = await bcrypt.hash(password, 10);
+  if (otp == OtpToken.otp) {
+    let user = await mechanicModel.create({
+      name,
+      email,
+      mobile,
+      password: bcrypPassword,
+      searchValue,
+      experience,
+      proof: req.file,
+    });
+    signupMail(email, name);
+    const mechanicToken = jwt.sign(
+      {
+        id: user._id,
+      },
+      '00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa'
+    );
+    return res
+      .cookie('mechanicSignupToken', mechanicToken, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        sameSite: 'none',
+      })
+      .json({ err: false, message: 'User registration success' });
+  } else {
+    res.json({ err: true, message: 'something went wrong' });
+  }
+};
 
-    // Read the converted images as base64
-    const imageBase64 = [];
-    for (const imagePath of imagePaths) {
-      const image = fs.readFileSync(imagePath, "base64");
-      imageBase64.push(`data:image/png;base64,${image}`);
-    }
-
-    // Respond with the image paths or base64 data
-    res.json({ imagePaths, imageBase64 });
-
-    let mechanicToken=req.cookies.mechanicSignupToken;
-     const OtpToken = jwt.verify(mechanicToken,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa')
-    let bcrypPassword=await bcrypt.hash(password,10)
-    if(otp==OtpToken.otp){
-
-        let user= await mechanicModel.create({
-            name,
-            email,
-            mobile,
-            password:bcrypPassword,
-            searchValue,
-            experience,
-            pdf:req.file
-        });
-        signupMail(email,name)
-        const mechanicToken=jwt.sign({
-            id:user._id
-        },
-        "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");    
-        return res.cookie("mechanicSignupToken", mechanicToken, {
-            httpOnly: true,
-            secure: true,
-            maxAge: 1000 * 60 * 60 * 24 * 7,
-            sameSite: "none",
-        }).json({ err: false ,message:'User registration success'});
-    }else{
-        res.json({err:true,message:'something went wrong'})
-    }
-
-}
 export const mechanicLogin=async(req,res)=>{
     try {
         let {email,password}=req.body;
