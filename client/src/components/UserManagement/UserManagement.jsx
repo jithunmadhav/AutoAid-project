@@ -16,6 +16,8 @@ import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import BannedUser from './BannedUsers';
 import TextField from '@mui/material/TextField';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -45,6 +47,8 @@ function UserManagement() {
   const handleClose = () => setOpen(false);
   const [result, setResult] = useState([]);
   const [search, setsearch] = useState('')
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const handleBan = (id) => {
     axios.post('/admin/banuser', { id }).then((response) => {
       if (!response.data.err) {
@@ -56,10 +60,16 @@ function UserManagement() {
   };
 
   useEffect(() => {
-    axios.get('/admin/users?search=' + search).then((response) => {
+    axios.get('/admin/users/',{  params: {
+      search: search,
+      page: currentPage,
+    }}).then((response) => {
+      console.log(response.data);
       setResult(response.data.result);
+      setTotalPages(response.data.totalPages);
+
     });
-  }, [open, search]);
+  }, [open, search,currentPage]);
 
   const style = {
     position: 'absolute',
@@ -71,6 +81,9 @@ function UserManagement() {
     borderRadius: 2,
     boxShadow: 24,
     p: 4,
+  };
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -174,6 +187,13 @@ function UserManagement() {
             <Typography variant="h6" style={{ textAlign: 'center', marginTop: '20px' }}>No users found</Typography>
           )}
         </div>
+        <Stack spacing={2} sx={{position: 'absolute', bottom: 50, left: '50%', transform: 'translateX(-50%)'}}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
     ) : (
       <BannedUser />

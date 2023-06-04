@@ -38,7 +38,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
@@ -47,7 +46,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function MechanicManagement() {
   const [showBannedusers, setshowBannedusers] = useState(false);
   const [viewDetials, setviewDetials] = useState(false);
-  const handleCancel = () => setOpen(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -55,8 +53,8 @@ function MechanicManagement() {
   const [details, setDetails] = useState([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = React.useState('');
-
- 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const handleBan = (id) => {
     axios.post('/admin/banmechanic', { id }).then((response) => {
@@ -73,16 +71,17 @@ function MechanicManagement() {
       params: {
         search: search,
         filter: filter,
-      }
+        page: currentPage,
+      },
     }).then((response) => {
-      setResult(response.data.result);
+      setResult(response.data.mechanics);
+      setTotalPages(response.data.totalPages);
     });
-    
-  }, [open, search,filter]);
+  }, [open, search, filter, currentPage]);
 
   const style = {
     position: 'absolute',
-    top: '50%',
+    top: '40%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
@@ -92,6 +91,10 @@ function MechanicManagement() {
     p: 4,
   };
 
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
+
   return (
     showBannedusers ? (
       <BannedMechanics />
@@ -99,24 +102,27 @@ function MechanicManagement() {
       <MechanicDetails data={details} />
     ) : (
       <div>
-        <FormControl sx={{ m: 1, minWidth: 150 ,position:'absolute' , top:95 ,left:95,height:10 }} size='small' >
-        <InputLabel id="demo-simple-select-helper-label">Filter</InputLabel>
-        <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={filter}
-          label="Age"
-          onChange={(event)=>setFilter(event.target.value)}
+        <FormControl
+          sx={{ m: 1, minWidth: 150, position: 'absolute', top: 95, left: 95, height: 10 }}
+          size='small'
         >
-          <MenuItem value="">
-            <em></em>
-          </MenuItem>
-          <MenuItem value={'applied'}>Applied</MenuItem>
-          <MenuItem value={'approved'}>Approved</MenuItem>
-          <MenuItem value={'rejected'}>Rejected</MenuItem>
-        </Select>
-      </FormControl>
-      
+          <InputLabel id="demo-simple-select-helper-label">Filter</InputLabel>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            value={filter}
+            label="Age"
+            onChange={(event) => setFilter(event.target.value)}
+          >
+            <MenuItem value="">
+              <em></em>
+            </MenuItem>
+            <MenuItem value={'applied'}>Applied</MenuItem>
+            <MenuItem value={'approved'}>Approved</MenuItem>
+            <MenuItem value={'rejected'}>Rejected</MenuItem>
+          </Select>
+        </FormControl>
+
         <Box
           component="form"
           sx={{
@@ -146,7 +152,7 @@ function MechanicManagement() {
 
         <div className="table-div">
           {result.length === 0 ? (
-            <Typography variant="h6" component="h6" textAlign='center'> 
+            <Typography variant="h6" component="h6" textAlign='center'>
               No Mechanics found.
             </Typography>
           ) : (
@@ -208,53 +214,40 @@ function MechanicManagement() {
                         open={open}
                         onClose={handleClose}
                         closeAfterTransition
-                        slots={{ backdrop: Backdrop }}
-                        slotProps={{
-                          backdrop: {
-                            timeout: 500,
-                          },
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                          timeout: 500,
                         }}
                       >
                         <Fade in={open}>
                           <Box sx={style}>
-                            <Typography
-                              style={{
-                                textAlign: 'center',
-                                fontFamily: 'monospace',
-                                fontSize: '25px',
-                                fontWeight: 'bolder',
-                              }}
-                              id="transition-modal-title"
-                              variant="h6"
-                              component="h6"
-                            >
-                              Are you sure you want to ban?
+                            <Typography variant="h6"
+                             style={{
+                              textAlign: 'center',
+                              fontFamily: 'monospace',
+                              fontSize: '25px',
+                              fontWeight: 'bolder',
+                            }}
+                             component="h6">
+                              Are you sure to ban?
                             </Typography>
-                            <Typography
-                              id="transition-modal-description"
-                              sx={{ mt: 2 }}
+                            <div style={{display:'flex',justifyContent:'space-around',marginTop:'20px'}}>
+                            <Button
+                              style={{ margin: '0 10px' }}
+                              onClick={() => handleBan(row._id)}
+                              variant="outlined"
+                              color="error"
                             >
-                              <div
-                                style={{
-                                  display: 'flex',
-                                  justifyContent: 'space-around',
-                                }}
-                              >
-                                <Button
-                                  variant="outlined"
-                                  onClick={handleCancel}
-                                >
-                                  Cancel
-                                </Button>
-                                <Button
-                                  variant="outlined"
-                                  onClick={() => handleBan(row._id)}
-                                  color="error"
-                                >
-                                  Confirm
-                                </Button>
-                              </div>
-                            </Typography>
+                              confirm
+                            </Button>
+                            <Button
+                              onClick={handleClose}
+                              variant="outlined"
+                              color="success"
+                            >
+                              cancel
+                            </Button>
+                            </div>
                           </Box>
                         </Fade>
                       </Modal>
@@ -265,9 +258,13 @@ function MechanicManagement() {
             </TableContainer>
           )}
         </div>
-        <Stack spacing={2} >
-      <Pagination style={{ display:'flex',justifyContent:'center' }} count={5} variant="outlined" shape="rounded" />
-      </Stack>
+        <Stack spacing={2} sx={{position: 'absolute', bottom: 50, left: '50%', transform: 'translateX(-50%)'}}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+          />
+        </Stack>
       </div>
     )
   );

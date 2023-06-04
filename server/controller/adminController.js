@@ -4,10 +4,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import {approvedMail, rejectMail} from '../helper/mail.js' 
 import userModel from '../model/userModel.js'
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import fs from 'fs';
-import PDFImage from 'pdf-image';
+
 
    export const  adminLogin=async(req,res)=>{
         try {
@@ -69,11 +66,27 @@ import PDFImage from 'pdf-image';
     }
     export const getAllUsers=async(req,res)=>{
      try {
-        let result = await userModel.find({ name:new RegExp(req.query.search, 'i'),ban:false}, {password:0}).lean()
-        if(result){
-            res.json({err:false,result})
-        }else{
-            res.json({err:true,message:'something went wrong'})
+        const { search, page } = req.query;
+        const perPage = 5;  
+        const currentPage = parseInt(page) || 1; 
+        const query = {
+          ban: false,
+          name: new RegExp(search, 'i')
+        };
+           
+        const totalUser = await userModel.countDocuments(query);
+        console.log(totalUser);
+        const totalPages = Math.ceil(totalUser / perPage);
+        
+        const result = await userModel
+        .find(query, { password: 0 })
+          .skip((currentPage - 1) * perPage)
+          .limit(perPage)
+          .lean();
+        if (result) {
+          res.json({ err: false, result, totalPages });
+        } else {
+          res.json({ err: true, message: 'Something went wrong' });
         }
             
      } catch (error) {
@@ -113,18 +126,30 @@ import PDFImage from 'pdf-image';
     }
     export const allMechanics = async (req, res) => {
         try {
-          const { search, filter } = req.query;
+          const { search, filter, page } = req.query;
+          const perPage = 5; 
+          const currentPage = parseInt(page) || 1; 
+          
           const query = {
             ban: false,
             name: new RegExp(search, 'i')
           };
+          
           if (filter) {
             query.applicationStatus = filter;
           }
-          const result = await mechanicModel.find(query, { password: 0 }).lean();
+          
+          const totalMechanics = await mechanicModel.countDocuments(query);
+          const totalPages = Math.ceil(totalMechanics / perPage);
+          
+          const mechanics = await mechanicModel
+            .find(query, { password: 0 })
+            .skip((currentPage - 1) * perPage)
+            .limit(perPage)
+            .lean();
       
-          if (result) {
-            res.json({ err: false, result });
+          if (mechanics) {
+            res.json({ err: false, mechanics, totalPages });
           } else {
             res.json({ err: true, message: 'Something went wrong' });
           }
@@ -133,6 +158,7 @@ import PDFImage from 'pdf-image';
           res.json({ err: true, message: 'Internal server error' });
         }
       };
+      
       
     
     export const banMechanic=async(req,res)=>{
