@@ -45,7 +45,7 @@ function BannedMechanics() {
   const [result, setResult] = useState([]);
 
   const handleunBan = (id) => {
-    axios.post('/admin/unbanmechanic', { id }).then((response) => {
+    axios.patch('/admin/unbanmechanic', { id }).then((response) => {
       if (!response.data.err) {
         setOpen(false);
       } else {

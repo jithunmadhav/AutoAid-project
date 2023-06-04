@@ -57,7 +57,7 @@ function MechanicManagement() {
   const [totalPages, setTotalPages] = useState(1);
 
   const handleBan = (id) => {
-    axios.post('/admin/banmechanic', { id }).then((response) => {
+    axios.patch('/admin/banmechanic', { id }).then((response) => {
       if (!response.data.err) {
         setOpen(false);
       } else {

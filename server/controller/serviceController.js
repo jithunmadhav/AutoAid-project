@@ -1,12 +1,14 @@
-import mechanicModel from "../model/mechanicModel"
+import serviceModel from "../model/serviceModel.js"
 
 
-export const twoWheelerBooking=async(req,res)=>{
-    let {location}=req.body
-    let result= await mechanicModel.find({location:location})
-    if(result){
-        res.json({err:false,result})
-    }else{
-        res.json({err:true})
-    }
+export const addServices=async(req,res)=>{
+    const {name}=req.body
+    await serviceModel.create({
+        serviceName:name,
+        image:req.file
+    }).then((result)=>{
+        res.json({err:false})
+    }).catch(error=>{
+        res.json({err:true,error})
+    })
 }
