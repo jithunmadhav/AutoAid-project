@@ -17,6 +17,10 @@ import Typography from '@mui/material/Typography';
 import BannedMechanics from './BannedMechanics';
 import MechanicDetails from './MechanicDetails';
 import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -48,6 +52,11 @@ function MechanicManagement() {
   const [result, setResult] = useState([]);
   const [details, setDetails] = useState([]);
   const [search, setSearch] = useState('');
+  const [filter, setFilter] = React.useState('');
+
+  const handleChange = (event) => {
+    setFilter(event.target.value);
+  };
 
   const handleBan = (id) => {
     axios.post('/admin/banmechanic', { id }).then((response) => {
@@ -84,6 +93,24 @@ function MechanicManagement() {
       <MechanicDetails data={details} />
     ) : (
       <div>
+        <FormControl sx={{ m: 1, minWidth: 150 ,position:'absolute' , top:95 ,left:95,height:10 }} size='small' >
+        <InputLabel id="demo-simple-select-helper-label">Filter</InputLabel>
+        <Select
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
+          value={filter}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value="">
+            <em></em>
+          </MenuItem>
+          <MenuItem value={'applied'}>Applied</MenuItem>
+          <MenuItem value={'approved'}>Approved</MenuItem>
+          <MenuItem value={'rejected'}>Rejected</MenuItem>
+        </Select>
+      </FormControl>
+      
         <Box
           component="form"
           sx={{
