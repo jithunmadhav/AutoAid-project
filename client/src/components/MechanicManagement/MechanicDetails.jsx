@@ -4,10 +4,10 @@ import MechanicManagement from './MechanicManagement';
 import axios from '../../axios'
 
 function MechanicDetails(props) {
-  console.log(props.data.details);
+  console.log(props.data._id);
   const [showUserManagement, setShowUserManagement] = useState(false);
   const imgURL='http://localhost:4000/uploads/'
-  const id=props.data.details._id;
+  const id=props.data._id;
   const handleApprove=()=>{
     axios.post('/admin/approve',{id}).then((response)=>{
       if(!response.data.err){
@@ -36,7 +36,7 @@ function MechanicDetails(props) {
           Back
         </Button>
         <div style={{ height: '80vh' }}>
-          {<img src={imgURL+props.data.details.proof.filename} alt="PDF" style={{ width: '100%', height: '93%', objectFit: 'contain' , marginTop:'45px' }} />}
+          {<img src={imgURL+props.data.proof.filename} alt="PDF" style={{ width: '100%', height: '93%', objectFit: 'contain' , marginTop:'45px' }} />}
         </div>
         <div style={{ marginTop:'22px',display:'flex' ,justifyContent:'center' }}>
           <Button variant='outlined' onClick={handleApprove} color='success'> Approve</Button>

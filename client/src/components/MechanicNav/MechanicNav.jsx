@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSelector } from 'react-redux';
 function MechanicNav() {
-    const {user}=useSelector((state)=>{
+    const {mechanic}=useSelector((state)=>{
         return state
        });
         const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +35,7 @@ function MechanicNav() {
           <div  style={{ justifyContent:'flex-end' }}  className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
             <ul  className="navbar-nav ml-auto ">
               <li  className="nav-item">
-                <Link className="nav-link" to="/" onClick={closeNavbar}>
+                <Link className="nav-link" to="/mechanic/dashboard" onClick={closeNavbar}>
                   Dashboard
                 </Link>
               </li>
@@ -50,8 +50,8 @@ function MechanicNav() {
                 </Link>
               </li>
               <li className="nav-item">
-                {user.login ?(<Link className="nav-link" to="/mechanic/profile" onClick={closeNavbar}>
-                  {user.details[0].name}
+                {mechanic.mechLog ?(<Link className="nav-link" to="/mechanic/profile" onClick={closeNavbar}>
+                  {mechanic.details[0].name}
                 </Link>)
                 :(<Link className="nav-link" to="/mechanic/profile" onClick={closeNavbar}>
                   profile

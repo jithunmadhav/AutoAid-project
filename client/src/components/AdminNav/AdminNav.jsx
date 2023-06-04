@@ -18,7 +18,26 @@ function AdminNav() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar  position="static" sx={{ backgroundColor: 'black',minHeight:'70px' }} >
+      <Slide
+        direction="down"
+        in={showLinks}
+        mountOnEnter
+        unmountOnExit
+        timeout={{ enter: 300, exit: 100 }} // Adjust animation duration as needed
+      >
+        <Box sx={{ position: 'fixed', top: '70px', left: 0, right: 0, padding: '10px', backgroundColor: 'black' }}>
+          <Button color="inherit" sx={{ display: 'block', my: 1 }}>
+            <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/dashboard'}>DASHBOARD</Link>
+          </Button>
+          <Button color="inherit" sx={{ display: 'block', my: 1 }}>
+            <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/usermanagement'}>USER MANAGEMENT</Link>
+          </Button>
+          <Button color="inherit" sx={{ display: 'block', my: 1 }}>
+            <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/mechanicmanagement'}>MECHANICS MANAGEMENT</Link>
+          </Button>
+        </Box>
+      </Slide>
+      <AppBar position="static" sx={{ backgroundColor: 'black', minHeight:'70px' }}>
         <Toolbar>
           <Typography variant="h6" component="div" style={{ fontFamily:'monospace' }}>
             AUTO AID
@@ -39,28 +58,9 @@ function AdminNav() {
             <MenuIcon />
           </IconButton>
         </Toolbar>
-        <Slide
-          direction="down"
-          in={showLinks}
-          mountOnEnter
-          unmountOnExit
-          timeout={{ enter: 300, exit: 100 }} // Adjust animation duration as needed
-        >
-          <Box sx={{ padding: '10px', display: showLinks ? 'block' : 'none' }}>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>
-              <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/dashboard'}>DASHBOARD</Link>
-            </Button>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>
-              <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/usermanagement'}>USER MANAGEMENT</Link>
-            </Button>
-            <Button color="inherit" sx={{ display: 'block', my: 1 }}>
-              <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/mechanicmanagement'}>MECHANICS MANAGEMENT</Link>
-            </Button>
-          </Box>
-        </Slide>
       </AppBar>
     </Box>
   );
 }
 
-export default AdminNav
+export default AdminNav;

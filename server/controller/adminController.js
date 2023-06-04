@@ -69,7 +69,7 @@ import PDFImage from 'pdf-image';
     }
     export const getAllUsers=async(req,res)=>{
      try {
-        let result = await userModel.find({ban:false}).lean()
+        let result = await userModel.find({ name:new RegExp(req.query.search, 'i'),ban:false}, {password:0}).lean()
         if(result){
             res.json({err:false,result})
         }else{
@@ -113,7 +113,7 @@ import PDFImage from 'pdf-image';
     }
     export const allMechanics=async(req,res)=>{
         try {
-           let result = await mechanicModel.find({ban:false}).lean()
+           let result = await mechanicModel.find({ name:new RegExp(req.query.search, 'i'),ban:false}, {password:0}).lean()
            if(result){
                res.json({err:false,result})
             }else{

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -17,6 +16,7 @@ import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import BannedMechanics from './BannedMechanics';
 import MechanicDetails from './MechanicDetails';
+import TextField from '@mui/material/TextField';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,13 +40,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function MechanicManagement() {
   const [showBannedusers, setshowBannedusers] = useState(false);
-  const [viewDetials, setviewDetials] = useState(false)
+  const [viewDetials, setviewDetials] = useState(false);
   const handleCancel = () => setOpen(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [result, setResult] = useState([]);
-  const [details, setdetails] = useState([])
+  const [details, setDetails] = useState([]);
+  const [search, setSearch] = useState('');
 
   const handleBan = (id) => {
     axios.post('/admin/banmechanic', { id }).then((response) => {
@@ -59,10 +60,10 @@ function MechanicManagement() {
   };
 
   useEffect(() => {
-    axios.get('/admin/mechanics').then((response) => {
+    axios.get('/admin/mechanics?search=' + search).then((response) => {
       setResult(response.data.result);
     });
-  }, [open]);
+  }, [open, search]);
 
   const style = {
     position: 'absolute',
@@ -77,12 +78,31 @@ function MechanicManagement() {
   };
 
   return (
-    showBannedusers ?   (
-      <BannedMechanics /> 
-    ) : viewDetials ? (<MechanicDetails data={{details}} />)
-
-    :(
+    showBannedusers ? (
+      <BannedMechanics />
+    ) : viewDetials ? (
+      <MechanicDetails data={details} />
+    ) : (
       <div>
+        <Box
+          component="form"
+          sx={{
+            '& > :not(style)': { m: 1, width: '25ch' },
+            position: 'absolute',
+            right: '338px',
+            top: '87px',
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="standard-basic"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            label="search"
+            variant="standard"
+          />
+        </Box>
         <Button
           style={{ position: 'absolute', right: '101px', top: '105px' }}
           onClick={() => setshowBannedusers(true)}
@@ -92,87 +112,125 @@ function MechanicManagement() {
         </Button>
 
         <div className="table-div">
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Name</StyledTableCell>
-                  <StyledTableCell align="center">Email</StyledTableCell>
-                  <StyledTableCell align="center">Mobile</StyledTableCell>
-                  <StyledTableCell align="center">App Status</StyledTableCell>
-                  <StyledTableCell align="center">Action</StyledTableCell>
-                  <StyledTableCell align="center"></StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {result.map((row) => (
-                  <StyledTableRow key={row.name}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.name}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {row.email}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {row.mobile}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {row.applicationStatus }
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      <Button
-                        onClick={handleOpen}
-                        variant="outlined"
-                        color="error"
-                      >
-                        Ban
-                      </Button>
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                     <Button onClick={()=>{setviewDetials(true); setdetails(row);}}>view details</Button>
-                    </StyledTableCell>
-                    <Modal
-                      aria-labelledby="transition-modal-title"
-                      aria-describedby="transition-modal-description"
-                      open={open}
-                      onClose={handleClose}
-                      closeAfterTransition
-                      slots={{ backdrop: Backdrop }}
-                      slotProps={{
-                        backdrop: {
-                          timeout: 500,
-                        },
-                      }}
-                    >
-                      <Fade in={open}>
-                        <Box sx={style}>
-                          <Typography
-                            style={{
-                              textAlign: 'center',
-                              fontFamily: 'monospace',
-                              fontSize: '25px',
-                              fontWeight: 'bolder',
+          {result.length === 0 ? (
+            <Typography variant="h6" component="h6" textAlign='center'> 
+              No Mechanics found.
+            </Typography>
+          ) : (
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>Name</StyledTableCell>
+                    <StyledTableCell align="center">Email</StyledTableCell>
+                    <StyledTableCell align="center">Mobile</StyledTableCell>
+                    <StyledTableCell align="center">Experience</StyledTableCell>
+                    <StyledTableCell align="center">App Status</StyledTableCell>
+                    <StyledTableCell align="center">Action</StyledTableCell>
+                    <StyledTableCell align="center"></StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {result.map((row) => (
+                    <StyledTableRow key={row.name}>
+                      <StyledTableCell component="th" scope="row">
+                        {row.name}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {row.email}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {row.mobile}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {row.experience + ' years'}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {row.applicationStatus}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button
+                          onClick={handleOpen}
+                          variant="outlined"
+                          color="error"
+                        >
+                          Ban
+                        </Button>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {row.applicationStatus === 'applied' && (
+                          <Button
+                            onClick={() => {
+                              setviewDetials(true);
+                              setDetails(row);
                             }}
-                            id="transition-modal-title"
-                            variant="h6"
-                            component="h6"
                           >
-                            Are you sure to ban?
-                          </Typography>
-                          <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                              <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
-                              <Button variant="outlined" onClick={() => handleBan(row._id)} color="error">Confirm</Button>
-                            </div>
-                          </Typography>
-                        </Box>
-                      </Fade>
-                    </Modal>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                            view details
+                          </Button>
+                        )}
+                      </StyledTableCell>
+                      <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        open={open}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        slots={{ backdrop: Backdrop }}
+                        slotProps={{
+                          backdrop: {
+                            timeout: 500,
+                          },
+                        }}
+                      >
+                        <Fade in={open}>
+                          <Box sx={style}>
+                            <Typography
+                              style={{
+                                textAlign: 'center',
+                                fontFamily: 'monospace',
+                                fontSize: '25px',
+                                fontWeight: 'bolder',
+                              }}
+                              id="transition-modal-title"
+                              variant="h6"
+                              component="h6"
+                            >
+                              Are you sure you want to ban?
+                            </Typography>
+                            <Typography
+                              id="transition-modal-description"
+                              sx={{ mt: 2 }}
+                            >
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-around',
+                                }}
+                              >
+                                <Button
+                                  variant="outlined"
+                                  onClick={handleCancel}
+                                >
+                                  Cancel
+                                </Button>
+                                <Button
+                                  variant="outlined"
+                                  onClick={() => handleBan(row._id)}
+                                  color="error"
+                                >
+                                  Confirm
+                                </Button>
+                              </div>
+                            </Typography>
+                          </Box>
+                        </Fade>
+                      </Modal>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </div>
       </div>
     )

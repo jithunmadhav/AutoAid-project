@@ -15,6 +15,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import BannedUser from './BannedUsers';
+import TextField from '@mui/material/TextField';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,7 +44,7 @@ function UserManagement() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [result, setResult] = useState([]);
-
+  const [search, setsearch] = useState('')
   const handleBan = (id) => {
     axios.post('/admin/banuser', { id }).then((response) => {
       if (!response.data.err) {
@@ -55,10 +56,10 @@ function UserManagement() {
   };
 
   useEffect(() => {
-    axios.get('/admin/users').then((response) => {
+    axios.get('/admin/users?search=' + search).then((response) => {
       setResult(response.data.result);
     });
-  }, [open]);
+  }, [open, search]);
 
   const style = {
     position: 'absolute',
@@ -75,6 +76,17 @@ function UserManagement() {
   return (
     !showBannedusers ? (
       <div>
+        <Box
+          component="form"
+          sx={{
+            '& > :not(style)': { m: 1, width: '25ch' },
+            position: 'absolute', right: '308px', top: '87px'
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField id="standard-basic" value={search} onChange={(e) => setsearch(e.target.value)} label="search" variant="standard" />
+        </Box>
         <Button
           style={{ position: 'absolute', right: '101px', top: '105px' }}
           onClick={() => setshowBannedusers(true)}
@@ -84,79 +96,83 @@ function UserManagement() {
         </Button>
 
         <div className="table-div">
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Name</StyledTableCell>
-                  <StyledTableCell align="center">Email</StyledTableCell>
-                  <StyledTableCell align="center">Mobile</StyledTableCell>
-                  <StyledTableCell align="center">Action</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {result.map((row) => (
-                  <StyledTableRow key={row.name}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.name}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {row.email}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {row.mobile}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      <Button
-                        onClick={handleOpen}
-                        variant="outlined"
-                        color="error"
+          {result.length > 0 ? (
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>Name</StyledTableCell>
+                    <StyledTableCell align="center">Email</StyledTableCell>
+                    <StyledTableCell align="center">Mobile</StyledTableCell>
+                    <StyledTableCell align="center">Action</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {result.map((row) => (
+                    <StyledTableRow key={row.name}>
+                      <StyledTableCell component="th" scope="row">
+                        {row.name}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {row.email}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {row.mobile}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button
+                          onClick={handleOpen}
+                          variant="outlined"
+                          color="error"
+                        >
+                          Ban
+                        </Button>
+                      </StyledTableCell>
+                      <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        open={open}
+                        onClose={handleClose}
+                        closeAfterTransition
+                        slots={{ backdrop: Backdrop }}
+                        slotProps={{
+                          backdrop: {
+                            timeout: 500,
+                          },
+                        }}
                       >
-                        Ban
-                      </Button>
-                    </StyledTableCell>
-                    <Modal
-                      aria-labelledby="transition-modal-title"
-                      aria-describedby="transition-modal-description"
-                      open={open}
-                      onClose={handleClose}
-                      closeAfterTransition
-                      slots={{ backdrop: Backdrop }}
-                      slotProps={{
-                        backdrop: {
-                          timeout: 500,
-                        },
-                      }}
-                    >
-                      <Fade in={open}>
-                        <Box sx={style}>
-                          <Typography
-                            style={{
-                              textAlign: 'center',
-                              fontFamily: 'monospace',
-                              fontSize: '25px',
-                              fontWeight: 'bolder',
-                            }}
-                            id="transition-modal-title"
-                            variant="h6"
-                            component="h6"
-                          >
-                            Are you sure to ban?
-                          </Typography>
-                          <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                              <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
-                              <Button variant="outlined" onClick={() => handleBan(row._id)} color="error">Confirm</Button>
-                            </div>
-                          </Typography>
-                        </Box>
-                      </Fade>
-                    </Modal>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                        <Fade in={open}>
+                          <Box sx={style}>
+                            <Typography
+                              style={{
+                                textAlign: 'center',
+                                fontFamily: 'monospace',
+                                fontSize: '25px',
+                                fontWeight: 'bolder',
+                              }}
+                              id="transition-modal-title"
+                              variant="h6"
+                              component="h6"
+                            >
+                              Are you sure to ban?
+                            </Typography>
+                            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
+                                <Button variant="outlined" onClick={() => handleBan(row._id)} color="error">Confirm</Button>
+                              </div>
+                            </Typography>
+                          </Box>
+                        </Fade>
+                      </Modal>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : (
+            <Typography variant="h6" style={{ textAlign: 'center', marginTop: '20px' }}>No users found</Typography>
+          )}
         </div>
       </div>
     ) : (

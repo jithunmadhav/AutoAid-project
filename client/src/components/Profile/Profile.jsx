@@ -29,8 +29,8 @@ function Profile() {
             <img src= 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1680295524~exp=1680296124~hmac=02e23136e23578ef52071ce6ce8be6ecd2a32c6bef946fcacd4e6e788ed33360' style={{objectFit:'cover'}} alt='' width="100"  className="rounded-circle" />
             </div>
             <div>
-            <p  className='name'>{user.details[0].name}</p>
-            <p style={{ marginTop:'-17px' }} className='name'>{user.details[0].email}</p>
+            <p  className='name'>{user.details.name}</p>
+            <p style={{ marginTop:'-17px' }} className='name'>{user.details.email}</p>
             <button className='edit-btn'>Edit</button>
 
             </div>
