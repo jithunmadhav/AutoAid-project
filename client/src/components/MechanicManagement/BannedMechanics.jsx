@@ -74,7 +74,7 @@ function BannedMechanics() {
 
   return (
     !showUser ? (
-      <div>
+      <div className='admin-bg'>
         <Button
           style={{ position: 'absolute', right: '101px', top: '105px' }}
           onClick={() => setshowUser(true)}
@@ -82,7 +82,7 @@ function BannedMechanics() {
         >
           Back
         </Button>
-        <div className="table-div">
+        <div style={{ padding:'100px' }}>
           {result.length === 0 ? (
             <Typography variant="h5" component="div" align="center" sx={{ mt: 4 }}>
               No banned mechanics

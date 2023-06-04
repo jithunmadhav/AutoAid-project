@@ -92,7 +92,7 @@ function UserManagement() {
 
   return (
     !showBannedusers ? (
-      <div>
+      <div className='admin-bg'>
         <Box
           component="form"
           sx={{
@@ -112,7 +112,7 @@ function UserManagement() {
           Banned users
         </Button>
 
-        <div className="table-div">
+        <div style={{padding:'100px'}}>
           {result.length > 0 ? (
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 700 }} aria-label="customized table">

@@ -105,7 +105,7 @@ function MechanicManagement() {
     ) : viewDetials ? (
       <MechanicDetails data={details} />
     ) : (
-      <div>
+      <div className='admin-bg'>
         <FormControl
           sx={{ m: 1, minWidth: 150, position: 'absolute', top: 95, left: 95, height: 10 }}
           size='small'
@@ -154,7 +154,7 @@ function MechanicManagement() {
           Banned Mechanics
         </Button>
 
-        <div className="table-div">
+        <div style={{ padding:'100px' }}>
           {result.length === 0 ? (
             <Typography variant="h6" component="h6" textAlign='center'>
               No Mechanics found.

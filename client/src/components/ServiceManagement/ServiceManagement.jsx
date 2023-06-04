@@ -2,7 +2,7 @@ import React from 'react'
 
 function ServiceManagement() {
   return (
-    <div>
+    <div className='admin-bg'>
       
     </div>
   )

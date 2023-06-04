@@ -171,7 +171,6 @@ import userModel from '../model/userModel.js'
     export const bannedMechanics=async(req,res)=>{
         try {
             let result = await mechanicModel.find({ban:true}).lean()
-            console.log(result);
               if(result){
                   res.json({err:false,result})
               }else{
