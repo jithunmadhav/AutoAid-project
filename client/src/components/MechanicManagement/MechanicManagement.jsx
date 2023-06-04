@@ -21,6 +21,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -54,9 +56,7 @@ function MechanicManagement() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = React.useState('');
 
-  const handleChange = (event) => {
-    setFilter(event.target.value);
-  };
+ 
 
   const handleBan = (id) => {
     axios.post('/admin/banmechanic', { id }).then((response) => {
@@ -69,10 +69,16 @@ function MechanicManagement() {
   };
 
   useEffect(() => {
-    axios.get('/admin/mechanics?search=' + search).then((response) => {
+    axios.get('/admin/mechanics', {
+      params: {
+        search: search,
+        filter: filter,
+      }
+    }).then((response) => {
       setResult(response.data.result);
     });
-  }, [open, search]);
+    
+  }, [open, search,filter]);
 
   const style = {
     position: 'absolute',
@@ -100,7 +106,7 @@ function MechanicManagement() {
           id="demo-simple-select-helper"
           value={filter}
           label="Age"
-          onChange={handleChange}
+          onChange={(event)=>setFilter(event.target.value)}
         >
           <MenuItem value="">
             <em></em>
@@ -259,6 +265,9 @@ function MechanicManagement() {
             </TableContainer>
           )}
         </div>
+        <Stack spacing={2} >
+      <Pagination style={{ display:'flex',justifyContent:'center' }} count={5} variant="outlined" shape="rounded" />
+      </Stack>
       </div>
     )
   );

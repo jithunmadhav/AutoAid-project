@@ -111,19 +111,29 @@ import PDFImage from 'pdf-image';
             res.json({err:true,err,message:"something went wrong"})
         })
     }
-    export const allMechanics=async(req,res)=>{
+    export const allMechanics = async (req, res) => {
         try {
-           let result = await mechanicModel.find({ name:new RegExp(req.query.search, 'i'),ban:false}, {password:0}).lean()
-           if(result){
-               res.json({err:false,result})
-            }else{
-                res.json({err:true,message:'something went wrong'})
-            }
-            
+          const { search, filter } = req.query;
+          const query = {
+            ban: false,
+            name: new RegExp(search, 'i')
+          };
+          if (filter) {
+            query.applicationStatus = filter;
+          }
+          const result = await mechanicModel.find(query, { password: 0 }).lean();
+      
+          if (result) {
+            res.json({ err: false, result });
+          } else {
+            res.json({ err: true, message: 'Something went wrong' });
+          }
         } catch (error) {
-            console.log(error);
+          console.log(error);
+          res.json({ err: true, message: 'Internal server error' });
         }
-    }
+      };
+      
     
     export const banMechanic=async(req,res)=>{
         const {id} = req.body
