@@ -41,18 +41,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function UserManagement() {
   const [showBannedusers, setshowBannedusers] = useState(false);
-  const handleCancel = () => setOpen(false);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const handleCancel = () => setSelectedUserId(null);
+  const handleOpen = (id) => setSelectedUserId(id);
+  const handleClose = () => setSelectedUserId(null);
   const [result, setResult] = useState([]);
-  const [search, setsearch] = useState('')
+  const [search, setsearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const handleBan = (id) => {
-    axios.post('/admin/banuser', { id }).then((response) => {
+    axios.patch('/admin/banuser', { id }).then((response) => {
       if (!response.data.err) {
-        setOpen(false);
+        setSelectedUserId(null);
       } else {
         console.log(response.data.message);
       }
@@ -60,16 +60,19 @@ function UserManagement() {
   };
 
   useEffect(() => {
-    axios.get('/admin/users/',{  params: {
-      search: search,
-      page: currentPage,
-    }}).then((response) => {
-      console.log(response.data);
-      setResult(response.data.result);
-      setTotalPages(response.data.totalPages);
-
-    });
-  }, [open, search,currentPage]);
+    axios
+      .get('/admin/users/', {
+        params: {
+          search: search,
+          page: currentPage,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setResult(response.data.result);
+        setTotalPages(response.data.totalPages);
+      });
+  }, [selectedUserId, search, currentPage]);
 
   const style = {
     position: 'absolute',
@@ -82,6 +85,7 @@ function UserManagement() {
     boxShadow: 24,
     p: 4,
   };
+
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
   };
@@ -122,19 +126,15 @@ function UserManagement() {
                 </TableHead>
                 <TableBody>
                   {result.map((row) => (
-                    <StyledTableRow key={row.name}>
+                    <StyledTableRow key={row._id}>
                       <StyledTableCell component="th" scope="row">
                         {row.name}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {row.email}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {row.mobile}
-                      </StyledTableCell>
+                      <StyledTableCell align="center">{row.email}</StyledTableCell>
+                      <StyledTableCell align="center">{row.mobile}</StyledTableCell>
                       <StyledTableCell align="center">
                         <Button
-                          onClick={handleOpen}
+                          onClick={() => handleOpen(row._id)} // Pass the user ID to handleOpen
                           variant="outlined"
                           color="error"
                         >
@@ -144,7 +144,7 @@ function UserManagement() {
                       <Modal
                         aria-labelledby="transition-modal-title"
                         aria-describedby="transition-modal-description"
-                        open={open}
+                        open={selectedUserId === row._id} 
                         onClose={handleClose}
                         closeAfterTransition
                         slots={{ backdrop: Backdrop }}
@@ -154,7 +154,7 @@ function UserManagement() {
                           },
                         }}
                       >
-                        <Fade in={open}>
+                        <Fade in={selectedUserId === row._id}>
                           <Box sx={style}>
                             <Typography
                               style={{
@@ -187,7 +187,7 @@ function UserManagement() {
             <Typography variant="h6" style={{ textAlign: 'center', marginTop: '20px' }}>No users found</Typography>
           )}
         </div>
-        <Stack spacing={2} sx={{position: 'absolute', bottom: 50, left: '50%', transform: 'translateX(-50%)'}}>
+        <Stack spacing={2} sx={{ position: 'absolute', bottom: 50, left: '50%', transform: 'translateX(-50%)' }}>
           <Pagination
             count={totalPages}
             page={currentPage}

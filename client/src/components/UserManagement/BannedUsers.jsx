@@ -45,7 +45,7 @@ function BannedUser() {
   const [result, setResult] = useState([]);
 
   const handleunBan = (id) => {
-    axios.post('/admin/unbanuser', { id }).then((response) => {
+    axios.patch('/admin/unbanuser', { id }).then((response) => {
       if (!response.data.err) {
         setOpen(false);
       } else {

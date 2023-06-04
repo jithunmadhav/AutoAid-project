@@ -11,7 +11,7 @@ router.get('/applied',appliedMechanics)
 router.post('/approve',approveApplication)
 router.post('/reject',rejectApplication)
 router.get('/users',getAllUsers).get('/bannedusers',bannedUsers)
-router.post('/banuser',banUser).post('/unbanuser',unBanUser)
+router.patch('/banuser',banUser).patch('/unbanuser',unBanUser)
 
 
 export default router
