@@ -7,14 +7,27 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Slide from '@mui/material/Slide';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from '../../axios';
+import { useDispatch } from 'react-redux';
 
 function AdminNav() {
+  const dispatch = useDispatch()
+  const navigate =useNavigate()
   const [showLinks, setShowLinks] = React.useState(false);
 
   const handleMenuClick = () => {
     setShowLinks(!showLinks);
   };
+
+  const handleLogout=()=>{
+    axios.get('/admin/logout').then((response)=>{
+      if(!response.data.err){
+        dispatch({type:'refresh'})
+        navigate('/admin/login')
+      }
+    })
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -34,6 +47,12 @@ function AdminNav() {
           </Button>
           <Button color="inherit" sx={{ display: 'block', my: 1 }}>
             <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/mechanicmanagement'}>MECHANICS MANAGEMENT</Link>
+          </Button>
+          <Button color="inherit" sx={{ display: 'block', my: 1 }}>
+            <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/mechanicmanagement'}>SERVICE MANAGEMENT</Link>
+          </Button>
+          <Button onClick={handleLogout} color="inherit" sx={{ display: 'block', my: 1 ,color:'white' }}>
+           LOGOUT
           </Button>
         </Box>
       </Slide>

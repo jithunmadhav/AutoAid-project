@@ -75,7 +75,6 @@ import userModel from '../model/userModel.js'
         };
            
         const totalUser = await userModel.countDocuments(query);
-        console.log(totalUser);
         const totalPages = Math.ceil(totalUser / perPage);
         
         const result = await userModel
@@ -193,4 +192,13 @@ import userModel from '../model/userModel.js'
            })
        }
 
+       export const adminLogout=(req,res)=>{
+        return res
+        .cookie('adminToken', '', {
+          httpOnly: true,
+          secure: true,
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+          sameSite: 'none',
+        }).json({ err: false, message: 'Logged out successfully' });
+       }
       
