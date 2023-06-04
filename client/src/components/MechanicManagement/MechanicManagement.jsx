@@ -63,7 +63,9 @@ function MechanicManagement() {
       } else {
         console.log(response.data.message);
       }
-    });
+    }).catch(err=>{
+      console.log(err);
+    })
   };
 
   useEffect(() => {
@@ -76,7 +78,9 @@ function MechanicManagement() {
     }).then((response) => {
       setResult(response.data.mechanics);
       setTotalPages(response.data.totalPages);
-    });
+    }).catch(err=>{
+      console.log(err);
+    })
   }, [open, search, filter, currentPage]);
 
   const style = {

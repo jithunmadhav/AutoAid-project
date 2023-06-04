@@ -20,6 +20,10 @@ function AdminLogin() {
         }else{
           setErr(response.data.message)
         }
+      }).catch((error)=>{
+        console.log(error);
+       dispatch({type:'refresh'})
+       navigate('/error')
       })
     }else{
       setErr('All fields are required')

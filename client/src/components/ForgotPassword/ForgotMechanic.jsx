@@ -2,8 +2,12 @@ import React, { useState } from 'react'
 import './ForgotPassword.css'
 import axios from '../../axios'
 import OtpVerification from '../OTPverification/OtpVerification'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 function ForgotMechanic() {
+  const dispatch = useDispatch()
+  const navigate=useNavigate()
     const [Otp, SetOtp] = useState(false)
     const [email, setemail] = useState('')
     const handleSubmit=(e)=>{
@@ -13,6 +17,10 @@ function ForgotMechanic() {
             if(!response.data.errr){
                 SetOtp(true)
             }
+        }).catch((error)=>{
+          console.log(error);
+         dispatch({type:'refresh'})
+         navigate('/error')
         })
 
     }

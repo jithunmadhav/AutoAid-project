@@ -26,6 +26,10 @@ function AdminNav() {
         dispatch({type:'refresh'})
         navigate('/admin/login')
       }
+    }).catch((error)=>{
+      console.log(error);
+     dispatch({type:'refresh'})
+     navigate('/error')
     })
   }
 
@@ -38,7 +42,7 @@ function AdminNav() {
         unmountOnExit
         timeout={{ enter: 300, exit: 100 }} // Adjust animation duration as needed
       >
-        <Box sx={{ position: 'fixed', top: '70px', left: 0, right: 0, padding: '10px', backgroundColor: 'black' }}>
+        <Box sx={{ position: 'fixed', top: '70px', left: 0, right: 0, padding: '10px', backgroundColor: 'black', zIndex: 9999 }}>
           <Button color="inherit" sx={{ display: 'block', my: 1 }}>
             <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/dashboard'}>DASHBOARD</Link>
           </Button>

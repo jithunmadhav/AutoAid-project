@@ -18,6 +18,7 @@ import MechanicProfilePage from './Pages/MechanicProfilePage';
 import AdminDashboardPage from './Pages/AdminDashboardPage';
 import UserManagementPage from './Pages/UserManagementPage';
 import MechanicManagement from './Pages/MechanicManagementPage';
+import ErrorPage from './Pages/ErrorPage';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -44,6 +45,9 @@ function App() {
     <div>
       <Router>
         <Routes>
+          {
+            <Route element={<ErrorPage/>} path={'/error'} />
+          }
         {
             admin.adminLog===false && (
               <>
