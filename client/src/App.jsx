@@ -19,6 +19,7 @@ import AdminDashboardPage from './Pages/AdminDashboardPage';
 import UserManagementPage from './Pages/UserManagementPage';
 import MechanicManagement from './Pages/MechanicManagementPage';
 import ErrorPage from './Pages/ErrorPage';
+import ServiceManagementPage from './Pages/ServiceManagementPage';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -55,6 +56,8 @@ function App() {
               <Route element={<Navigate to={'/admin/login'} />} path={'/admin/dashboard'}/>
               <Route element={<Navigate to={'/admin/login'} />} path={'admin/usermanagement'} />
               <Route element={<Navigate to={'/admin/login'} />} path={'/admin/mechanicmanagement'} />
+              <Route element={<Navigate to={'/admin/login'} />} path={'/admin/servicemanagement'} />
+
               </>
             )
           }
@@ -65,6 +68,8 @@ function App() {
               <Route element={<AdminDashboardPage/>} path={'/admin/dashboard'}/>
               <Route element={<UserManagementPage/>} path={'/admin/usermanagement'} />
               <Route element={<MechanicManagement/>} path={'/admin/mechanicmanagement'} />
+              <Route element={<ServiceManagementPage/>} path={'/admin/servicemanagement'} />
+
               </>
             )
           }
