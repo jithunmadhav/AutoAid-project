@@ -3,7 +3,10 @@ import './MechanicSignup.css'
 import Axios from '../../axios';
 import axios from 'axios';
 import OtpVerification from '../OTPverification/OtpVerification';
-
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 function MechanicSignup2(props) {
   const [searchValue, setSearchValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -11,6 +14,7 @@ function MechanicSignup2(props) {
   const [err, setErr] = useState('');
   const [showOtp, setShowOtp] = useState(false);
   const [file, setfile] = useState('')
+  const [service, setservice] = useState('')
 
   const handleSearchChange = (e) => {
     const { value } = e.target;
@@ -90,7 +94,27 @@ function MechanicSignup2(props) {
                 required
               />
             </fieldset>
-            <fieldset className="username">
+           
+             
+            <FormControl sx={{ m: 1, minWidth: 250 ,}} size='small'> 
+           <InputLabel style={{ fontSize:'14px' }}  id="demo-simple-select-helper-label">Select service</InputLabel>
+          <Select
+   
+           labelId="demo-simple-select-helper-label"
+           id="demo-simple-select-helper"
+             value={service}
+            onChange={(event) => setservice(event.target.value)}
+          className="select-input" // Add a custom CSS class
+           >
+         <MenuItem value="">
+          <em></em>
+        </MenuItem>
+         <MenuItem value={'applied'}>Applied</MenuItem>
+        </Select>
+        </FormControl>
+
+            
+            <fieldset className="username" style={{ marginTop:'-6px' }}>
               <label style={{ fontSize: '14px' }}>Resume</label>
               <input type="file" onChange={(e)=>setfile(e.target.files[0])} accept='image/*' required />
             </fieldset>

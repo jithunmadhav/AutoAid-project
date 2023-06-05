@@ -194,3 +194,14 @@
   .suggestion-box > div:hover {
     background-color: #f1f1f1;
   }
+  .select-input {
+    margin-left: -8px;
+    height: 45px;
+    width: 346px;
+    outline: 2px solid #ccc; /* Customize the outline styles */
+  }
+  .inputlabel{
+    margin-left: -8px;
+    height: 45px;
+    width: 346px;
+  }
