@@ -55,6 +55,7 @@ const handleDelete=(id)=>{
     console.log(response);
     if(!response.data.err){
       dispatch({type:'refresh'})
+      handleCancel()
     }
   }).catch((err)=>{
     dispatch({type:'refresh'})
@@ -69,7 +70,7 @@ useEffect(() => {
     dispatch({type:'refresh'})
     navigate('/error')
   })
-},[dispatch,navigate])
+})
 
 
     const style = {
