@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MechanicSignup.css'
 import Axios from '../../axios';
 import axios from 'axios';
@@ -15,13 +15,21 @@ function MechanicSignup2(props) {
   const [showOtp, setShowOtp] = useState(false);
   const [file, setfile] = useState('')
   const [service, setservice] = useState('')
-
+  const [serviceResult, setserviceResult] = useState([])
+  
+  useEffect(() => {
+   Axios.get('/admin/allservices').then((response)=>{
+    console.log(response.data.result);
+    if(!response.data.err){
+      setserviceResult(response.data.result)
+    }
+   })
+  }, [])
   const handleSearchChange = (e) => {
     const { value } = e.target;
     setSearchValue(value);
     fetchSuggestions(value);
   };
-
   const fetchSuggestions = async (value) => {
     try {
       const response = await axios.get(
@@ -109,7 +117,9 @@ function MechanicSignup2(props) {
          <MenuItem value="">
           <em></em>
         </MenuItem>
-         <MenuItem value={'applied'}>Applied</MenuItem>
+        {serviceResult.map((item,index)=>{
+         return <MenuItem value={item.serviceName}>{item.serviceName}</MenuItem>
+        })}
         </Select>
         </FormControl>
 
