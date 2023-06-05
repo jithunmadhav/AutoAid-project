@@ -107,7 +107,6 @@ function MechanicSignup2(props) {
             <FormControl sx={{ m: 1, minWidth: 250 ,}} size='small'> 
            <InputLabel style={{ fontSize:'14px' }}  id="demo-simple-select-helper-label">Select service</InputLabel>
           <Select
-   
            labelId="demo-simple-select-helper-label"
            id="demo-simple-select-helper"
              value={service}
@@ -135,7 +134,7 @@ function MechanicSignup2(props) {
         </div>
       </div>
       {showOtp && (
-        <OtpVerification data={{ ...props.data,file, searchValue, experience, reset: 'mechanicsignup' }} />
+        <OtpVerification data={{ ...props.data,file, searchValue, experience,service, reset: 'mechanicsignup' }} />
       )}
     </div>
   );

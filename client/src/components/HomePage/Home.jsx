@@ -1,32 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Home.css';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import axios from '../../axios'
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
-  // Define an array of data for the cards
-  const cardData = [
-    {
-      title: 'Breakdown support',
-      image: 'https://img.freepik.com/free-vector/car-crash-concept-illustration_114360-7980.jpg?w=1380&t=st=1685293661~exp=1685294261~hmac=461a8e29e0b5d90f3bf7f69d81dd4c142e3d42101352d3169a41e96d7ccfaa9d',
-    },
-    {
-      title: '2 wheeler support',
-      image: 'https://img.freepik.com/premium-vector/bearded-hipster-guy-motorcycle-customization-service-vector-flat-illustration-mechanic-man-assemble-parts-motorbike-garage-isolated-white-male-biker-enjoying-hobby-work-with-transport_198278-8929.jpg?w=996',
-    },
-    {
-      title: '4,6 wheeler support',
-      image: 'https://img.freepik.com/free-vector/auto-mechanic-repairing-vehicle-engine-isolated-flat-vector-illustration-cartoon-man-fixing-checking-car-with-open-hood-garage_74855-8227.jpg?size=626&ext=jpg',
-    },
-    {
-      title: 'Washing',
-      image: 'https://img.freepik.com/premium-vector/car-wash-service-flat-design-illustration-workers-washing-automobile-using-sponges-soap-water-background-poster-banner_2175-1980.jpg?size=626&ext=jpg',
-    },
-  ];
+const [result, setresult] = useState([])
+const navigate=useNavigate()
 
+  useEffect(() => {
+   axios.get('/admin/allservices').then((response)=>{
+    if(!response.data.err){
+      console.log(response.data);
+      setresult(response.data.result)
+    }
+   }).catch(()=>{
+    navigate('/error')
+   })
+  },[navigate])
+const imgUrl='http://localhost:4000/uploads/'
+const openMap=(name)=>{
+  console.log(name);
+  navigate('/place')
+}
   return (
     <>
       <div className='background'>
@@ -42,27 +42,32 @@ function Home() {
       </div>
       <div className='secondPage'>
         <h1 className='services'>Our Services</h1>
-        <div className='cards'>
-        {cardData.map((card, index) => (
-          <Card key={index} sx={{ maxWidth: 345 }} style={{ borderRadius:'15px' }}>
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                style={{ height:'240px' }}
-                image={card.image}
-                alt={card.title}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div" style={{ fontFamily:'Monomaniac One, sans-serif',textAlign:'center'}}>
-                  {card.title}
-                  
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+     
+  <div className='cards'>
+  {result.map((card, index) => (
+    <Card key={index} sx={{ maxWidth: 345 }} style={{ borderRadius: '15px' }}>
+      <CardActionArea>
+        {card.image.map((img, imgIndex) => (
+          <CardMedia
+          onClick={()=>openMap(card.serviceName)}
+            key={imgIndex}
+            component="img"
+            height="140"
+            style={{ height: '240px' }}
+            
+            image={imgUrl+img.filename}
+            alt={card.serviceName}
+          />
         ))}
-        </div>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center' }}>
+            {card.serviceName}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+  ))}
+</div>
       </div>
       <div className='Third-page'>
         <h2 className='whyAutoAid'> Why AutoAid ?</h2>

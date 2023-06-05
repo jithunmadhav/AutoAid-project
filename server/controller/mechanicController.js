@@ -64,7 +64,7 @@ export const mechanicSignup2=async(req,res)=>{
  
 
 export const verifyMechanicSignup = async (req, res) => {
-  const { name, email, mobile, password, searchValue, experience } = req.body;
+  const { name, email, mobile, password, searchValue, experience,service } = req.body;
   let otp = req.body.OTP;
   let mechanicToken = req.cookies.mechanicSignupToken;
   const OtpToken = jwt.verify(
@@ -81,6 +81,7 @@ export const verifyMechanicSignup = async (req, res) => {
       location:searchValue,
       experience,
       proof: req.file,
+      service:service
     });
     signupMail(email, name);
     const mechanicToken = jwt.sign(

@@ -110,7 +110,6 @@ useEffect(() => {
                       <StyledTableCell component="th" scope="row">
                         {row.serviceName}
                       </StyledTableCell>
-                     { console.log("****************",row)}
                       <StyledTableCell align="center">
                       {row.image.map((image, index) => (
                         <img
