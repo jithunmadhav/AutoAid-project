@@ -7,9 +7,9 @@ export const addServices=async(req,res)=>{
         serviceName:name,
         image:req.file
     }).then((result)=>{
-        res.json({err:false})
+        res.status(200).json({err:false})
     }).catch(error=>{
-        res.json({err:true,error})
+        res.status(500).json({err:true,error})
     })
 }
 
@@ -17,7 +17,7 @@ export const allServices=async(req,res)=>{
     try {
         let result=await serviceModel.find().lean()
     if(result){
-        res.json({err:false,result})
+        res.status(200).json({err:false,result})
     }else{
         res.status(404).json({err:true,message:'something went wrong'})
     }
@@ -25,4 +25,13 @@ export const allServices=async(req,res)=>{
         res.status(500).json({ err: true, message: 'Internal server error' });
 
     }
+}
+
+export const deleteService=async(req,res)=>{
+    const {id}=req.body;
+    await serviceModel.deleteOne({_id:id}).then((result)=>{
+        res.status(200).json({err:false,result})
+    }).catch((error)=>{
+        res.status(500).json({err:true,error})
+    })
 }
