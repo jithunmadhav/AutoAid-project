@@ -1,6 +1,6 @@
 import express from 'express'
 import { adminLogin, adminLogout, allMechanics, appliedMechanics, approveApplication, banMechanic, bannedMechanics, bannedUsers, banUser, getAllUsers, rejectApplication, unbanMechanic, unBanUser } from '../controller/adminController.js'
-import { addServices } from '../controller/serviceController.js'
+import { addServices, allServices, deleteService } from '../controller/serviceController.js'
 import upload from '../helper/multer.js'
 import { adminCheckAuth } from '../middleware/adminAuth.js'
 const router=express.Router()
@@ -15,6 +15,8 @@ router.post('/reject',rejectApplication)
 router.get('/users',getAllUsers).get('/bannedusers',bannedUsers)
 router.patch('/banuser',banUser).patch('/unbanuser',unBanUser)
 router.post('/addservice',upload.single('file'),addServices)
+router.get('/allservices',allServices)
+router.delete('/deleteservice/:id',deleteService)
 
 
 export default router

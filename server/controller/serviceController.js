@@ -28,7 +28,8 @@ export const allServices=async(req,res)=>{
 }
 
 export const deleteService=async(req,res)=>{
-    const {id}=req.body;
+    const {id}=req.params;
+    console.log(id);
     await serviceModel.deleteOne({_id:id}).then((result)=>{
         res.status(200).json({err:false,result})
     }).catch((error)=>{

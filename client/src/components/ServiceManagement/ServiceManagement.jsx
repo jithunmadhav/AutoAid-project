@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddService from './AddService'
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -15,6 +15,8 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
  
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,18 +39,39 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
+function ServiceManagement() {
+  const [selectedImageId, setSelectedImageId] = useState(null);
+  const handleCancel = () => setSelectedImageId(null);
+  const handleOpen = (id) => setSelectedImageId(id);
+  const handleClose = () => setSelectedImageId(null);
+  const [result, setResult] = useState([]);
+  const [showAddService, setshowAddService] = useState(false)
+  const dispatch = useDispatch()
+  const navigate =useNavigate()
+
 const handleDelete=(id)=>{
-  axios.get('/')
+  console.log(`/admin/deleteservice/${id}`);
+  axios.delete(`/admin/deleteservice/${id}`).then((response)=>{
+    console.log(response);
+    if(!response.data.err){
+      dispatch({type:'refresh'})
+    }
+  }).catch((err)=>{
+    dispatch({type:'refresh'})
+    navigate('/error')
+  })
 }
 
-function ServiceManagement() {
-  const [showBannedusers, setshowBannedusers] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  const handleCancel = () => setSelectedUserId(null);
-  const handleOpen = (id) => setSelectedUserId(id);
-  const handleClose = () => setSelectedUserId(null);
-  const [result, setResult] = useState([]);
-    const [showAddService, setshowAddService] = useState(false)
+useEffect(() => {
+  axios.get('/admin/allservices').then((response)=>{
+    setResult(response.data.result)
+  }).catch((err)=>{
+    dispatch({type:'refresh'})
+    navigate('/error')
+  })
+},[dispatch,navigate])
+
+
     const style = {
       position: 'absolute',
       top: '50%',
@@ -60,6 +83,8 @@ function ServiceManagement() {
       boxShadow: 24,
       p: 4,
     };
+    const imgURL='http://localhost:4000/uploads/'
+
   return (
     !showAddService ?
     <div className='admin-bg'>
@@ -72,33 +97,42 @@ function ServiceManagement() {
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell>Name</StyledTableCell>
-                    <StyledTableCell align="center">Email</StyledTableCell>
-                    <StyledTableCell align="center">Mobile</StyledTableCell>
+                    <StyledTableCell> Service name</StyledTableCell>
+                    <StyledTableCell align="center">Image</StyledTableCell>
                     <StyledTableCell align="center">Action</StyledTableCell>
+
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {result.map((row) => (
+                  {result.map((row,index) => (
                     <StyledTableRow key={row._id}>
                       <StyledTableCell component="th" scope="row">
-                        {row.name}
+                        {row.serviceName}
                       </StyledTableCell>
-                      <StyledTableCell align="center">{row.email}</StyledTableCell>
-                      <StyledTableCell align="center">{row.mobile}</StyledTableCell>
+                     { console.log("****************",row)}
+                      <StyledTableCell align="center">
+                      {row.image.map((image, index) => (
+                        <img
+                        key={index}
+                       style={{ width: '100px', height: '80px' }}
+                        src={imgURL + image.filename}
+                        alt=""
+                        />
+                        ))}
+                      </StyledTableCell>
                       <StyledTableCell align="center">
                         <Button
-                          onClick={() => handleOpen(row._id)} // Pass the user ID to handleOpen
+                          onClick={() => handleOpen(row._id)} 
                           variant="outlined"
                           color="error"
                         >
-                          Ban
+                          Delete
                         </Button>
                       </StyledTableCell>
                       <Modal
                         aria-labelledby="transition-modal-title"
                         aria-describedby="transition-modal-description"
-                        open={selectedUserId === row._id} 
+                        open={selectedImageId === row._id} 
                         onClose={handleClose}
                         closeAfterTransition
                         slots={{ backdrop: Backdrop }}
@@ -108,7 +142,7 @@ function ServiceManagement() {
                           },
                         }}
                       >
-                        <Fade in={selectedUserId === row._id}>
+                        <Fade in={selectedImageId === row._id}>
                           <Box sx={style}>
                             <Typography
                               style={{
@@ -121,7 +155,7 @@ function ServiceManagement() {
                               variant="h6"
                               component="h6"
                             >
-                              Are you sure to ban?
+                              Are you sure to delete?
                             </Typography>
                             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                               <div style={{ display: 'flex', justifyContent: 'space-around' }}>
