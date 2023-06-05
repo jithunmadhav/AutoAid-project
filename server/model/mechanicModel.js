@@ -16,7 +16,7 @@ const mechanicSchema=mongoose.Schema({
         type:Number,
         required:true
     },
-    searchValue:{
+    location:{
         type:String,
         required:true
     },
@@ -45,6 +45,10 @@ const mechanicSchema=mongoose.Schema({
     },
     proof:{
         type:Object,
+        required:true
+    },
+    service:{
+        type:String,
         required:true
     }
     
