@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import React from 'react'
 import './BookingProfile.css'
 function BookingProfile(props) {
@@ -18,7 +19,10 @@ function BookingProfile(props) {
         </div>
       </div>
     </div>
-      <div className='Booking-maindiv-2'></div>
+      <div className='Booking-maindiv-2'>
+        <Button className='quick-btn' variant='outlined' color='error'>QUICK SERVICE</Button>
+        <Button className='schedule-btn' variant='outlined'>SCHEDULE SERVICE</Button>
+      </div>
   </div>
   )
 }

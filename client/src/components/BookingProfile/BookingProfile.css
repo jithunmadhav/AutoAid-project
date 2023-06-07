@@ -37,13 +37,25 @@
 .Booking-maindiv-2{
     position: absolute;
     top: 52%;
-    left: 48%;
+    left: 61%;
     transform: translate(-50%, -50%);
     z-index: 1;
-    width: 400px;
+    width: 800px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     height: 600px ;
+}
+.quick-btn{
+    position: absolute !important;
+    bottom: 10%;
+    left: 22%;
+}
+
+.schedule-btn{
+    position: absolute !important;
+    bottom:10%;
+    left: 55%;
+
 }
