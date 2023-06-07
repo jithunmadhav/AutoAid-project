@@ -17,7 +17,7 @@ router.patch('/banuser',banUser).patch('/unbanuser',unBanUser)
 router.post('/addservice',upload.single('file'),addServices)
 router.get('/allservices',allServices)
 router.delete('/deleteservice/:id',deleteService)
-router.get('/allmechanics',mechanics)
+router.get('/allmechanics/:service',mechanics)
 
 
 export default router

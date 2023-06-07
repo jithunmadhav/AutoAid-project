@@ -11,7 +11,8 @@ import './Place.css'
 mapboxgl.accessToken = 'pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw';
 
 export default function PlaceAPI(props) {
-  console.log(props);
+  const service=props.data.data
+  console.log(service);
   const mapContainer = useRef(null);
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
@@ -38,11 +39,11 @@ export default function PlaceAPI(props) {
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v12',
         center: [longitude, latitude],
-        zoom: 11,
+        zoom: 12,
       });
 
       map.on('load', () => {
-        Axios.get('/admin/allmechanics').then((response) => {
+        Axios.get(`/admin/allmechanics/${service}`).then((response) => {
           const mechanics = response.data.mechanic;
           mechanics.forEach((mechanic) => {
             const location = mechanic.location;
@@ -69,7 +70,11 @@ export default function PlaceAPI(props) {
                     const marker = new mapboxgl.Marker({ color: 'red' })
                       .setLngLat(coordinates)
                       .addTo(map);
-
+                      const popup = new mapboxgl.Popup({ closeOnClick: false }).setHTML(
+                        `<h3>${mechanic.name}</h3><p>${mechanic.experience} years exp</p>`
+                      );
+      
+                      marker.setPopup(popup);
                     const mechanicData = {
                       ...mechanic,
                       coordinates,
@@ -82,7 +87,7 @@ export default function PlaceAPI(props) {
         });
       });
     }
-  }, [latitude, longitude]);
+  }, [latitude, longitude,service]);
 
   function calculateDistance(coord1, coord2) {
     const [lon1, lat1] = coord1;

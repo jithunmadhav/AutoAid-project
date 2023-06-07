@@ -125,7 +125,8 @@ import userModel from '../model/userModel.js'
     }
     export const mechanics=async(req,res)=>{
         try {
-            let mechanic=await mechanicModel.find({ban:false,applicationStatus:'approved'}).lean()
+            const service=req.params.service;
+            let mechanic=await mechanicModel.find({ban:false,applicationStatus:'approved',service:service}).lean()
             res.json({err:false,mechanic})
         } catch (error) {
             console.log(error);
