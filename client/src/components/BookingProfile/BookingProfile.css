@@ -1,0 +1,49 @@
+.Booking-bg{
+    background: linear-gradient(to right, #111111,#0e1136) !important;
+    height: 100vh;
+}
+.Booking-innder-div{
+    position: absolute;
+    top: 52%;
+    left: 28%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    height: 600px ;
+}
+.Booking-inner-div2{
+    display: flex;
+    padding: 5%;
+    justify-content: center;
+}
+.Booking-div2-sub1{
+    height: 500px;
+    width: 30%;
+}
+.Booking-div2-sub2{
+    height: 500px;
+    background-color: cadetblue;
+    width: 70%;
+}
+.Booking-profile-img{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+.Booking-maindiv-2{
+    position: absolute;
+    top: 52%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    height: 600px ;
+}

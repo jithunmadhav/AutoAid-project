@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import './Place.css'
+import BookingProfile from '../BookingProfile/BookingProfile';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw';
 
@@ -19,7 +20,13 @@ export default function PlaceAPI(props) {
   const [nearMechanic, setNearMechanic] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 4;
+  const [openProfile, setopenProfile] = useState(false)
+  const [data, setdata] = useState('')
 
+  const viewProfile=(data)=>{
+    setdata(data)
+    setopenProfile(true)
+  }
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -126,6 +133,7 @@ export default function PlaceAPI(props) {
   };
 
   return (
+    openProfile ? <BookingProfile data={{...data}} /> :
     <div>
       <div ref={mapContainer} style={{ height: '100vh' }} />
 
@@ -135,7 +143,7 @@ export default function PlaceAPI(props) {
         </button>
         {currentCards.map((card, index) => (
           <Card key={index} sx={{ maxWidth: 345 }} style={{ borderRadius: '15px', width: '280px', marginRight: '50px', marginLeft:'50px' }}>
-            <CardActionArea style={{ backgroundColor:'#ada7a7' }}>
+            <CardActionArea  onClick={()=>viewProfile(card)} style={{ backgroundColor:'#ada7a7' }}>
               <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center', fontSize: '35px' }}>
                 {card.name}
               </Typography>
@@ -152,6 +160,6 @@ export default function PlaceAPI(props) {
         </button>
       </div>
       
-    </div>
+    </div> 
   );
 }
