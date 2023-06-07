@@ -11,7 +11,7 @@ import cookieparser from 'cookie-parser'
 const app=express()
 dbconnect();
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://192.168.0.73:3000'],
+    origin: ['http://localhost:3000', 'http://192.168.191.127:3000'],
     credentials: true
   }));
   

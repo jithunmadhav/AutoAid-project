@@ -2,13 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import Axios from '../../axios';
 import axios from 'axios';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
+import './Place.css'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw';
 
-export default function MapWithGeolocation() {
+export default function PlaceAPI() {
   const mapContainer = useRef(null);
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
+  const [nearMechanic, setNearMechanic] = useState([]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -29,7 +35,7 @@ export default function MapWithGeolocation() {
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v12',
         center: [longitude, latitude],
-        zoom: 13,
+        zoom: 11,
       });
 
       map.on('load', () => {
@@ -61,6 +67,8 @@ export default function MapWithGeolocation() {
                       .setLngLat(coordinates)
                       .addTo(map);
 
+                    setNearMechanic((prevMechanics) => [...prevMechanics, mechanic]);
+                    
                     const popup = new mapboxgl.Popup({ closeOnClick: false }).setHTML(
                       `<h3>${mechanic.name}</h3><p>${mechanic.experience} years exp</p>`
                     );
@@ -75,12 +83,11 @@ export default function MapWithGeolocation() {
     }
   }, [latitude, longitude]);
 
-  // Function to calculate the distance between two coordinates using the Haversine formula
   function calculateDistance(coord1, coord2) {
     const [lon1, lat1] = coord1;
     const [lon2, lat2] = coord2;
 
-    const R = 6371; // Radius of the Earth in kilometers
+    const R = 6371;  
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
     const dLon = ((lon2 - lon1) * Math.PI) / 180;
     const a =
@@ -92,8 +99,27 @@ export default function MapWithGeolocation() {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
 
-    return distance * 1000; // Convert distance to meters
+    return distance * 1000;  
   }
-
-  return <div ref={mapContainer} style={{ height: '100vh' }} />;
+  return (
+    <div>
+      <div ref={mapContainer} style={{ height: '100vh' }} />
+      <div className='cards-place'>
+        {nearMechanic.map((card, index) => (
+          <Card key={index} sx={{ maxWidth: 345 }} style={{ borderRadius: '15px', width: '280px' }}>
+            <CardActionArea>
+              <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center', fontSize: '35px' }}>
+                {card.name}
+              </Typography>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center' }}>
+                  {card.experience}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
 }
