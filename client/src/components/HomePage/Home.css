@@ -80,4 +80,7 @@
     margin-top: 50px;
     font-family: 'Merienda', cursive;
   }
-   
+  .footer{
+    height: 25vh;
+    background-color: #000000e0;
+}

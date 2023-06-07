@@ -10,11 +10,14 @@ import './Place.css'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw';
 
-export default function PlaceAPI() {
+export default function PlaceAPI(props) {
+  console.log(props);
   const mapContainer = useRef(null);
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [nearMechanic, setNearMechanic] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 4;
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -67,13 +70,11 @@ export default function PlaceAPI() {
                       .setLngLat(coordinates)
                       .addTo(map);
 
-                    setNearMechanic((prevMechanics) => [...prevMechanics, mechanic]);
-                    
-                    const popup = new mapboxgl.Popup({ closeOnClick: false }).setHTML(
-                      `<h3>${mechanic.name}</h3><p>${mechanic.experience} years exp</p>`
-                    );
-
-                    marker.setPopup(popup);
+                    const mechanicData = {
+                      ...mechanic,
+                      coordinates,
+                    };
+                    setNearMechanic((prevMechanics) => [...prevMechanics, mechanicData]);
                   }
                 }
               });
@@ -87,7 +88,7 @@ export default function PlaceAPI() {
     const [lon1, lat1] = coord1;
     const [lon2, lat2] = coord2;
 
-    const R = 6371;  
+    const R = 6371;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
     const dLon = ((lon2 - lon1) * Math.PI) / 180;
     const a =
@@ -99,27 +100,53 @@ export default function PlaceAPI() {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
 
-    return distance * 1000;  
+    return distance * 1000;
   }
+
+  // Pagination Logic
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = nearMechanic.slice(indexOfFirstCard, indexOfLastCard);
+
+  const handleNextPage = () => {
+    if (indexOfLastCard < nearMechanic.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div>
       <div ref={mapContainer} style={{ height: '100vh' }} />
+
       <div className='cards-place'>
-        {nearMechanic.map((card, index) => (
-          <Card key={index} sx={{ maxWidth: 345 }} style={{ borderRadius: '15px', width: '280px' }}>
-            <CardActionArea>
+      <button    onClick={handlePrevPage} disabled={currentPage === 1}>
+          Prev
+        </button>
+        {currentCards.map((card, index) => (
+          <Card key={index} sx={{ maxWidth: 345 }} style={{ borderRadius: '15px', width: '280px', marginRight: '50px', marginLeft:'50px' }}>
+            <CardActionArea style={{ backgroundColor:'#ada7a7' }}>
               <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center', fontSize: '35px' }}>
                 {card.name}
               </Typography>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center' }}>
-                  {card.experience}
+                  {card.experience} years exp
                 </Typography>
               </CardContent>
             </CardActionArea>
           </Card>
         ))}
+         <button   onClick={handleNextPage} disabled={indexOfLastCard >= nearMechanic.length}>
+          Next
+        </button>
       </div>
+      
     </div>
   );
 }

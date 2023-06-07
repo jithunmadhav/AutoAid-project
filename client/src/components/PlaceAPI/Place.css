@@ -1,26 +1,33 @@
-.map-container {
-  height: 100vh;
-}
-
-.sidebar {
-  background-color: rgba(35, 55, 75, 0.9);
-  color: #fff;
-  padding: 6px 12px;
-  font-family: monospace;
-  z-index: 1;
-  position: absolute;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  margin: 12px;
-  border-radius: 4px;
-}
-.cards-place{
+.cards-place {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-left: 60px;
   margin-right: 60px;
   margin-top: 170px;
   border-radius: 30px;
   margin-bottom: 150px;
+  position: absolute;
+  top: 63%;
+  left: 0;
+  right: 0;
 }
+
+.cards-place button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  color: #000000;
+  cursor: pointer;
+}
+
+.cards-place button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.cards-place button:first-child {
+  margin-right: 10px;
+}
+
+

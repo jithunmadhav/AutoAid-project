@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Navbar.css';
-import { useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 
 
 function Navbar() {
@@ -18,9 +18,10 @@ function Navbar() {
     const closeNavbar = () => {
       setIsOpen(false);
     };
+   
   
     return (
-      <nav className="navbar navBG navbar-expand-lg navbar-light bg-light" style={{position:'fixed',width:'100%', zIndex:'10'}}>
+      <nav className="navbar navBG navbar-expand-lg navbar-light bg-light" style={{position:'fixed',width:'100%' ,height:'50px', zIndex:'10'}}>
             {/* <img src="/images/autoaid.png" alt="" /> */}
             <h1 className='LogoName'>AUTO AID</h1>
         <div className="container">
@@ -38,7 +39,7 @@ function Navbar() {
           <div  style={{ justifyContent:'flex-end' }}  className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
             <ul  className="navbar-nav ml-auto ">
               <li  className="nav-item">
-                <Link className="nav-link" to="/" onClick={closeNavbar}>
+                <Link className="nav-link" to="/" onClick={()=>{closeNavbar();}}>
                   Home
                 </Link>
               </li>

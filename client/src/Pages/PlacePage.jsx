@@ -2,11 +2,11 @@ import React from 'react'
 import Navbar from '../components/NavBar/Navbar'
 import PlaceAPI from '../components/PlaceAPI/PlaceAPI'
 
-function PlacePage() {
+function PlacePage(props) {
   return (
     <div>
       <Navbar/>
-      <PlaceAPI/>
+      <PlaceAPI data={{...props.data}}/>
     </div>
   )
 }

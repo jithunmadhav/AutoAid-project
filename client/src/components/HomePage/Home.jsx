@@ -7,11 +7,16 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import axios from '../../axios'
 import { useNavigate } from 'react-router-dom';
+import PlacePage from '../../Pages/PlacePage';
+import { useSelector } from 'react-redux';
 
 function Home() {
+  const { user,refresh} = useSelector((state) => state);
 const [result, setresult] = useState([])
 const navigate=useNavigate()
-
+const [showPlace, setshowPlace] = useState(false)
+console.log(showPlace);
+const [data, setdata] = useState('')
   useEffect(() => {
    axios.get('/admin/allservices').then((response)=>{
     if(!response.data.err){
@@ -21,14 +26,17 @@ const navigate=useNavigate()
    }).catch(()=>{
     navigate('/error')
    })
-  },[navigate])
+  },[navigate,refresh])
 const imgUrl='http://localhost:4000/uploads/'
 const openMap=(name)=>{
-  console.log(name);
-  navigate('/place')
+  setdata(name)
+  setshowPlace(true)  
 }
   return (
-    <>
+    showPlace===true && user.login ?  <PlacePage data={{data}}/>
+      :showPlace && !user.login ? navigate('/user/login')
+      
+     : ( <>
       <div className='background'>
         <div style={{ width: '50%' }}>
           <img className='background-img' src="https://autoaid.in/auto-aid-logo.png" alt="logo" />
@@ -78,7 +86,9 @@ const openMap=(name)=>{
           <p className='whyAutoAid' style={{ fontSize:'20px' }}>In short, the user can carry a garage on his phone. 
               Helping our users to enjoy a hassle-free voyage across Kerala is the primary intention behind the development of Auto Aid.</p>
       </div>
-    </>
+      <div className='footer'></div>
+    </>)
+   
   );
 }
 
