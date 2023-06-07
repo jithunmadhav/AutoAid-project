@@ -34,7 +34,7 @@ export const mechanicSignup2=async(req,res)=>{
         if(password==confirmPassword){
            let otp=randomNumber()
            console.log(otp);
-           sentOTP(email,otp);
+        //    sentOTP(email,otp);
         //    mobileOTP(mobile,otp)
             //   mobileOTP2(mobile,otp)
             const mechanicToken=jwt.sign({
@@ -83,7 +83,7 @@ export const verifyMechanicSignup = async (req, res) => {
       proof: req.file,
       service:service
     });
-    signupMail(email, name);
+    // signupMail(email, name);
     const mechanicToken = jwt.sign(
       {
         id: user._id,

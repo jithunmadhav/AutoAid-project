@@ -123,10 +123,19 @@ import userModel from '../model/userModel.js'
             res.json({err:true,err,message:"something went wrong"})
         })
     }
+    export const mechanics=async(req,res)=>{
+        try {
+            let mechanic=await mechanicModel.find({ban:false,applicationStatus:'approved'}).lean()
+            res.json({err:false,mechanic})
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     export const allMechanics = async (req, res) => {
         try {
           const { search, filter, page } = req.query;
-          const perPage = 5; 
+          const perPage = 8; 
           const currentPage = parseInt(page) || 1; 
           
           const query = {
