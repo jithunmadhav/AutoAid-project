@@ -17,7 +17,7 @@ function AddVehicle() {
         setvehicleResult(response.data.result)
       }
      })
-    }, [])
+    }, [vehicleResult,id])
   return (
     openform ? <AddVehicleForm/> :
     <div className='vehicle-background'>

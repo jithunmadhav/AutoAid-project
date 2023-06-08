@@ -183,7 +183,9 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
             res.status(404).json({err:true,message:'All fields are required'})
         }
     }
-  
+   export const allVehicle=(req,res)=>{
+    
+   }
     
     export const userLogout = (req, res) => {
         return res
