@@ -98,8 +98,8 @@ export default function PlaceAPI() {
     }
   }, [latitude, longitude,service]);
 
-  function calculateDistance(coord1, coord2) {
-    const [lon1, lat1] = coord1;
+  function calculateDistance(coord1, coord2) { 
+   const [lon1, lat1] = coord1;
     const [lon2, lat2] = coord2;
 
     const R = 6371;

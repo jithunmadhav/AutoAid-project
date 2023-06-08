@@ -7,16 +7,12 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import axios from '../../axios'
 import { useNavigate } from 'react-router-dom';
-import PlacePage from '../../Pages/PlacePage';
 import { useSelector } from 'react-redux';
 
 function Home() {
-  const { user,refresh} = useSelector((state) => state);
+  const {refresh} = useSelector((state) => state);
 const [result, setresult] = useState([])
 const navigate=useNavigate()
-const [showPlace, setshowPlace] = useState(false)
-console.log(showPlace);
-const [data, setdata] = useState('')
   useEffect(() => {
    axios.get('/admin/allservices').then((response)=>{
     if(!response.data.err){
@@ -29,8 +25,6 @@ const [data, setdata] = useState('')
   },[navigate,refresh])
 const imgUrl='http://localhost:4000/uploads/'
 const openMap=(name)=>{
-  setdata(name)
-  // setshowPlace(true)  
   navigate('/location', { state: { serviceName: name } });
 
 }

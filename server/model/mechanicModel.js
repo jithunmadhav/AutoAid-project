@@ -48,7 +48,15 @@ const mechanicSchema=mongoose.Schema({
         required:true
     },
     service:{
-        type:String,
+        type:Array,
+        required:true
+    },
+    about:{
+        type :String,
+        required:true
+    },
+    minAmount:{
+        type:Number,
         required:true
     }
     
