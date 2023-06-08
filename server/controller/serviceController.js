@@ -1,3 +1,4 @@
+import { randomNumber } from "../helper/randomNum.js"
 import serviceModel from "../model/serviceModel.js"
 import userModel from "../model/userModel.js"
 
@@ -38,8 +39,9 @@ export const deleteService=async(req,res)=>{
 }
 export const addVehicle=async(req,res)=>{
     const {manufacture,vehicleName,regNo,kilometer,fuel,manufactureYear,id}=req.body
+    const Id=randomNumber();
     if(manufacture.trim() && vehicleName.trim() && regNo.trim() && kilometer.trim() && fuel.trim() && manufactureYear.trim()){
-        await userModel.updateOne({_id:id},{$addToSet:{vehicle:req.body}}).then((result)=>{
+        await userModel.updateOne({_id:id},{$addToSet:{vehicle:{$each:[{...req.body,Id}]}}}).then((result)=>{
             res.status(200).json({err:false,message:'Successfully '})
         }).catch(()=>{
             res.status(404).json({err:true,message:'Error occured '})
@@ -59,13 +61,12 @@ if(result){
 }
 
 export const deleteVehicle = async (req, res) => {
-    console.log(req.body);
     const { userId, vehicleId } = req.body;
     
     try {
       const result = await userModel.updateOne(
         { _id: userId },
-        { $pull: { vehicle: { id: vehicleId } } }
+        { $pull: { vehicle: { Id: vehicleId } } }
       );
       
       console.log(result);
@@ -77,3 +78,4 @@ export const deleteVehicle = async (req, res) => {
   };
   
 
+          
