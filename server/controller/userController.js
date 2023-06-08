@@ -188,7 +188,9 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
     const id=req.params.id;
     const result=await userModel.find({_id:id},{password:0}).lean()
     if(result){
-        
+        res.status(200).json({err:false,result})
+    }else{
+        res.status(404).json({err:true,message:'somethind went wrong'})
     }
    }
     
