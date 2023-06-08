@@ -19,6 +19,7 @@ import UserManagementPage from './Pages/UserManagementPage';
 import MechanicManagement from './Pages/MechanicManagementPage';
 import ErrorPage from './Pages/ErrorPage';
 import ServiceManagementPage from './Pages/ServiceManagementPage';
+import PlacePage from './Pages/PlacePage';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -79,7 +80,8 @@ function App() {
               <Route element={<HomePage />} path="/" />
               <Route element={<ForgotPasswordPage />} path={"/forgotPassword"}/>
               <Route element={<Navigate to={'/user/login'} />} path="/user/profile" />
-              
+              <Route element={<Navigate to={'/user/login'} />} path={'/location'} />
+
             </>
           )}
 
@@ -87,6 +89,7 @@ function App() {
             <>
               <Route element={<HomePage />} path="/" />
               <Route element={<ProfilePage />} path="/user/profile" />
+              <Route element={<PlacePage/>} path={'/location'} />
             </>
           )}
 

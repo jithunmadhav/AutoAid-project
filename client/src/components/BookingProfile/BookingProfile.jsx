@@ -2,7 +2,6 @@ import { Button } from '@mui/material';
 import React from 'react'
 import './BookingProfile.css'
 function BookingProfile(props) {
-    console.log("++++++++++++++++++",props.data);
   return (
     <div className='profile-background'>
     <div className='Booking-innder-div'>

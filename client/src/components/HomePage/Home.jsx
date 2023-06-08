@@ -30,13 +30,12 @@ const [data, setdata] = useState('')
 const imgUrl='http://localhost:4000/uploads/'
 const openMap=(name)=>{
   setdata(name)
-  setshowPlace(true)  
+  // setshowPlace(true)  
+  navigate('/location', { state: { serviceName: name } });
+
 }
   return (
-    showPlace===true && user.login ?  <PlacePage data={{data}}/>
-      :showPlace && !user.login ? navigate('/user/login')
-      
-     : ( <>
+   <>
       <div className='background'>
         <div style={{ width: '50%' }}>
           <img className='background-img' src="https://autoaid.in/auto-aid-logo.png" alt="logo" />
@@ -87,7 +86,7 @@ const openMap=(name)=>{
               Helping our users to enjoy a hassle-free voyage across Kerala is the primary intention behind the development of Auto Aid.</p>
       </div>
       <div className='footer'></div>
-    </>)
+    </>
    
   );
 }

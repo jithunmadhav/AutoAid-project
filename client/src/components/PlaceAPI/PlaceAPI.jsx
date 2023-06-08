@@ -8,11 +8,13 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import './Place.css'
 import BookingProfile from '../BookingProfile/BookingProfile';
+import { useLocation } from 'react-router-dom';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw';
 
-export default function PlaceAPI(props) {
-  const service=props.data.data
+export default function PlaceAPI() {
+  const location = useLocation();
+  const service=location.state.serviceName
   console.log(service);
   const mapContainer = useRef(null);
   const [latitude, setLatitude] = useState('');
