@@ -77,11 +77,24 @@ export const deleteVehicle = async (req, res) => {
     }
   };
 
-  export const editVehicleDetails=async(req,res)=>{
-    const {userId,vehicleId}=req.params;
-    const result=await userModel.findOne({_id:userId},{vehicle:{id:vehicleId}})
-    console.log(result);
-  }
+  export const editVehicleDetails = async (req, res) => {
+    console.log(req.query);
+    const { userId } = req.query;
+    const vehicleId=parseInt(req.query.vehicleId)
+    try {
+      const result = await userModel.findOne(
+        { _id: userId, 'vehicle.Id': vehicleId },
+        { 'vehicle.$': 1 }
+      );
+  
+      console.log(result);
+      res.status(200).json({ err: false });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ err: true, message: 'Failed to retrieve vehicle details' });
+    }
+  };
+  
   
 
           
