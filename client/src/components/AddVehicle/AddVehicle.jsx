@@ -30,14 +30,14 @@ function AddVehicle() {
         <button onClick={()=>openForm()} className='vehicle-btn' >+</button>
         {
           vehicleResult.map((item)=>{
-            <div className='vehicle-table'>
-              <div style={{width:'50%'}}>
+            return  ( <div className='vehicle-table'>
+              <div style={{width:'50%',height:'100px'}}>
+                <p>{item.manufacture}</p>
+              </div>
+              <div style={{width:'50%',height:'100px'}}>
 
               </div>
-              <div>
-
-              </div>
-            </div>
+            </div>)
 
           })
         }
