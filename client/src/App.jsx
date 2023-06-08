@@ -20,6 +20,7 @@ import MechanicManagement from './Pages/MechanicManagementPage';
 import ErrorPage from './Pages/ErrorPage';
 import ServiceManagementPage from './Pages/ServiceManagementPage';
 import PlacePage from './Pages/PlacePage';
+import AddVehiclePage from './Pages/AddVehiclePage';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -81,6 +82,7 @@ function App() {
               <Route element={<ForgotPasswordPage />} path={"/forgotPassword"}/>
               <Route element={<Navigate to={'/user/login'} />} path="/user/profile" />
               <Route element={<Navigate to={'/user/login'} />} path={'/location'} />
+              <Route element={<Navigate to={'/user/login'} />} path='/addvehicle'/>
 
             </>
           )}
@@ -90,6 +92,7 @@ function App() {
               <Route element={<HomePage />} path="/" />
               <Route element={<ProfilePage />} path="/user/profile" />
               <Route element={<PlacePage/>} path={'/location'} />
+              <Route element={<AddVehiclePage/>} path='/addvehicle'/>
             </>
           )}
 

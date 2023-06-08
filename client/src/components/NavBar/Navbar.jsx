@@ -44,8 +44,8 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about" onClick={closeNavbar}>
-                  About
+                <Link className="nav-link" to="/addvehicle" onClick={closeNavbar}>
+                  Vechicle
                 </Link>
               </li>
               <li className="nav-item">

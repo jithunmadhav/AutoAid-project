@@ -1,0 +1,50 @@
+.vehicle-background{
+    background: linear-gradient(to right, #111111,#0e1136) !important;
+    height: 100vh;
+}
+.vehicle-inner-div{
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 1200px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+     
+    height: 700px ;
+}
+.vehicle-btn{
+    width: 4%;
+    outline: none !important;
+    background: linear-gradient(-5deg,  #111111,#0e1136);
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+    position: absolute;
+    right: 3%;
+    top: 4%;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 24px;
+}
+.vehicle-btn::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+    box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0), 0 3px 3px rgba(0, 0, 0, .2);
+    border-radius: 5px;
+}
+.vehicle-btn:hover::after {
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.2);
+}
