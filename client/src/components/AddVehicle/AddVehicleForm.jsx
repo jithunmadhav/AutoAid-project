@@ -6,9 +6,14 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import axios from '../../axios';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 function AddVehicleForm() {
    const navgate=useNavigate()
-    const [fuel, setfuel] = useState('')
+   const {user}=useSelector((state)=>{
+    return state
+   })
+   const id=user.details._id;
+   const [fuel, setfuel] = useState('')
     const [closeform, setcloseform] = useState(false)
     const [manufacture, setmanufacture] = useState('')
     const [vehiclename, setvehiclename] = useState('')
@@ -22,7 +27,7 @@ function AddVehicleForm() {
     const handleSubmit=(e)=>{
         e.preventDefult();
         if(manufacture.trim() && vehiclename.trim()&& regno.trim()&&kilometer.trim()&&fuel.trim()&&manufactureyear.trim()){
-            axios.post('/user/addvehicle',{manufacture,vehiclename,regno,kilometer,fuel,manufactureyear}).then((response)=>{
+            axios.post('/user/addvehicle',{manufacture,vehiclename,regno,kilometer,fuel,manufactureyear,id}).then((response)=>{
                 if(!response.data.err){
                     navgate('/addvehicle')
                 }else{
@@ -51,7 +56,7 @@ function AddVehicleForm() {
   </div>
   <div className='vehicle-classic'>
   <p className='errorMessage'>{err}</p>
-    <form style={{ marginTop:'-43px' }} className='Form' >
+    <form style={{ marginTop:'-43px' }} className='Form' onSubmit={handleSubmit} >
       <fieldset className='username'>
         <input type="text" placeholder="Manufacture"  value={manufacture} onChange={(e)=>setmanufacture(e.target.value)} required/>
       </fieldset>
@@ -69,7 +74,6 @@ function AddVehicleForm() {
           <Select
            labelId="demo-simple-select-helper-label"
            id="demo-simple-select-helper"
-           multiple
              value={fuel}
             onChange={(event) => setfuel(event.target.value)}
           className="select-input" // Add a custom CSS class
