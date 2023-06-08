@@ -28,8 +28,19 @@ function AddVehicle() {
 
         <h4 className='vehicle-heading'>My Vehicle</h4>
         <button onClick={()=>openForm()} className='vehicle-btn' >+</button>
-        {}
-        <div className='vehicle-table'></div>
+        {
+          vehicleResult.map((item)=>{
+            <div className='vehicle-table'>
+              <div style={{width:'50%'}}>
+
+              </div>
+              <div>
+
+              </div>
+            </div>
+
+          })
+        }
 
       </div>
     </div>
