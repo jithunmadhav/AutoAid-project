@@ -2,13 +2,16 @@ import axios from '../../axios'
 import React, { useEffect, useState } from 'react'
 import './AddVehicle.css'
 import AddVehicleForm from './AddVehicleForm'
+import { useSelector } from 'react-redux'
 function AddVehicle() {
+  const {user} = useSelector(state => state)
+  const id=user.details._id
     const [openform, setopenform] = useState(false)
     const openForm=()=>{
         setopenform(true)
     }
     useEffect(() => {
-     axios
+     axios.get('/user/allvehicle')
     }, [])
   return (
     openform ? <AddVehicleForm/> :
