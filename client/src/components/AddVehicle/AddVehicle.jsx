@@ -31,8 +31,10 @@ function AddVehicle() {
         {
           vehicleResult.map((item)=>{
             return  ( <div className='vehicle-table'>
-              <div style={{width:'50%',height:'100px'}}>
-                <p>{item.manufacture}</p>
+              <div style={{width:'50%',height:'100px', textAlign:'left' ,paddingLeft:'20px',marginBottom:'0px'}}>
+                <p style={{ marginBottom:'0px' }}>{item.vehicleName}</p>
+                <p style={{ marginBottom:'0px' }}>{item.regNo}</p>
+                <p style={{ marginBottom:'0px' }}>{item.regNo}</p>
               </div>
               <div style={{width:'50%',height:'100px'}}>
 
