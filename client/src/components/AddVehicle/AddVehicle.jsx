@@ -7,17 +7,20 @@ function AddVehicle() {
   const {user} = useSelector(state => state)
   const id=user.details._id
   const [vehicleResult, setvehicleResult] = useState([])
+  useEffect(() => {
+    axios.get(`/user/allvehicle/${id}`).then((response)=>{
+      if(!response.data.err){
+        setvehicleResult(response.data.result[0].vehicle)
+      }
+    })
+  },[id])
+  
+  console.log(vehicleResult);
     const [openform, setopenform] = useState(false)
     const openForm=()=>{
         setopenform(true)
     }
-    useEffect(() => {
-     axios.get(`/user/allvehicle/${id}`).then((response)=>{
-      if(!response.data.err){
-        setvehicleResult(response.data.result)
-      }
-     })
-    }, [vehicleResult,id])
+    
   return (
     openform ? <AddVehicleForm/> :
     <div className='vehicle-background'>
