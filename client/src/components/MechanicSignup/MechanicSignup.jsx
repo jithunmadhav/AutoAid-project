@@ -47,6 +47,7 @@ function MechanicSignup() {
       <fieldset className='password'>
         <input type="text"  value={mobile} onChange={(e=>setmobile(e.target.value))} placeholder="Mobile"  required/>
       </fieldset>
+   
       <fieldset className='password'>
         <input type="password"  value={password} onChange={(e=>setpassword(e.target.value))} placeholder="password"  required/>
       </fieldset>

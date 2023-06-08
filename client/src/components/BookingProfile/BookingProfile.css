@@ -13,10 +13,11 @@
     border-radius: 10px;
     box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    height: 600px ;
+    height: 500px ;
 }
 .Booking-inner-div2{
     display: flex;
+    margin-top: 70px;
     padding: 5%;
     justify-content: center;
 }
@@ -37,15 +38,15 @@
 .Booking-maindiv-2{
     position: absolute;
     top: 52%;
-    left: 61%;
+    left: 58%;
     transform: translate(-50%, -50%);
     z-index: 1;
-    width: 800px;
+    width: 700px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    height: 600px ;
+    height: 500px ;
 }
 .quick-btn{
     position: absolute !important;

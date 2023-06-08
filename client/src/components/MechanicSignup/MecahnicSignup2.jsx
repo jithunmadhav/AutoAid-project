@@ -7,16 +7,38 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 function MechanicSignup2(props) {
+  const theme = useTheme();
   const [searchValue, setSearchValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [experience, setExperience] = useState('');
   const [err, setErr] = useState('');
   const [showOtp, setShowOtp] = useState(false);
   const [file, setfile] = useState('')
-  const [service, setservice] = useState('')
+  const [service, setservice] = useState([])
   const [serviceResult, setserviceResult] = useState([])
-  
+  const [minAmount, setminAmount] = useState('')
+
   useEffect(() => {
    Axios.get('/admin/allservices').then((response)=>{
     console.log(response.data.result);
@@ -47,6 +69,15 @@ function MechanicSignup2(props) {
     setSuggestions([]);
   };
 
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setservice(
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
@@ -69,7 +100,7 @@ function MechanicSignup2(props) {
         <div className="Signup-connect-mechanic"></div>
         <div className="Signup-classic">
           <p className="errorMessage">{err}</p>
-          <form className="Form" onSubmit={handleFormSubmit}>
+          <form style={{ marginTop:'-39px' }} className="Form" onSubmit={handleFormSubmit}>
             <fieldset className="username">
               <div style={{ position: 'relative' }}>
                 <input
@@ -102,13 +133,17 @@ function MechanicSignup2(props) {
                 required
               />
             </fieldset>
+            <fieldset className='password'>
+        <input type="number"  value={minAmount} onChange={(e=>setminAmount(e.target.value))} placeholder="Minimum amount"  required/>
+          </fieldset>
            
              
-            <FormControl sx={{ m: 1, minWidth: 250 ,}} size='small'> 
+            {/* <FormControl sx={{ m: 1, minWidth: 250 ,}} size='small'> 
            <InputLabel style={{ fontSize:'14px' }}  id="demo-simple-select-helper-label">Select service</InputLabel>
           <Select
            labelId="demo-simple-select-helper-label"
            id="demo-simple-select-helper"
+           multiple
              value={service}
             onChange={(event) => setservice(event.target.value)}
           className="select-input" // Add a custom CSS class
@@ -120,7 +155,29 @@ function MechanicSignup2(props) {
          return <MenuItem value={item.serviceName}>{item.serviceName}</MenuItem>
         })}
         </Select>
-        </FormControl>
+        </FormControl> */}
+     <FormControl sx={{ m: 1, width: 300 }} size="small">
+     <InputLabel style={{ fontSize:'14px' ,marginTop:'8px' }}  id="demo-simple-select-helper-label">Select service</InputLabel>  <Select
+    labelId="demo-multiple-name-label"
+    id="demo-multiple-name"
+    multiple
+    className="select-input" 
+    value={service}
+    onChange={handleChange}
+    input={<OutlinedInput label="Name" />}
+    MenuProps={MenuProps}
+  >
+    {serviceResult.map((item) => (
+      <MenuItem
+        key={item._id}
+        value={item.serviceName} // Assuming "serviceName" is the desired value to be stored in the state
+        style={getStyles(item.serviceName, service, theme)}
+      >
+        {item.serviceName}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
 
             
             <fieldset className="username" style={{ marginTop:'-6px' }}>
@@ -134,7 +191,7 @@ function MechanicSignup2(props) {
         </div>
       </div>
       {showOtp && (
-        <OtpVerification data={{ ...props.data,file, searchValue, experience,service, reset: 'mechanicsignup' }} />
+        <OtpVerification data={{ ...props.data,file, searchValue, experience,service,minAmount, reset: 'mechanicsignup' }} />
       )}
     </div>
   );

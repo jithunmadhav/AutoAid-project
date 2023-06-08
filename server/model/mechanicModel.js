@@ -53,7 +53,6 @@ const mechanicSchema=mongoose.Schema({
     },
     about:{
         type :String,
-        required:true
     },
     minAmount:{
         type:Number,
