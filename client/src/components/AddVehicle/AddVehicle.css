@@ -192,6 +192,7 @@
     
   }
   .vehicle-table{
+    display: flex;
     margin: 31px 0px -13px 58px;
     width: 91%;
     height: 110px;
