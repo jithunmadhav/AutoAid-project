@@ -76,6 +76,12 @@ export const deleteVehicle = async (req, res) => {
       res.status(500).json({ err: true, message: 'Failed to delete vehicle' });
     }
   };
+
+  export const editVehicleDetails=async(req,res)=>{
+    const {userId,vehicleId}=req.params;
+    const result=await userModel.findOne({_id:userId},{vehicle:{id:vehicleId}})
+    console.log(result);
+  }
   
 
           

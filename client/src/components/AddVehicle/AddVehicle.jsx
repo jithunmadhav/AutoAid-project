@@ -5,7 +5,7 @@ import AddVehicleForm from './AddVehicleForm'
 import { useDispatch, useSelector } from 'react-redux'
 
 function AddVehicle() {
-  const { user } = useSelector(state => state)
+  const { user,refresh } = useSelector(state => state)
   const id = user.details._id
   const [vehicleResult, setVehicleResult] = useState([])
   const dispatch = useDispatch()
@@ -15,7 +15,7 @@ function AddVehicle() {
         setVehicleResult(response.data.result[0].vehicle)
       }
     })
-  }, [id])
+  }, [id,refresh])
 
   console.log(vehicleResult)
 
@@ -23,8 +23,8 @@ function AddVehicle() {
   const openFormHandler = () => {
     setOpenForm(true)
   }
-  const editVehicle=(id)=>{
-
+  const editVehicle=(vehicleId,userId)=>{
+    axios.get('/user/vehicleDetails',{params:{vehicleId,userId}})
   }
   const deleteVehicle=(vehicleId,userId)=>{
     console.log("++++++++++",vehicleId);
@@ -66,7 +66,7 @@ function AddVehicle() {
                 </div>
                 <div style={{ width: '10%', height: '100px' }}>
                   <div style={{ paddingTop:'30px' }} >
-                    <button onClick={()=>editVehicle(item._id)} style={{ marginRight:'20px' }}>
+                    <button onClick={()=>editVehicle(item.Id,id)} style={{ marginRight:'20px' }}>
                       
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
