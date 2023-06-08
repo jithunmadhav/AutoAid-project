@@ -58,10 +58,22 @@ if(result){
 }
 }
 
-export const deleteVehicle=async(req,res)=>{
-    const {userId,vehicleId}=req.body;
-    await userModel.updateOne({_id:userId},{$pull:{vehicle:{vehicleId:vehicleId}}}).then((result)=>{
-        console.log(result);
-    })
-}
+export const deleteVehicle = async (req, res) => {
+    console.log(req.body);
+    const { userId, vehicleId } = req.body;
+    
+    try {
+      const result = await userModel.updateOne(
+        { _id: userId },
+        { $pull: { vehicle: { id: vehicleId } } }
+      );
+      
+      console.log(result);
+      res.status(200).json({ err: false, message: 'Vehicle deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ err: true, message: 'Failed to delete vehicle' });
+    }
+  };
+  
 
