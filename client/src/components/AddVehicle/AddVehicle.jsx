@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 function AddVehicle() {
   const {user} = useSelector(state => state)
   const id=user.details._id
+  const [vehicleResult, setvehicleResult] = useState([])
     const [openform, setopenform] = useState(false)
     const openForm=()=>{
         setopenform(true)
@@ -13,7 +14,7 @@ function AddVehicle() {
     useEffect(() => {
      axios.get(`/user/allvehicle/${id}`).then((response)=>{
       if(!response.data.err){
-        
+        setvehicleResult(response.data.result)
       }
      })
     }, [])
