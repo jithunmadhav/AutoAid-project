@@ -16,6 +16,12 @@
      
     height: 700px ;
 }
+.vehicle-heading{
+    margin-bottom: 59px;
+    text-align: center;
+    font-family: 'Monomaniac One', sans-serif;
+    margin-top: 20px;
+}
 .vehicle-btn{
     width: 4%;
     outline: none !important;
@@ -184,4 +190,13 @@
        padding: 38px 50px;
     }
     
+  }
+  .vehicle-table{
+    margin: 31px 0px -13px 58px;
+    width: 91%;
+    height: 100px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
   }
