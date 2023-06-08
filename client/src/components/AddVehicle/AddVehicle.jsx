@@ -11,7 +11,11 @@ function AddVehicle() {
         setopenform(true)
     }
     useEffect(() => {
-     axios.get('/user/allvehicle')
+     axios.get(`/user/allvehicle/${id}`).then((response)=>{
+      if(!response.data.err){
+        
+      }
+     })
     }, [])
   return (
     openform ? <AddVehicleForm/> :
