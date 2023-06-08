@@ -4,12 +4,36 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import axios from '../../axios';
+import { useNavigate } from 'react-router-dom';
 function AddVehicleForm() {
-   
-    const [fuel, setfuel] = useState([])
+   const navgate=useNavigate()
+    const [fuel, setfuel] = useState('')
     const [closeform, setcloseform] = useState(false)
+    const [manufacture, setmanufacture] = useState('')
+    const [vehiclename, setvehiclename] = useState('')
+    const [regno, setregno] = useState('')
+    const [kilometer, setkilometer] = useState('')
+    const [manufactureyear, setmanufactureyear] = useState('')
+    const [err, seterr] = useState('')
     const closeForm=()=>{
         setcloseform(true)
+    }
+    const handleSubmit=(e)=>{
+        e.preventDefult();
+        if(manufacture.trim() && vehiclename.trim()&& regno.trim()&&kilometer.trim()&&fuel.trim()&&manufactureyear.trim()){
+            axios.post('/user/addvehicle',{manufacture,vehiclename,regno,kilometer,fuel,manufactureyear}).then((response)=>{
+                if(!response.data.err){
+                    navgate('/addvehicle')
+                }else{
+                    seterr(response.data.message)
+                }
+            })
+        }else{
+            seterr("All fields are required")
+        }
+            
+
     }
   return (
     closeform ?<AddVehiclePage/> :
@@ -26,19 +50,19 @@ function AddVehicleForm() {
   <div className='vehicle-connect'>
   </div>
   <div className='vehicle-classic'>
-  {/* <p className='errorMessage'>{err}</p> */}
+  <p className='errorMessage'>{err}</p>
     <form style={{ marginTop:'-43px' }} className='Form' >
       <fieldset className='username'>
-        <input type="text" placeholder="Manufacture"  required/>
+        <input type="text" placeholder="Manufacture"  value={manufacture} onChange={(e)=>setmanufacture(e.target.value)} required/>
       </fieldset>
       <fieldset className='email'>
-        <input type="email" placeholder="Vehicle name" required/>
+        <input type="text" placeholder="Vehicle name" value={vehiclename} onChange={(e)=>setvehiclename(e.target.value)} required/>
       </fieldset>
       <fieldset className='password'>
-        <input type="text" placeholder="Reg no"   required/>
+        <input type="text" placeholder="Reg no" value={regno} onChange={(e)=>setregno(e.target.value)}   required/>
       </fieldset>
       <fieldset className='password'>
-        <input type="number" placeholder="Kilometer"  required/>
+        <input type="number" placeholder="Kilometer" value={kilometer} onChange={(e)=>setkilometer(e.target.value)}  required/>
       </fieldset>
          <FormControl sx={{ m: 1, minWidth: 250 ,}} size='small'> 
            <InputLabel style={{ fontSize:'14px', marginTop:'5px' }}  id="demo-simple-select-helper-label">Fuel type</InputLabel>
@@ -57,7 +81,7 @@ function AddVehicleForm() {
         <MenuItem value={'Eletric'}>Eletric</MenuItem> </Select>
         </FormControl>
       <fieldset className='password'>
-        <input type="text" placeholder="Manufacture year"    required/>
+        <input type="text" placeholder="Manufacture year"  value={manufactureyear} onChange={(e)=>setmanufactureyear(e.target.value)}   required/>
       </fieldset>
       <button type="submit" style={{ color:'white' }}  className="btn">submit</button>
       
