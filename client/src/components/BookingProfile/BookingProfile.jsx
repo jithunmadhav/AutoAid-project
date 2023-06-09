@@ -1,6 +1,8 @@
 import { Button } from '@mui/material';
 import React from 'react'
 import './BookingProfile.css'
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 function BookingProfile(props) {
   const firstWord = props.data.location.split(',')[0].trim();
   return (
@@ -14,7 +16,10 @@ function BookingProfile(props) {
           <div>
           <p  className='name'>{props.data.name}</p>
           <p style={{ marginTop:'-17px' }} className='name'>{props.data.experience} + years of experience.</p>
-       
+          <p style={{ marginTop:'-17px' }} className='name'>{props.data.distance} KM away from you.</p>
+          <Stack  spacing={1}>
+               <Rating style={{ display:'flex',justifyContent:'center' }} name="size-small" defaultValue={props.data.rating} size="small" readOnly />
+           </Stack>
 
           </div>
         </div>

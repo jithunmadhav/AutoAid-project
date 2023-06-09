@@ -78,6 +78,8 @@ export default function PlaceAPI() {
                   const userLocation = [longitude, latitude];
                   const distance = calculateDistance(userLocation, coordinates);
                   if (distance <= 10000) {
+                    mechanic.distance=(distance/1000).toFixed(1);
+                    console.log("DISTANCE :",mechanic);
                     const marker = new mapboxgl.Marker({ color: 'red' })
                       .setLngLat(coordinates)
                       .addTo(map);
@@ -154,6 +156,9 @@ export default function PlaceAPI() {
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center' }}>
                   {card.experience} years exp
+                </Typography>
+                <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center' }}>
+                  {card.distance} KM
                 </Typography>
                 <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', display:'flex', justifyContent:'center' }}>
                 <Stack  spacing={1}>
