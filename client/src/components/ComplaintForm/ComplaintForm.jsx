@@ -11,12 +11,11 @@ function ComplaintForm(props) {
   useEffect(() => {
    axios.get('/user/vehicleDetails',{params:{vehicleId,userId}}).then((response)=>{
     if(!response.data.err){
-      console.log("******",response.data);
-      setvehicleDetails(response.data.result)
+      setvehicleDetails(response.data.result.vehicle[0])
     }
-   }).catch(err => console.log(err))
-  }, [userId,vehicleId])
-  const [manufacture, setmanufacture] = useState(vehicleDetails.vehicle.manufacture)
+  }).catch(err => console.log(err))
+}, [userId,vehicleId])
+ 
   return (
     <div className='complaint-bg'>
       <div className='complaint-inner-div'>
@@ -24,15 +23,15 @@ function ComplaintForm(props) {
         <form style={{ display:'flex' }} >
       <div style={{ display:'flex' }}>
         <div className='form-div1'>
-          <input className='input-field' value={manufacture} type="text" readOnly />
-          <input className='input-field' type="text" readOnly />
-          <input className='input-field' type="text" readOnly/>
+          <input className='input-field' value={vehicleDetails?.manufacture || ''}  type="text" readOnly />
+          <input className='input-field' value={vehicleDetails?.regNo || ''} type="text" readOnly />
+          <input className='input-field' value={vehicleDetails?.fuel || ''} type="text" readOnly/>
           <input className='input-field' type="text" />
         </div>
         <div className='form-div2'>
-        <input className='input-field' type="text" readOnly />
-          <input className='input-field' type="text" readOnly />
-          <input className='input-field' type="text" readOnly />
+        <input className='input-field' value={vehicleDetails?.vehicleName || ''} type="text" readOnly />
+          <input className='input-field' value={vehicleDetails?.kilometer || ''} type="text" readOnly />
+          <input className='input-field' value={vehicleDetails?.manufactureYear || ''} type="text" readOnly />
           <input className='input-field' type="text" readOnly />
         </div>
       </div>
