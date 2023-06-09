@@ -45,10 +45,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function MechanicManagement() {
   const [showBannedusers, setshowBannedusers] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const handleCancel = () => setSelectedUserId(null);
+  const handleOpen = (id) => setSelectedUserId(id);
+  const handleClose = () => setSelectedUserId(null);
   const [viewDetials, setviewDetials] = useState(false);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [result, setResult] = useState([]);
   const [details, setDetails] = useState([]);
   const [search, setSearch] = useState('');
@@ -59,8 +61,8 @@ function MechanicManagement() {
   const handleBan = (id) => {
     axios.patch('/admin/banmechanic', { id }).then((response) => {
       if (!response.data.err) {
-        setOpen(false);
-      } else {
+        setSelectedUserId(null);
+            } else {
         console.log(response.data.message);
       }
     }).catch(err=>{
@@ -81,7 +83,7 @@ function MechanicManagement() {
     }).catch(err=>{
       console.log(err);
     })
-  }, [open, search, filter, currentPage]);
+  }, [open, search, filter, currentPage,selectedUserId]);
 
   const style = {
     position: 'absolute',
@@ -193,7 +195,7 @@ function MechanicManagement() {
                       </StyledTableCell>
                       <StyledTableCell align="center">
                         <Button
-                          onClick={handleOpen}
+                          onClick={() => handleOpen(row._id)}
                           variant="outlined"
                           color="error"
                         >
@@ -215,43 +217,37 @@ function MechanicManagement() {
                       <Modal
                         aria-labelledby="transition-modal-title"
                         aria-describedby="transition-modal-description"
-                        open={open}
+                        open={selectedUserId === row._id} 
                         onClose={handleClose}
                         closeAfterTransition
-                        BackdropComponent={Backdrop}
-                        BackdropProps={{
-                          timeout: 500,
+                        slots={{ backdrop: Backdrop }}
+                        slotProps={{
+                          backdrop: {
+                            timeout: 500,
+                          },
                         }}
                       >
-                        <Fade in={open}>
+                        <Fade in={selectedUserId === row._id}>
                           <Box sx={style}>
-                            <Typography variant="h6"
-                             style={{
-                              textAlign: 'center',
-                              fontFamily: 'monospace',
-                              fontSize: '25px',
-                              fontWeight: 'bolder',
-                            }}
-                             component="h6">
+                            <Typography
+                              style={{
+                                textAlign: 'center',
+                                fontFamily: 'monospace',
+                                fontSize: '25px',
+                                fontWeight: 'bolder',
+                              }}
+                              id="transition-modal-title"
+                              variant="h6"
+                              component="h6"
+                            >
                               Are you sure to ban?
                             </Typography>
-                            <div style={{display:'flex',justifyContent:'space-around',marginTop:'20px'}}>
-                            <Button
-                              style={{ margin: '0 10px' }}
-                              onClick={() => handleBan(row._id)}
-                              variant="outlined"
-                              color="error"
-                            >
-                              confirm
-                            </Button>
-                            <Button
-                              onClick={handleClose}
-                              variant="outlined"
-                              color="success"
-                            >
-                              cancel
-                            </Button>
-                            </div>
+                            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
+                                <Button variant="outlined" onClick={() => handleBan(row._id)} color="error">Confirm</Button>
+                              </div>
+                            </Typography>
                           </Box>
                         </Fade>
                       </Modal>
