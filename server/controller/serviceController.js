@@ -87,7 +87,6 @@ export const deleteVehicle = async (req, res) => {
         { 'vehicle.$': 1 }
       );
   
-      console.log(result);
       res.status(200).json({ err: false ,result});
     } catch (error) {
       console.error(error);
@@ -95,27 +94,31 @@ export const deleteVehicle = async (req, res) => {
     }
   };
 
-  export const editVehicle=async(req,res)=>{
+  export const editVehicle = async (req, res) => {
     try {
-        console.log(req.body);
-        const {manufacture,vehicleName,regNo,kilometer,fuel,manufactureYear,id,Id}=req.body
-        await userModel.updateOne({ _id: id, 'vehicle.Id': Id },{$set:{
-            manufacture:manufacture,
-            vehicleName:vehicleName,
-            regNo:regNo,
-            kilometer:kilometer,
-            fuel:fuel,
-            manufactureYear:manufactureYear,
-            id:id,
-            Id:Id
-        }}).then((result)=>{
-            console.log(result);
-        })
-
+      const { manufacture, vehicleName, regNo, kilometer, fuel, manufactureYear, id, Id } = req.body;
+      await userModel.updateOne(
+        { _id: id, 'vehicle.Id': Id },
+        {
+          $set: {
+            'vehicle.$.manufacture': manufacture,
+            'vehicle.$.vehicleName': vehicleName,
+            'vehicle.$.regNo': regNo,
+            'vehicle.$.kilometer': kilometer,
+            'vehicle.$.fuel': fuel,
+            'vehicle.$.manufactureYear': manufactureYear,
+            id: id,
+            Id: Id,
+          },
+        }
+      ).then((result) => {
+        console.log(result);
+      });
     } catch (error) {
-        
+      console.error(error);
     }
-  }
+  };
+  
   
   
 
