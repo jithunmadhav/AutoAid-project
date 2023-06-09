@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './AddVehicle.css'
 import AddVehicleForm from './AddVehicleForm'
 import { useDispatch, useSelector } from 'react-redux'
+import EditVehicle from './EditVehicle'
 
 function AddVehicle() {
   const { user,refresh } = useSelector(state => state)
@@ -20,14 +21,20 @@ function AddVehicle() {
   console.log(vehicleResult)
 
   const [openForm, setOpenForm] = useState(false)
+  const [openEdit, setopenEdit] = useState(false)
+  const [editResult, seteditResult] = useState('')
   const openFormHandler = () => {
     setOpenForm(true)
   }
   const editVehicle=(vehicleId,userId)=>{
-    axios.get('/user/vehicleDetails',{params:{vehicleId,userId}})
+    axios.get('/user/vehicleDetails',{params:{vehicleId,userId}}).then((response)=>{
+      if(!response.data.err){
+        seteditResult(response.data.result)
+        setopenEdit(true)
+      }
+    }).catch(err=>console.log(err))
   }
   const deleteVehicle=(vehicleId,userId)=>{
-    console.log("++++++++++",vehicleId);
    axios.patch('/user/deletevehicle',{vehicleId,userId}).then((response)=>{
     dispatch({type:'refresh'})
    }).catch(err=>{
@@ -39,6 +46,7 @@ function AddVehicle() {
 
   return (
     openForm ? <AddVehicleForm /> :
+    openEdit ?<EditVehicle data={{editResult}} /> :
     <div className='vehicle-background'>
       <div className='vehicle-inner-div'>
         <h4 className='vehicle-heading'>My Vehicle</h4>
