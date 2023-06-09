@@ -88,12 +88,20 @@ export const deleteVehicle = async (req, res) => {
       );
   
       console.log(result);
-      res.status(200).json({ err: false });
+      res.status(200).json({ err: false ,result});
     } catch (error) {
       console.error(error);
       res.status(500).json({ err: true, message: 'Failed to retrieve vehicle details' });
     }
   };
+
+  export const editVehicle=async(req,res)=>{
+    try {
+        console.log(req.body);
+    } catch (error) {
+        
+    }
+  }
   
   
 
