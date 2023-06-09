@@ -1,10 +1,19 @@
 import { Button } from '@mui/material';
-import React from 'react'
+import React, { useState } from 'react'
 import './BookingProfile.css'
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
+import {
+  CButton,
+  CModal,
+  CModalHeader,
+  CModalTitle,
+  CModalBody,
+  CModalFooter,
+} from '@coreui/react';
 function BookingProfile(props) {
   const firstWord = props.data.location.split(',')[0].trim();
+  const [visible, setVisible] = useState(false)
   return (
     <div className='profile-background'>
     <div className='Booking-innder-div'>
@@ -27,25 +36,41 @@ function BookingProfile(props) {
     </div>
       <div className='Booking-maindiv-2'>
       <div className='services'>
-  <h5 style={{ textAlign:'left',paddingLeft: '60px' }} >Services</h5>
-  <ul style={{ paddingLeft: '100px' }}>
+  <h5  >Services</h5>
+  <ul style={{ paddingLeft: '268px' }}>
     {
       props.data.service.map((item) => {
         return <li style={{ textAlign: 'left' }}>{item}</li>
       })
     }
   </ul>
-  <h5 style={{ textAlign:'left',paddingLeft: '60px' }}>Minimum amount : {props.data.minAmount}
+  <h5 >Minimum amount : {props.data.minAmount}
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18" fill="currentColor" class="bi bi-currency-rupee" viewBox="0 0 16 16">
           <path d="M4 3.06h2.726c1.22 0 2.12.575 2.325 1.724H4v1.051h5.051C8.855 7.001 8 7.558 6.788 7.558H4v1.317L8.437 14h2.11L6.095 8.884h.855c2.316-.018 3.465-1.476 3.688-3.049H12V4.784h-1.345c-.08-.778-.357-1.335-.793-1.732H12V2H4v1.06Z"/></svg>
 
   </h5>
-  <h5 style={{ textAlign:'left',paddingLeft: '60px' }} >Location : {firstWord}</h5>
+  <h5  >Location : {firstWord}</h5>
 </div>
 
-        <Button className='quick-btn' variant='outlined' color='error'>QUICK SERVICE</Button>
+        <Button  onClick={() => setVisible(!visible)} className='quick-btn' variant='outlined' color='error'>QUICK SERVICE</Button>
         <Button className='schedule-btn' variant='outlined'>SCHEDULE SERVICE</Button>
       </div>
+       
+    <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
+      <CModalHeader>
+        <CModalTitle>Modal title</CModalTitle>
+      </CModalHeader>
+      <CModalBody>
+        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+        egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+      </CModalBody>
+      <CModalFooter>
+        <CButton color="secondary" onClick={() => setVisible(false)}>
+          Close
+        </CButton>
+        <CButton style={{ justifyContent: 'space-evenly' }} color="primary">Save changes</CButton>
+      </CModalFooter>
+    </CModal>
   </div>
   )
 }
