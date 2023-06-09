@@ -14,6 +14,7 @@ import {
 function BookingProfile(props) {
   const firstWord = props.data.location.split(',')[0].trim();
   const [visible, setVisible] = useState(false)
+  const [visibleSchedule, setVisibleSchedule] = useState(false)
   return (
     <div className='profile-background'>
     <div className='Booking-innder-div'>
@@ -53,24 +54,42 @@ function BookingProfile(props) {
 </div>
 
         <Button  onClick={() => setVisible(!visible)} className='quick-btn' variant='outlined' color='error'>QUICK SERVICE</Button>
-        <Button className='schedule-btn' variant='outlined'>SCHEDULE SERVICE</Button>
+        <Button  onClick={() => setVisibleSchedule(!visible)} className='schedule-btn' variant='outlined'>SCHEDULE SERVICE</Button>
       </div>
        
-    <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
-      <CModalHeader>
-        <CModalTitle>Modal title</CModalTitle>
-      </CModalHeader>
-      <CModalBody>
-        Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-        egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-      </CModalBody>
-      <CModalFooter>
-        <CButton color="secondary" onClick={() => setVisible(false)}>
-          Close
-        </CButton>
-        <CButton style={{ justifyContent: 'space-evenly' }} color="primary">Save changes</CButton>
-      </CModalFooter>
-    </CModal>
+      <CModal alignment="center" visible={visible} onClose={() => setVisible(false)} className="custom-modal">
+  <CModalHeader style={{ justifyContent:'center' }} closeButton={false} className="custom-modal-header">
+    <CModalTitle  >Quick Service Booking</CModalTitle>
+  </CModalHeader>
+  <CModalBody className="custom-modal-body">
+    <p>1. Always do call and confirm after making appointments.</p>
+    <p>2. Please fix the service charge before starting the work.</p>
+    <p>3. Service charges may vary based on the work.</p>
+  </CModalBody>
+  <CModalFooter style={{ justifyContent: 'space-evenly' }} className="custom-modal-footer">
+    <CButton color="danger" onClick={() => setVisible(false)}>
+      Cancel
+    </CButton>
+    <CButton color="success">Continue</CButton>
+  </CModalFooter>
+</CModal>
+
+<CModal alignment="center" visible={visibleSchedule} onClose={() => setVisibleSchedule(false)} className="custom-modal">
+  <CModalHeader style={{ justifyContent:'center' }} closeButton={false} className="custom-modal-header">
+    <CModalTitle >Schedule Service Booking</CModalTitle>
+  </CModalHeader>
+  <CModalBody className="custom-modal-body">
+    <p>1. Always do call and confirm after making appointments.</p>
+    <p>2. Please fix the service charge before starting the work.</p>
+    <p>3. Service charges may vary based on the work.</p>
+  </CModalBody>
+  <CModalFooter style={{ justifyContent: 'space-evenly' }} className="custom-modal-footer">
+    <CButton color="danger" onClick={() => setVisibleSchedule(false)}>
+      Cancel
+    </CButton>
+    <CButton color="success">Continue</CButton>
+  </CModalFooter>
+</CModal>
   </div>
   )
 }
