@@ -98,6 +98,20 @@ export const deleteVehicle = async (req, res) => {
   export const editVehicle=async(req,res)=>{
     try {
         console.log(req.body);
+        const {manufacture,vehicleName,regNo,kilometer,fuel,manufactureYear,id,Id}=req.body
+        await userModel.updateOne({ _id: id, 'vehicle.Id': Id },{$set:{
+            manufacture:manufacture,
+            vehicleName:vehicleName,
+            regNo:regNo,
+            kilometer:kilometer,
+            fuel:fuel,
+            manufactureYear:manufactureYear,
+            id:id,
+            Id:Id
+        }}).then((result)=>{
+            console.log(result);
+        })
+
     } catch (error) {
         
     }

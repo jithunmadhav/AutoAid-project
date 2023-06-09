@@ -24,7 +24,7 @@ function EditVehicle(props) {
   const [err, setErr] = useState('');
 
   useEffect(() => {}, [closeForm]);
-
+  const Id=props.data.editResult.vehicle[0].Id;
   const closeFormAndOpenPage = () => {
     setCloseForm(true);
   };
@@ -48,7 +48,7 @@ function EditVehicle(props) {
           kilometer,
           fuel,
           manufactureYear,
-          id,
+          id,Id
         })
         .then((response) => {
           console.log(response.data);
