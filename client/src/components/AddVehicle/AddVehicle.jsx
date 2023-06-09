@@ -24,8 +24,6 @@ function AddVehicle() {
     })
   }, [id, refresh])
 
-  console.log(vehicleResult)
-
   const [openForm, setOpenForm] = useState(false)
   const [openEdit, setopenEdit] = useState(false)
   const [openComplaint, setopenComplaint] = useState(false)
