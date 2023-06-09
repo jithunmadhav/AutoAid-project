@@ -18,7 +18,7 @@ function BookingProfile(props) {
   const [visible, setVisible] = useState(false)
   const [visibleSchedule, setVisibleSchedule] = useState(false)
  const selectVehicle=()=>{
-  navigate('/addvehicle',{state:{mechanic:props}})
+  navigate('/addvehicle',{state:{...props.data}})
  }
 
   return (

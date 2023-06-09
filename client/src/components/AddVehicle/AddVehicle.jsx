@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom'
 
 function AddVehicle() {
   const location = useLocation()
-   
+   const [mechanic, setmechanic] = useState(location.state)
   const { user, refresh } = useSelector(state => state)
   const id = user.details._id
   const [vehicleResult, setVehicleResult] = useState([])
