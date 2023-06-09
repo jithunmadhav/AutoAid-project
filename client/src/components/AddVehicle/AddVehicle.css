@@ -201,3 +201,12 @@
     box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
     overflow: hidden;
   }
+  .continue-btn{
+    position: absolute;
+    right: 18%;
+    border-radius: 9px;
+    bottom: 5%;
+    background: white;
+    font-family: monospace;
+    font-weight: bolder;
+  }

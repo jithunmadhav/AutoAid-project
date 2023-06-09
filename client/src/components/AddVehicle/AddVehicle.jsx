@@ -5,6 +5,7 @@ import AddVehicleForm from './AddVehicleForm'
 import { useDispatch, useSelector } from 'react-redux'
 import EditVehicle from './EditVehicle'
 import { useLocation } from 'react-router-dom'
+import ComplaintForm from '../ComplaintForm/ComplaintForm'
 
 function AddVehicle() {
   const location = useLocation()
@@ -27,6 +28,7 @@ function AddVehicle() {
 
   const [openForm, setOpenForm] = useState(false)
   const [openEdit, setopenEdit] = useState(false)
+  const [openComplaint, setopenComplaint] = useState(false)
   const [editResult, seteditResult] = useState('')
   const openFormHandler = () => {
     setOpenForm(true)
@@ -50,10 +52,14 @@ function AddVehicle() {
   const handleVehicleSelection = (vehicle) => {
     setSelectedVehicle(vehicle); // Set the selected vehicle in state
   }
+  const openComplaintForm=()=>{
+    setopenComplaint(true)
+  }
 
   return (
     openForm ? <AddVehicleForm /> :
       openEdit ? <EditVehicle data={{ editResult }} /> :
+      openComplaint ?<ComplaintForm data={{mechanic,selectedVehicle}} /> :
         <div className='vehicle-background'>
           <div className='vehicle-inner-div'>
             <h4 className='vehicle-heading'>My Vehicle</h4>
@@ -113,6 +119,7 @@ function AddVehicle() {
                 })
               }
             </div>
+            {mechanic ? <button onClick={openComplaintForm} className='continue-btn'>continue</button> :""}
           </div>
         )
       }
