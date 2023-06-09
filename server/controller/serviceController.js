@@ -112,10 +112,11 @@ export const deleteVehicle = async (req, res) => {
           },
         }
       ).then((result) => {
-        console.log(result);
-      });
+        res.status(200).json({err:false})
+    });
     } catch (error) {
       console.error(error);
+      res.status(500).json({err:true})
     }
   };
   
