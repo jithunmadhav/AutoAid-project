@@ -40,8 +40,8 @@ const mechanicSchema=mongoose.Schema({
         default:[]
     },
     rating:{
-        type:Array,
-        default:[]
+        type:Number,
+        default:0
     },
     proof:{
         type:Object,

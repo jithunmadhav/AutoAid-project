@@ -9,6 +9,8 @@ import { CardActionArea } from '@mui/material';
 import './Place.css'
 import BookingProfile from '../BookingProfile/BookingProfile';
 import { useLocation } from 'react-router-dom';
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw';
 
@@ -145,13 +147,18 @@ export default function PlaceAPI() {
         </button>
         {currentCards.map((card, index) => (
           <Card key={index} sx={{ maxWidth: 345 }} style={{ borderRadius: '15px', width: '280px', marginRight: '50px', marginLeft:'50px' }}>
-            <CardActionArea  onClick={()=>viewProfile(card)} style={{ backgroundColor:'#ada7a7' }}>
+            <CardActionArea  onClick={()=>viewProfile(card)} style={{ backgroundColor:'#21252900' }}>
               <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center', fontSize: '35px' }}>
                 {card.name}
               </Typography>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center' }}>
                   {card.experience} years exp
+                </Typography>
+                <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', display:'flex', justifyContent:'center' }}>
+                <Stack  spacing={1}>
+               <Rating name="size-small" defaultValue={card.rating} size="small" readOnly />
+               </Stack>
                 </Typography>
               </CardContent>
             </CardActionArea>
