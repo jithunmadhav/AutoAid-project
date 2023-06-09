@@ -11,10 +11,16 @@ import {
   CModalBody,
   CModalFooter,
 } from '@coreui/react';
+import { useNavigate } from 'react-router-dom';
 function BookingProfile(props) {
+  const navigate=useNavigate()
   const firstWord = props.data.location.split(',')[0].trim();
   const [visible, setVisible] = useState(false)
   const [visibleSchedule, setVisibleSchedule] = useState(false)
+ const selectVehicle=()=>{
+  navigate('/addvehicle',{state:{mechanic:props}})
+ }
+
   return (
     <div className='profile-background'>
     <div className='Booking-innder-div'>
@@ -70,7 +76,7 @@ function BookingProfile(props) {
     <CButton color="danger" onClick={() => setVisible(false)}>
       Cancel
     </CButton>
-    <CButton color="success">Continue</CButton>
+    <CButton onClick={selectVehicle} color="success">Continue</CButton>
   </CModalFooter>
 </CModal>
 
@@ -87,7 +93,7 @@ function BookingProfile(props) {
     <CButton color="danger" onClick={() => setVisibleSchedule(false)}>
       Cancel
     </CButton>
-    <CButton color="success">Continue</CButton>
+    <CButton  color="success">Continue</CButton>
   </CModalFooter>
 </CModal>
   </div>
