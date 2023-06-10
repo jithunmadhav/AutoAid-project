@@ -58,7 +58,12 @@ fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude
     setVisible(true)
     console.log(props,location,complaint);
   }
-
+const placeOrder=()=>{
+  axios.post('/user/emergencybooking',{props,location,complaint}).then((response)=>{
+    console.log(response.data);
+    setVisible(false)
+  })
+}
   return (
     <div className='complaint-bg'>
       <div className='complaint-inner-div'>
@@ -102,8 +107,8 @@ fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude
     <CButton color="danger" onClick={() => setVisible(false)}>
       Cancel
     </CButton>
-    <CButton  color="success">
-      Continue
+    <CButton onClick={placeOrder}  color="primary">
+      Confirm
     </CButton>
   </CModalFooter>
 </CModal>
