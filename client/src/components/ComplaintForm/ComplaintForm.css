@@ -12,7 +12,7 @@
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
-    height: 700px ;
+    height: 740px ;
 }
 .Complaint-heading{
     text-align: center;
@@ -61,7 +61,7 @@
 .complaint-btn{
 
     position: absolute;
-    bottom: 5%;
+    bottom: 2%;
     border-radius: 4px;
     left: 35%;
     color: white;
