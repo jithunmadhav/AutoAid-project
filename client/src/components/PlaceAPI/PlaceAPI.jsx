@@ -87,6 +87,7 @@ export default function PlaceAPI() {
                   const distance = calculateDistance(userLocation, coordinates);
                   if (distance <= 10000) {
                     mechanic.distance=(distance/1000).toFixed(1);
+                    mechanic.selectedService=service;
                     console.log("DISTANCE :",mechanic);
                     const marker = new mapboxgl.Marker({ color: 'red' })
                       .setLngLat(coordinates)

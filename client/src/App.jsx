@@ -48,7 +48,7 @@ function App() {
       <Router>
         <Routes>
           {
-            <Route element={<ErrorPage/>} path={'/error'} />
+            <Route element={<ErrorPage/>} path={'*'} />
           }
         {
             admin.adminLog===false && (

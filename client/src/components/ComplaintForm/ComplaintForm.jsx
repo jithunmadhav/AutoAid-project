@@ -3,9 +3,19 @@ import React, { useEffect, useState } from 'react'
 import './ComplaintForm.css'
 import { useSelector } from 'react-redux';
 import Axios from 'axios';
-
+import {
+  CButton,
+  CModal,
+  CModalHeader,
+  CModalTitle,
+  CModalBody,
+  CModalFooter,
+} from '@coreui/react';
 function ComplaintForm(props) {
+  console.log(props);
   const { user } = useSelector(state => state);
+  const [visible, setVisible] = useState(false)
+  const [complaint, setcomplaint] = useState('')
   const vehicleId = props.data.selectedVehicle;
   const userId = user.details._id;
   const [vehicleDetails, setVehicleDetails] = useState('');
@@ -43,16 +53,21 @@ fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude
       });
   }, [userId, vehicleId]);
 
+  const handleSubmit=(e)=>{
+    e.preventDefault()
+    setVisible(true)
+    console.log(props,location,complaint);
+  }
 
   return (
     <div className='complaint-bg'>
       <div className='complaint-inner-div'>
         <h3 className='Complaint-heading'>Complaint Form</h3>
-        <form style={{ display: 'flex' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex' }}>
           <div style={{ display: 'flex' }}>
             <div className='form-div1'>
               <label>Manufacturer:</label>
-              <input className='input-field' value={vehicleDetails?.manufacture || ''} type="text" readOnly />
+              <input className='input-field' value={vehicleDetails?.manufacture || ''}  type="text" readOnly />
               <label>Registration Number:</label>
               <input className='input-field' value={vehicleDetails?.regNo || ''} type="text" readOnly />
               <label>Fuel:</label>
@@ -68,11 +83,30 @@ fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude
               <label>Manufacture Year:</label>
               <input className='input-field' value={vehicleDetails?.manufactureYear || ''} type="text" readOnly />
               <label>Complaint Description:</label>
-              <textarea style={{ height:'96px' }} className='input-field' type="text" placeholder='Eg : 5000KM oil change' />
+              <textarea style={{ height:'96px' }} value={complaint} onChange={(e)=>setcomplaint(e.target.value)} className='input-field' type="text" placeholder='Eg : 5000KM oil change' />
             </div>
           </div>
-          <button className='complaint-btn'>Submit</button>
+          <button  className='complaint-btn'>Submit</button>
         </form>
+        <CModal alignment="center" visible={visible} onClose={() => setVisible(false)} className="custom-modal">
+  <CModalHeader style={{ justifyContent: 'center' }} closeButton={false} className="custom-modal-header">
+    <CModalTitle>Confirmation</CModalTitle>
+  </CModalHeader>
+  <CModalBody   className="custom-modal-body">
+    <p>Technician Info &emsp; : {props.data.mechanic.name}</p>
+    <p>vehicle  &emsp; &emsp; &emsp; &emsp;     : {vehicleDetails.vehicleName} - {vehicleDetails.manufacture}</p>
+    <p>Service Info&emsp;&nbsp; &emsp;    : {props.data.mechanic.selectedService}</p>
+    <p>Booking Type&nbsp; &emsp;   : {props.data.mechanic.booking}</p>
+  </CModalBody>
+  <CModalFooter  style={{ justifyContent: 'space-evenly' }} className="custom-modal-footer">
+    <CButton color="danger" onClick={() => setVisible(false)}>
+      Cancel
+    </CButton>
+    <CButton  color="success">
+      Continue
+    </CButton>
+  </CModalFooter>
+</CModal>
       </div>
     </div>
   )

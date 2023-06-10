@@ -13,12 +13,17 @@ import {
 } from '@coreui/react';
 import { useNavigate } from 'react-router-dom';
 function BookingProfile(props) {
+  console.log("***////////*****",props);
   const navigate=useNavigate()
   const firstWord = props.data.location.split(' ')[0].trim();
   const [visible, setVisible] = useState(false)
   const [visibleSchedule, setVisibleSchedule] = useState(false)
  const selectVehicle=()=>{
-  navigate('/addvehicle',{state:{...props.data}})
+  if(visible){
+    navigate('/addvehicle',{state:{...props.data,booking:'Emergency booking'}})
+  }else if(visibleSchedule){
+
+  }
  }
 
   return (
