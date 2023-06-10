@@ -12,7 +12,6 @@ import {
   CModalFooter,
 } from '@coreui/react';
 function ComplaintForm(props) {
-  console.log(props);
   const { user } = useSelector(state => state);
   const [visible, setVisible] = useState(false)
   const [complaint, setcomplaint] = useState('')
@@ -58,8 +57,8 @@ fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude
     setVisible(true)
     console.log(props,location,complaint);
   }
-const placeOrder=()=>{
-  axios.post('/user/emergencybooking',{props,location,complaint}).then((response)=>{
+const emergencyschedule=()=>{
+  axios.post('/user/emergencyschedule',{...props.data,location,complaint,userId}).then((response)=>{
     console.log(response.data);
     setVisible(false)
   })
@@ -107,7 +106,7 @@ const placeOrder=()=>{
     <CButton color="danger" onClick={() => setVisible(false)}>
       Cancel
     </CButton>
-    <CButton onClick={placeOrder}  color="primary">
+    <CButton onClick={emergencyschedule}  color="primary">
       Confirm
     </CButton>
   </CModalFooter>
