@@ -2,7 +2,7 @@ import axios from '../../axios';
 import React, { useEffect, useState } from 'react'
 import './ComplaintForm.css'
 import { useSelector } from 'react-redux';
-
+import Axios from 'axios'
 function ComplaintForm(props) {
   const {user} = useSelector(state => state)
   const vehicleId=props.data.selectedVehicle;
@@ -14,6 +14,10 @@ function ComplaintForm(props) {
       setvehicleDetails(response.data.result.vehicle[0])
     }
   }).catch(err => console.log(err))
+
+  Axios.get('https://ipapi.co/json').then((response)=>{
+    console.log(response);
+  })
 }, [userId,vehicleId])
  
   return (
@@ -30,12 +34,12 @@ function ComplaintForm(props) {
         </div>
         <div className='form-div2'>
         <input className='input-field' value={vehicleDetails?.vehicleName || ''} type="text" readOnly />
-          <input className='input-field' value={vehicleDetails?.kilometer || ''} type="text" readOnly />
+          <input className='input-field' value={vehicleDetails?.kilometer+' KM' || ''} type="text" readOnly />
           <input className='input-field' value={vehicleDetails?.manufactureYear || ''} type="text" readOnly />
-          <input className='input-field' type="text" readOnly />
+          <input className='input-field' type="text" placeholder='Describe the complaint' />
         </div>
       </div>
-        <button className='btn'>Submit</button>
+        <button className='complaint-btn'>Submit</button>
         </form>
       </div>
     </div>

@@ -14,7 +14,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 function BookingProfile(props) {
   const navigate=useNavigate()
-  const firstWord = props.data.location.split(',')[0].trim();
+  const firstWord = props.data.location.split(' ')[0].trim();
   const [visible, setVisible] = useState(false)
   const [visibleSchedule, setVisibleSchedule] = useState(false)
  const selectVehicle=()=>{
@@ -62,27 +62,28 @@ function BookingProfile(props) {
         <Button  onClick={() => setVisible(!visible)} className='quick-btn' variant='outlined' color='error'>QUICK SERVICE</Button>
         <Button  onClick={() => setVisibleSchedule(!visible)} className='schedule-btn' variant='outlined'>SCHEDULE SERVICE</Button>
       </div>
-       
       <CModal alignment="center" visible={visible} onClose={() => setVisible(false)} className="custom-modal">
-  <CModalHeader style={{ justifyContent:'center' }} closeButton={false} className="custom-modal-header">
-    <CModalTitle  >Quick Service Booking</CModalTitle>
+  <CModalHeader style={{ justifyContent: 'center' }} closeButton={false} className="custom-modal-header">
+    <CModalTitle>Quick Service Booking</CModalTitle>
   </CModalHeader>
   <CModalBody className="custom-modal-body">
     <p>1. Always do call and confirm after making appointments.</p>
     <p>2. Please fix the service charge before starting the work.</p>
     <p>3. Service charges may vary based on the work.</p>
   </CModalBody>
-  <CModalFooter style={{ justifyContent: 'space-evenly' }} className="custom-modal-footer">
+  <CModalFooter  style={{ justifyContent: 'space-evenly' }} className="custom-modal-footer">
     <CButton color="danger" onClick={() => setVisible(false)}>
       Cancel
     </CButton>
-    <CButton onClick={selectVehicle} color="success">Continue</CButton>
+    <CButton onClick={selectVehicle} color="success">
+      Continue
+    </CButton>
   </CModalFooter>
 </CModal>
 
 <CModal alignment="center" visible={visibleSchedule} onClose={() => setVisibleSchedule(false)} className="custom-modal">
-  <CModalHeader style={{ justifyContent:'center' }} closeButton={false} className="custom-modal-header">
-    <CModalTitle >Schedule Service Booking</CModalTitle>
+  <CModalHeader style={{ justifyContent: 'center' }} closeButton={false} className="custom-modal-header">
+    <CModalTitle>Schedule Service Booking</CModalTitle>
   </CModalHeader>
   <CModalBody className="custom-modal-body">
     <p>1. Always do call and confirm after making appointments.</p>
@@ -93,9 +94,10 @@ function BookingProfile(props) {
     <CButton color="danger" onClick={() => setVisibleSchedule(false)}>
       Cancel
     </CButton>
-    <CButton  color="success">Continue</CButton>
+    <CButton color="success">Continue</CButton>
   </CModalFooter>
 </CModal>
+
   </div>
   )
 }

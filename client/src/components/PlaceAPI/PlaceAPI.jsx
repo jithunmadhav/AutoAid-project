@@ -32,6 +32,11 @@ export default function PlaceAPI() {
     setopenProfile(true)
   }
   useEffect(() => {
+    // axios.get('https://ipapi.co/json').then((response)=>{
+    //   console.log(response);
+    //   setLatitude(response.data.latitude);
+    //   setLongitude(response.data.longitude);
+    // })
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setLatitude(position.coords.latitude);
@@ -52,7 +57,10 @@ export default function PlaceAPI() {
         center: [longitude, latitude],
         zoom: 12,
       });
-
+      const marker = new mapboxgl.Marker({ color: 'blue' })
+      .setLngLat([longitude, latitude])
+      .addTo(map);
+      
       map.on('load', () => {
         Axios.get(`/admin/allmechanics/${service}`).then((response) => {
           const mechanics = response.data.mechanic;
