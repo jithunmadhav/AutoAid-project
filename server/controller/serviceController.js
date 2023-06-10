@@ -78,7 +78,6 @@ export const deleteVehicle = async (req, res) => {
   };
 
   export const editVehicleDetails = async (req, res) => {
-    console.log(req.query);
     const { userId } = req.query;
     const vehicleId=parseInt(req.query.vehicleId)
     try {

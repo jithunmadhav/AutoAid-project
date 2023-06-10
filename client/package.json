@@ -19,6 +19,7 @@
     "bootstrap-icons": "^1.10.5",
     "carousel": "^0.0.3",
     "mapbox-gl": "^2.15.0",
+    "mapbox-gl-geocoder": "^2.0.1",
     "mdb-react-ui-kit": "^6.1.0",
     "mui-address-autocomplete": "^3.0.4",
     "mui-one-time-password-input": "^1.1.0",

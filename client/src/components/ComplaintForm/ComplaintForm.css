@@ -61,7 +61,7 @@
 .complaint-btn{
 
     position: absolute;
-    bottom: 10%;
+    bottom: 5%;
     border-radius: 4px;
     left: 35%;
     color: white;
@@ -75,3 +75,40 @@
     box-shadow: 0 3px 0px rgba(115, 136, 89, 0.2);
     text-shadow: 0 2px 3px rgba(39, 38, 38, 0.2);
 }
+.complaint-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .complaint-inner-div {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .Complaint-heading {
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-div1,
+  .form-div2 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .input-field {
+    margin-bottom: 10px;
+  }
+  
+  .complaint-btn {
+    align-self: center;
+  }
+  
