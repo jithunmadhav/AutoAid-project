@@ -25,3 +25,27 @@
     top: 21%;
     left: 29%;
 }
+.second-para{
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 20px;
+    position: absolute;
+    top: 75%;
+    left: 31%;
+}
+
+.coninue-button {
+    position: absolute;
+    top: 82%;
+    left: 42%;
+    width: 15%;
+    height: 45px;
+    outline: none !important;
+    background: linear-gradient(-5deg,  #111111,#0e1136);
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0 3px 0px rgba(115, 136, 89, 0.2);
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}

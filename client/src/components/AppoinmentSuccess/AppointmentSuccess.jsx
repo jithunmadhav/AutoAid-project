@@ -10,6 +10,8 @@ function AppointmentSuccess() {
       <div >
         <img className='success-img' src="http://www.clipartbest.com/cliparts/niX/8Mp/niX8MpbGT.png" alt="success logo" />
       </div>
+      <p className='second-para'>We will notify you when technician accepts your request</p>
+      <button className='coninue-button'>Contine</button>
     </>
   )
 }
