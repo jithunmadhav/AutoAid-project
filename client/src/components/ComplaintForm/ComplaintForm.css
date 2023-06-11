@@ -92,10 +92,7 @@
     text-align: center;
   }
   
-  form {
-    display: flex;
-    flex-direction: column;
-  }
+ 
   
   .form-div1,
   .form-div2 {

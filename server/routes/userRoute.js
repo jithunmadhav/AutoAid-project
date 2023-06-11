@@ -1,5 +1,5 @@
 import  express  from 'express';
-import { emergencySchedule } from '../controller/appointmentController.js';
+import stripePayment, { emergencySchedule } from '../controller/appointmentController.js';
 import { addVehicle, allVehicle, deleteVehicle, editVehicle, editVehicleDetails } from '../controller/serviceController.js';
 import { forgotPassword, resendOtp, resetpassword, userLogin, userLogout, userSignup, VerifyResetOtp, verifyUserSignup } from '../controller/userController.js';
 import { userCheckAuth } from '../middleware/userAuth.js';
@@ -13,5 +13,5 @@ router.get('/vehicleDetails',editVehicleDetails).patch('/editvehicle',editVehicl
 router.post('/emergencyschedule',emergencySchedule)
 router.post('/login',userLogin).get('/logout',userLogout)
 
-
+router.post('/create-checkout-session',stripePayment)
 export default router                                  

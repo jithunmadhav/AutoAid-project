@@ -29,6 +29,7 @@
     "pdf-poppler": "^0.2.1",
     "pdf2pic": "^2.2.1",
     "pdfjs-dist": "^3.7.107",
+    "stripe": "^12.9.0",
     "twilio": "^4.11.1"
   }
 }

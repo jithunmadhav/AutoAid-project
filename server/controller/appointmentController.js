@@ -20,3 +20,35 @@ export const emergencySchedule=async(req,res)=>{
     }
 
 }
+import stripe from 'stripe';
+
+const stripePayment = async (req, res) => {
+  const stripeInstance = stripe('sk_test_51NHUznSDz600njLar6X1WeRezbVTb8nHyW6bDnis6Cvab8BzpO3NP9VG2B6w7bqTSC7URvwqbA4rjWWVy4OPim0y00TDXzlSr7');
+
+  try {
+    const session = await stripeInstance.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'T-shirt',
+            },
+            unit_amount: 2000,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: 'http://localhost:4242/success',
+      cancel_url: 'http://localhost:4242/cancel',
+    });
+
+    res.redirect(303, session.url);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+};
+
+export default stripePayment;

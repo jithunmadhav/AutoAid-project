@@ -21,6 +21,7 @@ import ErrorPage from './Pages/ErrorPage';
 import ServiceManagementPage from './Pages/ServiceManagementPage';
 import PlacePage from './Pages/PlacePage';
 import AddVehiclePage from './Pages/AddVehiclePage';
+import StripeSample from './components/StripeSample';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -93,6 +94,7 @@ function App() {
               <Route element={<ProfilePage />} path="/user/profile" />
               <Route element={<PlacePage/>} path={'/location'} />
               <Route element={<AddVehiclePage/>} path='/addvehicle'/>
+              <Route element={<StripeSample/>} path='/stripe'/>
             </>
           )}
 
