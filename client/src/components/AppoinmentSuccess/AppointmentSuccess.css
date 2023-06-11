@@ -1,6 +1,27 @@
 .success-header{
+  
     text-align: center;
     font-family: monospace;
     font-weight: bolder;
-    color: rgb(7, 70, 7);
+    top: 10%;
+    left: 40%;
+    position: absolute;
+    color: #0e1136;
+
+}
+.success-img{
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    position: absolute;
+    left: 42%;
+    top: 30%;
+}
+.first-para{
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 20px;
+    position: absolute;
+    top: 21%;
+    left: 29%;
 }

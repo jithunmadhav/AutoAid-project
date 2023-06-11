@@ -1,7 +1,7 @@
 import axios from '../../axios';
 import React, { useEffect, useState } from 'react'
 import './ComplaintForm.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
@@ -15,13 +15,15 @@ import {
   CModalBody,
   CModalFooter,
 } from '@coreui/react';
-import AppointmentSuccess from '../AppoinmentSuccess/AppointmentSuccess';
+import { useNavigate } from 'react-router-dom';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 function ComplaintForm(props) {
+  const dispatch = useDispatch()
+  const navigate=useNavigate()
   const { user } = useSelector(state => state);
   const [open, setOpen] = React.useState(false);
   const [visible, setVisible] = useState(false)
@@ -30,7 +32,6 @@ function ComplaintForm(props) {
   const userId = user.details._id;
   const [vehicleDetails, setVehicleDetails] = useState('');
   const [location, setLocation] = useState('')
-  const [openSuccessPage, setopenSuccessPage] = useState(false)
   useEffect(() => {
     axios.get('/user/vehicleDetails', { params: { vehicleId, userId } })
       .then((response) => {
@@ -74,7 +75,8 @@ function ComplaintForm(props) {
       console.log(response.data);
       setVisible(false)
       setOpen(true);
-      setopenSuccessPage(true)
+      dispatch({type:'refresh'})
+      navigate('/success')
     })
   }
 
@@ -87,7 +89,7 @@ function ComplaintForm(props) {
   };
 
   return (
-    openSuccessPage ? <AppointmentSuccess/> :
+  
     <div className='complaint-bg'>
       <div className='complaint-inner-div'>
         <h3 className='Complaint-heading'>Complaint Form</h3>

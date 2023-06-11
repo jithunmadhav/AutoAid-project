@@ -22,6 +22,7 @@ import ServiceManagementPage from './Pages/ServiceManagementPage';
 import PlacePage from './Pages/PlacePage';
 import AddVehiclePage from './Pages/AddVehiclePage';
 import StripeSample from './components/StripeSample';
+import AppointmentSuccess from './components/AppoinmentSuccess/AppointmentSuccess';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -95,6 +96,7 @@ function App() {
               <Route element={<PlacePage/>} path={'/location'} />
               <Route element={<AddVehiclePage/>} path='/addvehicle'/>
               <Route element={<StripeSample/>} path='/stripe'/>
+              <Route element={<AppointmentSuccess/>} path={'/success'}/>
             </>
           )}
 
