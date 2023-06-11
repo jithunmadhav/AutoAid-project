@@ -15,6 +15,7 @@ import {
   CModalBody,
   CModalFooter,
 } from '@coreui/react';
+import AppointmentSuccess from '../AppoinmentSuccess/AppointmentSuccess';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -29,7 +30,7 @@ function ComplaintForm(props) {
   const userId = user.details._id;
   const [vehicleDetails, setVehicleDetails] = useState('');
   const [location, setLocation] = useState('')
-
+  const [openSuccessPage, setopenSuccessPage] = useState(false)
   useEffect(() => {
     axios.get('/user/vehicleDetails', { params: { vehicleId, userId } })
       .then((response) => {
@@ -73,6 +74,7 @@ function ComplaintForm(props) {
       console.log(response.data);
       setVisible(false)
       setOpen(true);
+      setopenSuccessPage(true)
     })
   }
 
@@ -85,6 +87,7 @@ function ComplaintForm(props) {
   };
 
   return (
+    openSuccessPage ? <AppointmentSuccess/> :
     <div className='complaint-bg'>
       <div className='complaint-inner-div'>
         <h3 className='Complaint-heading'>Complaint Form</h3>

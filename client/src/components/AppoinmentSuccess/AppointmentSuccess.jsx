@@ -1,6 +1,6 @@
 import React from 'react'
 import './AppoinmentSuccess.css'
-function AppoinmentSuccess() {
+function AppointmentSuccess() {
   return (
     <>
       <div>
@@ -10,4 +10,4 @@ function AppoinmentSuccess() {
   )
 }
 
-export default AppoinmentSuccess
+export default AppointmentSuccess
