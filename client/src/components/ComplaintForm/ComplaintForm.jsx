@@ -1,6 +1,6 @@
 import axios from '../../axios';
-import React, { useEffect, useState } from 'react'
-import './ComplaintForm.css'
+import React, { useEffect, useState } from 'react';
+import './ComplaintForm.css';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import Stack from '@mui/material/Stack';
@@ -14,6 +14,7 @@ import {
   CModalTitle,
   CModalBody,
   CModalFooter,
+  CProgress,
 } from '@coreui/react';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,16 +23,18 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 function ComplaintForm(props) {
-  const dispatch = useDispatch()
-  const navigate=useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector(state => state);
   const [open, setOpen] = React.useState(false);
-  const [visible, setVisible] = useState(false)
-  const [complaint, setComplaint] = useState('')
+  const [visible, setVisible] = useState(false);
+  const [complaint, setComplaint] = useState('');
   const vehicleId = props.data.selectedVehicle;
   const userId = user.details._id;
   const [vehicleDetails, setVehicleDetails] = useState('');
-  const [location, setLocation] = useState('')
+  const [location, setLocation] = useState('');
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     axios.get('/user/vehicleDetails', { params: { vehicleId, userId } })
       .then((response) => {
@@ -47,7 +50,6 @@ function ComplaintForm(props) {
           fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${accessToken}`)
             .then(response => response.json())
             .then(data => {
-              // Extract the place information from the response
               const placeName = data.features[0].text;
               setLocation(placeName)
             })
@@ -65,20 +67,24 @@ function ComplaintForm(props) {
   }, [userId, vehicleId]);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setVisible(true)
+    e.preventDefault();
+    setVisible(true);
     console.log(props, location, complaint);
-  }
+  };
 
   const emergencyschedule = () => {
+    setLoading(true);
     axios.post('/user/emergencyschedule', { ...props.data, location, complaint, userId }).then((response) => {
       console.log(response.data);
-      setVisible(false)
+      setVisible(false);
       setOpen(true);
-      dispatch({type:'refresh'})
-      navigate('/success')
-    })
-  }
+      dispatch({type:'refresh'});
+      setTimeout(() => {
+        setLoading(false);
+        navigate('/success');
+      }, 3000);
+    });
+  };
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -89,7 +95,6 @@ function ComplaintForm(props) {
   };
 
   return (
-  
     <div className='complaint-bg'>
       <div className='complaint-inner-div'>
         <h3 className='Complaint-heading'>Complaint Form</h3>
@@ -113,10 +118,17 @@ function ComplaintForm(props) {
               <label>Manufacture Year:</label>
               <input className='input-field' value={vehicleDetails?.manufactureYear || ''} type="text" readOnly />
               <label>Complaint Description:</label>
-              <textarea style={{ height: '96px' }} value={complaint} onChange={(e) => setComplaint(e.target.value)} className='input-field' type="text" placeholder='Eg : 5000KM oil change' />
+              <textarea style={{ height: '96px' }} value={complaint} onChange={(e) => setComplaint(e.target.value)} className='input-field' type="text" placeholder='Eg: 5000KM oil change' />
             </div>
           </div>
-          <button className='complaint-btn'>Submit</button>
+          <button className='complaint-btn' disabled={loading}>
+            Submit
+          </button>
+          {loading && (
+            <div style={{ marginTop: '10px' }}>
+              <CProgress animated color="success" value={100} />
+            </div>
+          )}
         </form>
         <CModal
           alignment="center"
@@ -129,9 +141,9 @@ function ComplaintForm(props) {
           </CModalHeader>
           <CModalBody className="custom-modal-body">
             <p>Technician Info &emsp; : {props.data.mechanic.name}</p>
-            <p>vehicle  &emsp; &emsp; &emsp; &emsp;     : {vehicleDetails.vehicleName} - {vehicleDetails.manufacture}</p>
-            <p>Service Info&emsp;&nbsp; &emsp;    : {props.data.mechanic.selectedService}</p>
-            <p>Booking Type&nbsp; &emsp;   : {props.data.mechanic.booking}</p>
+            <p>Vehicle &emsp; &emsp; &emsp; &emsp;: {vehicleDetails.vehicleName} - {vehicleDetails.manufacture}</p>
+            <p>Service Info&emsp;&nbsp; &emsp;: {props.data.mechanic.selectedService}</p>
+            <p>Booking Type&nbsp; &emsp;: {props.data.mechanic.booking}</p>
           </CModalBody>
           <CModalFooter style={{ justifyContent: 'space-evenly' }} className="custom-modal-footer">
             <CButton color="danger" onClick={() => setVisible(false)}>
@@ -170,7 +182,7 @@ function ComplaintForm(props) {
         </Stack>
       </div>
     </div>
-  )
+  );
 }
 
 export default ComplaintForm;
