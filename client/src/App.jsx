@@ -91,6 +91,7 @@ function App() {
 
           {user.login && (
             <>
+             <Route element={<Navigate to={'/'} />} path={'/user/login'} />
               <Route element={<HomePage />} path="/" />
               <Route element={<ProfilePage />} path="/user/profile" />
               <Route element={<PlacePage/>} path={'/location'} />
