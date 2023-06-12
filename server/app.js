@@ -8,7 +8,7 @@ import cookieparser from 'cookie-parser'
 const app=express()
 dbconnect();
 app.use(cors({
-  origin: ['http://localhost:3000'],
+  origin: ['http://localhost:3000','https://checkout.stripe.com'],
   credentials: true,
 }));
 

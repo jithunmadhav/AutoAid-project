@@ -23,14 +23,16 @@ export const emergencySchedule=async(req,res)=>{
 import stripe from 'stripe';
 
 const stripePayment = async (req, res) => {
-  const stripeInstance = stripe('sk_test_51NHUznSDz600njLar6X1WeRezbVTb8nHyW6bDnis6Cvab8BzpO3NP9VG2B6w7bqTSC7URvwqbA4rjWWVy4OPim0y00TDXzlSr7');
+  console.log(process.env.STRIPE_SECRET_KEY);
+  const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
 
   try {
     const session = await stripeInstance.checkout.sessions.create({
+      payment_method_types: ['card'],
       line_items: [
         {
           price_data: {
-            currency: 'usd',
+            currency: 'inr',
             product_data: {
               name: 'T-shirt',
             },
@@ -40,11 +42,12 @@ const stripePayment = async (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:4242/success',
-      cancel_url: 'http://localhost:4242/cancel',
+      success_url: 'http://localhost:3000/success',
+      cancel_url: 'http://localhost:3000/cancel',
+      billing_address_collection: 'auto', // Remove this line
     });
 
-    res.redirect(303, session.url);
+    res.json({ sessionId: session.id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });
