@@ -110,7 +110,7 @@ function App() {
             <>
               <Route element={<MechanicDashboardPage />} path="/mechanic/dashboard" />
               <Route element={<MechanicProfilePage/>} path={'/mechanic/profile'} />
-              <Route element={<MechanicTimeSchedule/>} path={'/mechanic/schedule'}/>
+              <Route element={<MechanicSchedulePage/>} path={'/mechanic/schedule'}/>
             </>
           )}
 

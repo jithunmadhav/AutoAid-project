@@ -1,27 +1,35 @@
 .dashboard-background{
-    /* background: linear-gradient(to right, #111111,#0e1136) !important; */
     background: linear-gradient(to right, #111111,#0e1136) !important;
     height: 100vh;
     padding-top: 1px;
 }
- 
-.nav-bg{
-    background: linear-gradient(to right, #111111,#0e1136) !important;
 
-}
-.cards-mechanics{
+.cards-mechanics {
     display: flex;
     justify-content: space-around;
     margin-left: 60px;
     margin-right: 60px;
-    margin-top: 230px;
+    margin-top: 180px;
     border-radius: 30px;
     margin-bottom: 150px;
   }
- .date-heading{
-    position: absolute;
-    top: 16%;
-    left: 5%;
-    color: white;
-    font-family: monospace;
- }
+  
+  .cards-mechanics-time {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 20px;
+    margin-left: 140px;
+  }
+  
+  @media (max-width: 768px) {
+    .cards-mechanics-time {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .cards-mechanics-time {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  
