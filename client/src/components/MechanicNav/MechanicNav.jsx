@@ -40,6 +40,11 @@ function MechanicNav() {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link className="nav-link" to="/mechanic/schedule" onClick={closeNavbar}>
+                  Schedule
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to="/about" onClick={closeNavbar}>
                   Appointments
                 </Link>
