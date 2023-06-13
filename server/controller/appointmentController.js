@@ -23,7 +23,6 @@ export const emergencySchedule=async(req,res)=>{
 import stripe from 'stripe';
 
 const stripePayment = async (req, res) => {
-  console.log(process.env.STRIPE_SECRET_KEY);
   const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
 
   try {
@@ -43,8 +42,8 @@ const stripePayment = async (req, res) => {
       ],
       mode: 'payment',
       success_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel',
-      billing_address_collection: 'auto', // Remove this line
+      cancel_url: 'http://localhost:3000/*',
+      billing_address_collection: 'auto', 
     });
 
     res.json({ sessionId: session.id });

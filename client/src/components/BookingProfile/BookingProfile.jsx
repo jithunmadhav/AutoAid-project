@@ -21,7 +21,7 @@ function BookingProfile(props) {
   if(visible){
     navigate('/addvehicle',{state:{...props.data,booking:'Emergency booking'}})
   }else if(visibleSchedule){
-    navigate('/addvehicle',{state:{...props.data,booking:'scheduled booking'}})
+    navigate('/scheduleslot',{state:{...props.data,booking:'scheduled booking'}})
   }
  }
 
@@ -98,7 +98,7 @@ function BookingProfile(props) {
     <CButton color="danger" onClick={() => setVisibleSchedule(false)}>
       Cancel
     </CButton>
-    <CButton color="success">Continue</CButton>
+    <CButton onClick={selectVehicle} color="success">Continue</CButton>
   </CModalFooter>
 </CModal>
 

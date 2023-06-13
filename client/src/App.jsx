@@ -99,6 +99,7 @@ function App() {
               <Route element={<PlacePage/>} path={'/location'} />
               <Route element={<AddVehiclePage/>} path='/addvehicle'/>
               <Route element={<StripeSample/>} path='/stripe'/>
+
               <Route element={<AppointmentSuccess/>} path={'/success'}/>
             </>
           )}
