@@ -24,6 +24,7 @@ import AddVehiclePage from './Pages/AddVehiclePage';
 import StripeSample from './components/StripeSample';
 import AppointmentSuccess from './components/AppoinmentSuccess/AppointmentSuccess';
 import MechanicSchedulePage from './Pages/MechanicSchedulePage';
+import MechanicTimeSchedule from './components/MechanicSchedule/MechanicTimeSchedule';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -109,7 +110,7 @@ function App() {
             <>
               <Route element={<MechanicDashboardPage />} path="/mechanic/dashboard" />
               <Route element={<MechanicProfilePage/>} path={'/mechanic/profile'} />
-              <Route element={<MechanicSchedulePage/>} path={'/mechanic/schedule'}/>
+              <Route element={<MechanicTimeSchedule/>} path={'/mechanic/schedule'}/>
             </>
           )}
 
