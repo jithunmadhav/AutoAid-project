@@ -34,17 +34,44 @@ function MechanicDashboard() {
       value: dayNumber
     });
   }
+  
 
-  for (let i = 9; i <= 23; i++) {
-    const hour12 = i > 12 ? i - 12 : i;
-    const meridiem = i >= 12 ? 'PM' : 'AM';
-    const time = hour12.toString().padStart(2, '0') + ':00 ' + meridiem;
-    timeSlots.push({
-      value: time
-    });
+  for (let i = 0; i < 7; i++) {
+    const date = new Date();
+    date.setDate(currentDate.getDate() + i);
+    const CurrDate=date
+    const dayName = daysOfWeek[date.getDay()];
+    const dayNumber = date.getDate();
+  
+    const dateObj = {
+      date: CurrDate,
+      dayName: dayName,
+      dayNumber: dayNumber,
+      slots: []
+    };
+  
+    for (let j = 9; j <= 23; j++) {
+      const hour12 = j > 12 ? j - 12 : j;
+      const meridiem = j >= 12 ? 'PM' : 'AM';
+      const time = hour12.toString().padStart(2, '0') + ':00 ' + meridiem;
+  
+      dateObj.slots.push({
+        value: time
+      });
+    }
+  
+    timeSlots.push(dateObj);
   }
+  const [findDate, setfindDate] = useState(timeSlots[0].slots)
 
   const handleDateCardClick = (index, date) => {
+    const result = timeSlots.find(slot => slot.date.getTime() === date.getTime());
+    const selectResult=new Date(result.date).toISOString()
+scheduledDate.map((item)=>{
+  console.log(item.date.split('T')[0]===selectResult.split('T')[0]);
+  console.log("******");
+})
+    setfindDate(result.slots)
     setSelectedDate(date);
     setSelectedCardIndex(index);
   };
@@ -54,17 +81,14 @@ function MechanicDashboard() {
     const existingIndex = selectedSlots.indexOf(index);
 
     if (existingIndex !== -1) {
-      // Time slot already selected, remove it
       selectedSlots.splice(existingIndex, 1);
     } else {
-      // Time slot not selected, add it
       selectedSlots.push(index);
       setselectedTime([...selectedTime,data])
     }
 
     setSelectedTimeSlots(selectedSlots);
   };
-console.log(selectedDate,"****************",selectedTime);
 
 const handlesubmit=()=>{
   axios.post('/mechanic/scheduleddate',{selectedDate,selectedTime,mechanic_id}).then((response)=>{
@@ -103,7 +127,7 @@ const handlesubmit=()=>{
           ))}
         </div>
         <div className='cards-mechanics-time'>
-          {timeSlots.map((card, index) => (
+          {findDate.map((card, index) => (
             <Card
               key={index}
               sx={{ maxWidth: 180 }}
