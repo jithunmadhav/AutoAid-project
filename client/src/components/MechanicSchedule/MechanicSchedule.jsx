@@ -8,7 +8,9 @@ import { CardActionArea } from '@mui/material';
 
 function MechanicDashboard() {
   const currentDate = new Date();
+  const [selectedDate, setselectedDate] = useState('');
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
+  const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
   const cardData = [];
   const timeSlots = [];
 
@@ -20,6 +22,7 @@ function MechanicDashboard() {
     const dayName = daysOfWeek[date.getDay()];
     const dayNumber = date.getDate();
     cardData.push({
+      date: date,
       title: dayName,
       value: dayNumber
     });
@@ -35,7 +38,18 @@ function MechanicDashboard() {
   }
 
   const handleCardClick = (index) => {
-    setSelectedCardIndex(index);
+    const selectedSlots = [...selectedTimeSlots];
+    const existingIndex = selectedSlots.indexOf(index);
+
+    if (existingIndex !== -1) {
+      // Time slot already selected, remove it
+      selectedSlots.splice(existingIndex, 1);
+    } else {
+      // Time slot not selected, add it
+      selectedSlots.push(index);
+    }
+
+    setSelectedTimeSlots(selectedSlots);
   };
 
   return (
@@ -50,7 +64,7 @@ function MechanicDashboard() {
               style={{
                 borderRadius: '15px',
                 width: '280px',
-                border: selectedCardIndex === index ? '4px solid green' : 'none'
+                border: selectedCardIndex === index ? '4px solid red' : 'none'
               }}
               onClick={() => handleCardClick(index)}
             >
@@ -69,10 +83,20 @@ function MechanicDashboard() {
         </div>
         <div className='cards-mechanics-time'>
           {timeSlots.map((card, index) => (
-            <Card key={index} sx={{ maxWidth: 180 }} style={{ borderRadius: '15px', width: '280px', height: '70px' }}>
+            <Card
+              key={index}
+              sx={{ maxWidth: 180 }}
+              style={{
+                borderRadius: '15px',
+                width: '280px',
+                height: '70px',
+                backgroundColor: selectedTimeSlots.includes(index) ? 'red' : 'transparent',
+              }}
+              onClick={() => handleCardClick(index)}
+            >
               <CardActionArea>
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'ui-monospace', textAlign: 'center' }}>
+                  <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'unset', textAlign: 'center' }}>
                     {card.value}
                   </Typography>
                 </CardContent>
@@ -80,6 +104,7 @@ function MechanicDashboard() {
             </Card>
           ))}
         </div>
+        <button className='mechanic-schedule-btn'>SAVE</button>
       </div>
     </>
   )

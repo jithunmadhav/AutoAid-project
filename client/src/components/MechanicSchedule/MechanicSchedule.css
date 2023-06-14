@@ -32,4 +32,13 @@
       grid-template-columns: repeat(1, 1fr);
     }
   }
-  
+  .mechanic-schedule-btn{
+    position: absolute !important;
+    bottom: 5% !important;
+    right: 8% !important;
+    width: 8%;
+    font-size: 25px;
+    font-family: Monomaniac One, sans-serif;
+    border-radius: 6px;
+    background: #d9f3bc;
+  }
