@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './MechanicSchedule.css'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import axios from '../../axios';
+import { useSelector } from 'react-redux';
 
 function MechanicDashboard() {
+  const {mechanic} = useSelector(state => state)
+  const mechanic_id=mechanic.details[0]._id;
+  useEffect(() => {
+    
+  }, [])
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setselectedTime] = useState([])
@@ -59,6 +66,14 @@ function MechanicDashboard() {
     setSelectedTimeSlots(selectedSlots);
   };
 console.log(selectedDate,"****************",selectedTime);
+
+const handlesubmit=()=>{
+  axios.post('/mechanic/scheduleddate',{selectedDate,selectedTime,mechanic_id}).then((response)=>{
+    console.log(response.data);
+  }).catch(err=>{
+    console.log(err);
+  })
+}
   return (
     <>
       <div className='dashboard-background'>
@@ -111,7 +126,7 @@ console.log(selectedDate,"****************",selectedTime);
             </Card>
           ))}
         </div>
-        <button className='mechanic-schedule-btn'>SAVE</button>
+        <button onClick={handlesubmit} className='mechanic-schedule-btn'>SAVE</button>
       </div>
     </>
   )
