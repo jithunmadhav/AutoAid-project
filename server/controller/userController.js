@@ -72,7 +72,7 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
 
     }
     export const resendOtp=(req,res)=>{
-        const {email,mobile}=req.body.data;
+        const {email,mobile}=req.body;
         let otp=randomNumber()
         console.log(otp);
                sentOTP(email,otp);

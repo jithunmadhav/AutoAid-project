@@ -72,6 +72,8 @@ export const verifyMechanicSignup = async (req, res) => {
     '00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa'
   );
   let bcrypPassword = await bcrypt.hash(password, 10);
+  console.log(otp);
+  console.log(OtpToken.otp);
   if (otp == OtpToken.otp) {
     let user = await mechanicModel.create({
       name,

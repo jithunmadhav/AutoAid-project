@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './MechanicSchedule.css'
 import Card from '@mui/material/Card';
@@ -11,9 +11,7 @@ import { useSelector } from 'react-redux';
 function MechanicDashboard() {
   const {mechanic} = useSelector(state => state)
   const mechanic_id=mechanic.details[0]._id;
-  useEffect(() => {
-    
-  }, [])
+  console.log(mechanic.details[0].scheduledDate);
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setselectedTime] = useState([])
