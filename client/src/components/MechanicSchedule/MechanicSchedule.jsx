@@ -11,9 +11,10 @@ import { useSelector } from 'react-redux';
 function MechanicDashboard() {
   const {mechanic} = useSelector(state => state)
   const mechanic_id=mechanic.details[0]._id;
-  console.log(mechanic.details[0].scheduledDate);
+  const [scheduledDate, setscheduledDate] = useState(mechanic.details[0].scheduledDate)
+  console.log(scheduledDate);
   const currentDate = new Date();
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(currentDate);
   const [selectedTime, setselectedTime] = useState([])
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);

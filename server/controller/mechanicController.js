@@ -161,18 +161,35 @@ export const mechanicLogin=async(req,res)=>{
         })
     }
 
-    export const scheduledDate=async(req,res)=>{
-        const {selectedDate,selectedTime,mechanic_id}=req.body
-        const date=new Date(selectedDate)
-        await mechanicModel.updateOne({_id:mechanic_id},{$addToSet:{scheduledDate:{
-            date:date,
-            selectedTime:selectedTime
-        }}}).then((result)=>{
-            res.status(200).json({err:false,result})
-        }).catch((error)=>{
-            res.status(500).json({err:true,error})
-        })
+    
+export const scheduledDate = async (req, res) => {
+    const { selectedDate, selectedTime, mechanic_id } = req.body;
+    const date = new Date(selectedDate);
+    const expirationDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+  
+    await mechanicModel
+      .updateOne(
+        { _id: mechanic_id },
+        {
+          $addToSet: {
+            scheduledDate: {
+              date: date,
+              selectedTime: selectedTime,
+              expirationDate: expirationDate,
+            },
+          },
+        }
+      )
+      .then((result) => {
+        mechanicModel.createIndexes({ scheduledDate: 1 }, { expireAfterSeconds: 0 });
+  
+        res.status(200).json({ err: false, result });
+      })
+      .catch((error) => {
+        res.status(500).json({ err: true, error });
+      });
     }
+
     export const mechanicLogout = (req, res) => {
         console.log("sdfds");
         return res
