@@ -8,7 +8,8 @@ import { CardActionArea } from '@mui/material';
 
 function MechanicDashboard() {
   const currentDate = new Date();
-  const [selectedDate, setselectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setselectedTime] = useState([])
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
   const cardData = [];
@@ -37,7 +38,12 @@ function MechanicDashboard() {
     });
   }
 
-  const handleCardClick = (index) => {
+  const handleDateCardClick = (index, date) => {
+    setSelectedDate(date);
+    setSelectedCardIndex(index);
+  };
+
+  const handleTimeSlotClick = (index,data) => {
     const selectedSlots = [...selectedTimeSlots];
     const existingIndex = selectedSlots.indexOf(index);
 
@@ -47,11 +53,12 @@ function MechanicDashboard() {
     } else {
       // Time slot not selected, add it
       selectedSlots.push(index);
+      setselectedTime([...selectedTime,data])
     }
 
     setSelectedTimeSlots(selectedSlots);
   };
-
+console.log(selectedDate,"****************",selectedTime);
   return (
     <>
       <div className='dashboard-background'>
@@ -66,7 +73,7 @@ function MechanicDashboard() {
                 width: '280px',
                 border: selectedCardIndex === index ? '4px solid red' : 'none'
               }}
-              onClick={() => handleCardClick(index)}
+              onClick={() => handleDateCardClick(index, card.date)}
             >
               <CardActionArea>
                 <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center', fontSize: '35px' }}>
@@ -90,13 +97,13 @@ function MechanicDashboard() {
                 borderRadius: '15px',
                 width: '280px',
                 height: '70px',
-                backgroundColor: selectedTimeSlots.includes(index) ? 'red' : 'transparent',
+                border: selectedTimeSlots.includes(index) ? '4px solid red' : 'none',
               }}
-              onClick={() => handleCardClick(index)}
+              onClick={() => handleTimeSlotClick(index,card)}
             >
               <CardActionArea>
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'unset', textAlign: 'center' }}>
+                  <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'unset', textAlign: 'center',fontSize:'25px' }}>
                     {card.value}
                   </Typography>
                 </CardContent>

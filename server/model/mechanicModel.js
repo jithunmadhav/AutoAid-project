@@ -57,6 +57,10 @@ const mechanicSchema=mongoose.Schema({
     minAmount:{
         type:Number,
         required:true
+    },
+    scheduledDate:{
+        type:Array,
+        default:[]
     }
     
     

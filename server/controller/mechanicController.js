@@ -33,6 +33,7 @@ export const mechanicSignup2=async(req,res)=>{
          
         if(password==confirmPassword){
            let otp=randomNumber()
+           console.log(otp);
            sentOTP(email,otp);
         //    mobileOTP(mobile,otp)
             //   mobileOTP2(mobile,otp)
