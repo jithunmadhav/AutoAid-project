@@ -9,7 +9,7 @@ import axios from '../../axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 function MechanicDashboard() {
-  const { mechanic, refresh } = useSelector(state => state);
+  const { mechanic } = useSelector(state => state);
   const dispatch = useDispatch()
   const mechanic_id = mechanic.details[0]._id;
   const [scheduledDate, setScheduledDate] = useState(mechanic.details[0].scheduledDate);
@@ -126,8 +126,6 @@ function MechanicDashboard() {
     setFindDate(updatedFindDate);
   }, [matchedIndex]);
 
-  console.log(matchedIndex);
-  console.log(findDate);
 
   return (
     <>

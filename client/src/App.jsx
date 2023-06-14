@@ -24,7 +24,6 @@ import AddVehiclePage from './Pages/AddVehiclePage';
 import StripeSample from './components/StripeSample';
 import AppointmentSuccess from './components/AppoinmentSuccess/AppointmentSuccess';
 import MechanicSchedulePage from './Pages/MechanicSchedulePage';
-import MechanicTimeSchedule from './components/MechanicSchedule/MechanicTimeSchedule';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
