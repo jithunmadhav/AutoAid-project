@@ -42,3 +42,7 @@
     border-radius: 6px;
     background: #d9f3bc;
   }
+  .cards-mechanics-time .MuiCard-root {
+    transition: background-color 0.3s ease;
+  }
+  

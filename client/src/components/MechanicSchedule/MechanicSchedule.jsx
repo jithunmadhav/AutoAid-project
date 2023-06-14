@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './MechanicSchedule.css'
 import Card from '@mui/material/Card';
@@ -6,10 +6,11 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import axios from '../../axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function MechanicDashboard() {
-  const { mechanic } = useSelector(state => state);
+  const { mechanic, refresh } = useSelector(state => state);
+  const dispatch = useDispatch()
   const mechanic_id = mechanic.details[0]._id;
   const [scheduledDate, setScheduledDate] = useState(mechanic.details[0].scheduledDate);
   const currentDate = new Date();
@@ -17,7 +18,7 @@ function MechanicDashboard() {
   const [selectedTime, setSelectedTime] = useState([]);
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
-  const [matchedIndex, setmatchedIndex] = useState([]);
+  const [matchedIndex, setMatchedIndex] = useState([]);
   const cardData = [];
   const timeSlots = [];
 
@@ -64,43 +65,46 @@ function MechanicDashboard() {
 
   const [findDate, setFindDate] = useState(timeSlots[0].slots);
 
-  const handleDateCardClick = async (index, date) => {
-    const result = timeSlots.find(
-      (slot) =>
-        slot.date.toISOString().split('T')[0] ===
-        date.toISOString().split('T')[0]
-    );
+  const handleDateCardClick = (index, date) => {
+    const result = timeSlots.find(slot => slot.date.getTime() === date.getTime());
     const selectResult = new Date(result.date).toISOString();
-
-    for (const item of scheduledDate) {
+    const matchingIndices = [];
+  
+    scheduledDate.forEach(item => {
       if (item.date.split('T')[0] === selectResult.split('T')[0]) {
-        const matchingIndices = result.slots
-          .filter((slot) =>
-            item.selectedTime.some((time) => time.value === slot.value)
-          )
+        const indices = result.slots
+          .filter(slot => item.selectedTime.some(time => time.value === slot.value))
           .map((_, index) => index);
-
-        await setmatchedIndex(matchingIndices);
+        matchingIndices.push(...indices);
+        dispatch({ type: 'refresh' });
       }
-    }
-
+    });
+  
+    setSelectedTime([]);
+    setSelectedTimeSlots([]);
+    setMatchedIndex(matchingIndices);
+  
     setFindDate(result.slots);
     setSelectedDate(date);
     setSelectedCardIndex(index);
   };
+  
 
   const handleTimeSlotClick = (index, data) => {
     const selectedSlots = [...selectedTimeSlots];
     const existingIndex = selectedSlots.indexOf(index);
 
-    if (existingIndex !== -1) {
-      selectedSlots.splice(existingIndex, 1);
-    } else {
-      selectedSlots.push(index);
-      setSelectedTime([...selectedTime, data]);
-    }
+    // Check if the slot is selectable
+    if (findDate[index].selectable) {
+      if (existingIndex !== -1) {
+        selectedSlots.splice(existingIndex, 1);
+      } else {
+        selectedSlots.push(index);
+        setSelectedTime([...selectedTime, data]);
+      }
 
-    setSelectedTimeSlots(selectedSlots);
+      setSelectedTimeSlots(selectedSlots);
+    }
   };
 
   const handleSubmit = () => {
@@ -114,8 +118,16 @@ function MechanicDashboard() {
   };
 
   useEffect(() => {
-    console.log("//////////---------",matchedIndex);
+    const updatedFindDate = findDate.map((card, index) => {
+      const backgroundColor = matchedIndex.includes(index) ? '#999191' : 'none';
+      const selectable = !matchedIndex.includes(index); // Set selectable based on matchedIndex
+      return { ...card, backgroundColor, selectable };
+    });
+    setFindDate(updatedFindDate);
   }, [matchedIndex]);
+
+  console.log(matchedIndex);
+  console.log(findDate);
 
   return (
     <>
@@ -155,6 +167,7 @@ function MechanicDashboard() {
                 borderRadius: '15px',
                 width: '280px',
                 height: '70px',
+                backgroundColor: card.backgroundColor,
                 border: selectedTimeSlots.includes(index) ? '4px solid red' : 'none',
               }}
               onClick={() => handleTimeSlotClick(index, card)}
