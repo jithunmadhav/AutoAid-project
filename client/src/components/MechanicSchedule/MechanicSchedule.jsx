@@ -9,7 +9,7 @@ import axios from '../../axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 function MechanicDashboard() {
-  const { mechanic } = useSelector(state => state);
+  const { mechanic, refresh } = useSelector(state => state);
   const dispatch = useDispatch()
   const mechanic_id = mechanic.details[0]._id;
   const [scheduledDate, setScheduledDate] = useState(mechanic.details[0].scheduledDate);
@@ -65,32 +65,36 @@ function MechanicDashboard() {
 
   const [findDate, setFindDate] = useState(timeSlots[0].slots);
 
-  const handleDateCardClick = (index, date) => {
-    const result = timeSlots.find(slot => slot.date.getTime() === date.getTime());
-    const selectResult = new Date(result.date).toISOString();
-    const matchingIndices = [];
-  
-    scheduledDate.forEach(item => {
-      if (item.date.split('T')[0] === selectResult.split('T')[0]) {
-        const indices = result.slots
-          .filter(slot => item.selectedTime.some(time => time.value === slot.value))
-          .map((_, index) => index);
-        matchingIndices.push(...indices);
-        dispatch({ type: 'refresh' });
-      }
-    });
-  
-    setSelectedTime([]);
-    setSelectedTimeSlots([]);
-    setMatchedIndex(matchingIndices);
-  
-    setFindDate(result.slots);
-    setSelectedDate(date);
-    setSelectedCardIndex(index);
-  };
-  
+const handleDateCardClick = (index, date) => {
+  const result = timeSlots.find(slot => slot.date.getTime() === date.getTime());
+  const selectResult = new Date(result.date).toISOString();
+  const matchingIndices = [];
+
+  scheduledDate.forEach(item => {
+    if (item.date.split('T')[0] === selectResult.split('T')[0]) {
+      console.log(item);
+      console.log(result);
+      const indices = result.slots
+        .filter(slot => item.selectedTime.some(time => time.value === slot.value))
+        .map((_, index) => index);
+      matchingIndices.push(...indices);
+      console.log(matchingIndices);
+      dispatch({ type: 'refresh' });
+    }
+  });
+
+  setSelectedTime([]);
+  setSelectedTimeSlots([]);
+  setMatchedIndex(matchingIndices);
+
+  setFindDate(result.slots);
+  setSelectedDate(date);
+  setSelectedCardIndex(index);
+};
+
 
   const handleTimeSlotClick = (index, data) => {
+
     const selectedSlots = [...selectedTimeSlots];
     const existingIndex = selectedSlots.indexOf(index);
 
@@ -108,7 +112,9 @@ function MechanicDashboard() {
   };
 
   const handleSubmit = () => {
-    axios.post('/mechanic/scheduleddate', { selectedDate, selectedTime, mechanic_id })
+    console.log("*******",selectedDate,selectedTime);
+    const selecteddate=selectedDate.toISOString()
+    axios.post('/mechanic/scheduleddate', { selecteddate, selectedTime, mechanic_id })
       .then(response => {
         console.log(response.data);
       })

@@ -163,31 +163,48 @@ export const mechanicLogin=async(req,res)=>{
 
     
 export const scheduledDate = async (req, res) => {
-    const { selectedDate, selectedTime, mechanic_id } = req.body;
-    const date = new Date(selectedDate);
+    const { selecteddate, selectedTime, mechanic_id } = req.body;
+    const currDate=new Date( new Date(selecteddate).toISOString().split('T')[0])
+    const date = new Date(selecteddate);
     const expirationDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
-  
-    await mechanicModel
-      .updateOne(
-        { _id: mechanic_id },
-        {
-          $addToSet: {
-            scheduledDate: {
-              date: date,
-              selectedTime: selectedTime,
-              expirationDate: expirationDate,
-            },
-          },
-        }
-      )
-      .then((result) => {
-        mechanicModel.createIndexes({ scheduledDate: 1 }, { expireAfterSeconds: 0 });
-  
+    const existingDate = await mechanicModel.findOne({ _id: mechanic_id, scheduledDate: { $elemMatch: { currDate } } });
+    if(existingDate){
+      const existingDateArray=existingDate.scheduledDate[0].selectedTime;
+      const newArray=selectedTime
+      const selectedtime=[...existingDateArray,...newArray]
+    
+      await mechanicModel.updateOne(
+        { _id: mechanic_id, 'scheduledDate.currDate': currDate },
+        { $set: { 'scheduledDate.$.selectedTime': selectedtime } }
+      ).then((result) => {
         res.status(200).json({ err: false, result });
-      })
-      .catch((error) => {
+      }).catch((error) => {
         res.status(500).json({ err: true, error });
       });
+    }else{
+      await mechanicModel
+        .updateOne(
+          { _id: mechanic_id },
+          {
+            $addToSet: {
+              scheduledDate: {
+                currDate:currDate,
+                date: date,
+                selectedTime: selectedTime,                    
+                expirationDate: expirationDate,
+              },
+            },
+          }
+        )
+        .then((result) => {
+          mechanicModel.createIndexes({ scheduledDate: 1 }, { expireAfterSeconds: 0 });
+    
+          res.status(200).json({ err: false, result });
+        })
+        .catch((error) => {
+          res.status(500).json({ err: true, error });
+        });
+    }
     }
 
     export const mechanicLogout = (req, res) => {
