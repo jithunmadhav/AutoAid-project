@@ -74,9 +74,9 @@ const handleDateCardClick = (index, date) => {
     if (item.date.split('T')[0] === selectResult.split('T')[0]) {
       console.log(item);
       console.log(result);
-      const indices = result.slots
-        .filter(slot => item.selectedTime.some(time => time.value === slot.value))
-        .map((_, index) => index);
+      const indices = item.selectedTime
+  .filter(time => time.index !== undefined)
+  .map(time => result.slots.findIndex(slot => slot.value === time.value));
       matchingIndices.push(...indices);
       console.log(matchingIndices);
       dispatch({ type: 'refresh' });
@@ -127,7 +127,7 @@ const handleDateCardClick = (index, date) => {
     const updatedFindDate = findDate.map((card, index) => {
       const backgroundColor = matchedIndex.includes(index) ? '#999191' : 'none';
       const selectable = !matchedIndex.includes(index); // Set selectable based on matchedIndex
-      return { ...card, backgroundColor, selectable };
+      return { ...card, backgroundColor, selectable,index };
     });
     setFindDate(updatedFindDate);
   }, [matchedIndex]);
