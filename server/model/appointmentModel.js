@@ -31,6 +31,12 @@ const appointmentSchema=mongoose.Schema({
     userId:{
         type:String,
         required:true
+    },
+    selectedDate:{
+        type:Date
+    },
+    selectedTime:{
+        type:String
     }
 })
 

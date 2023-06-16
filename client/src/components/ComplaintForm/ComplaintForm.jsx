@@ -74,7 +74,7 @@ function ComplaintForm(props) {
 
   const emergencyschedule = () => {
     setLoading(true);
-    axios.post('/user/emergencyschedule', { ...props.data, location, complaint, userId }).then((response) => {
+    axios.post('/user/appointment', { ...props.data, location, complaint, userId }).then((response) => {
       console.log(response.data);
       setVisible(false);
       setOpen(true);

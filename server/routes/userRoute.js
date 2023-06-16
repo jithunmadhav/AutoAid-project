@@ -10,7 +10,7 @@ router.post('/signup',userSignup).post('/verifySignup',verifyUserSignup).post('/
 router.post('/forgotPassword',forgotPassword).post('/resetPassword',resetpassword).post('/verifyResetOtp',VerifyResetOtp)
 router.post('/addvehicle',addVehicle).get('/allvehicle/:id',allVehicle).patch('/deletevehicle',deleteVehicle)
 router.get('/vehicleDetails',editVehicleDetails).patch('/editvehicle',editVehicle)
-router.post('/emergencyschedule',emergencySchedule)
+router.post('/appointment',emergencySchedule)
 router.post('/login',userLogin).get('/logout',userLogout)
 
 router.post('/create-checkout-session',stripePayment)
