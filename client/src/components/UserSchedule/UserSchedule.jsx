@@ -110,29 +110,7 @@ function UserSchedule() {
 
   const handleSubmit = () => {
     const selecteddate = selectedDate.toISOString();
-    axios
-      .post('/mechanic/scheduleddate', { selecteddate, selectedTime, mechanic_id })
-      .then(response => {
-        if (!response.data.err) {
-          const updatedFindDate = findDate.map((card, index) => {
-            const backgroundColor = selectedTimeSlots.includes(index) ? '#999191' : 'none';
-            const selectable = !selectedTimeSlots.includes(index);
-            return { ...card, backgroundColor, selectable };
-          });
-
-          setVisible(!visible);
-
-          // Update the scheduledDate state
-          const updatedScheduledDate = [...scheduledDate, {
-            date: selecteddate,
-            selectedTime
-          }];
-          setScheduledDate(updatedScheduledDate);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    console.log(selecteddate, selectedTime[0].value, mechanic_id);
   };
 
  useEffect(() => {
@@ -205,7 +183,7 @@ function UserSchedule() {
             </Typography>
           )}
           </div>
-        <button onClick={() => setVisible(!visible)} className='mechanic-schedule-btn'>SAVE</button>
+        <button onClick={() => setVisible(!visible)} className='mechanic-schedule-btn'>continue</button>
       </div>
       <CModal alignment="center" visible={visible} onClose={() => setVisible(false)} className="custom-modal">
         <CModalBody className="custom-modal-body">
