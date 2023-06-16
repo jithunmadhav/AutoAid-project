@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import './MechanicSchedule.css'
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -15,14 +14,14 @@ import {
 } from '@coreui/react';
 import { useNavigate } from 'react-router-dom';
 
-function MechanicDashboard() {
-  const { mechanic } = useSelector(state => state);
+function UserSchedule() {
+  const { user } = useSelector(state => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const mechanic_id = mechanic.details[0]._id;
+  const mechanic_id = user.details._id;
   const [visible, setVisible] = useState(false);
   const [refresh, setRefresh] = useState(false); // Add a refresh state
-  const [scheduledDate, setScheduledDate] = useState(mechanic.details[0].scheduledDate);
+  const [scheduledDate, setScheduledDate] = useState([]);
   console.log("*********",scheduledDate);
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState(currentDate);
@@ -244,4 +243,4 @@ function MechanicDashboard() {
   );
 }
 
-export default MechanicDashboard;
+export default UserSchedule;

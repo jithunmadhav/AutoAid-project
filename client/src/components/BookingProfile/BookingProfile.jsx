@@ -21,7 +21,7 @@ function BookingProfile(props) {
   if(visible){
     navigate('/addvehicle',{state:{...props.data,booking:'Emergency booking'}})
   }else if(visibleSchedule){
-    navigate('/scheduleslot',{state:{...props.data,booking:'scheduled booking'}})
+    navigate('/user/schedule',{state:{...props.data,booking:'scheduled booking'}})
   }
  }
 

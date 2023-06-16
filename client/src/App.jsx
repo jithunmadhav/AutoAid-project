@@ -24,6 +24,7 @@ import AddVehiclePage from './Pages/AddVehiclePage';
 import StripeSample from './components/StripeSample';
 import AppointmentSuccess from './components/AppoinmentSuccess/AppointmentSuccess';
 import MechanicSchedulePage from './Pages/MechanicSchedulePage';
+import UserSchedulePage from './Pages/UserSchedulePage';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -100,7 +101,7 @@ function App() {
               <Route element={<PlacePage/>} path={'/location'} />
               <Route element={<AddVehiclePage/>} path='/addvehicle'/>
               <Route element={<StripeSample/>} path='/stripe'/>
-
+              <Route element={<UserSchedulePage/>} path={'/user/schedule'}/>
               <Route element={<AppointmentSuccess/>} path={'/success'}/>
             </>
           )}
