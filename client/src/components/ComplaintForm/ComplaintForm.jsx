@@ -4,6 +4,7 @@ import './ComplaintForm.css';
 import { useDispatch, useSelector } from 'react-redux';
 import Axios from 'axios';
 import Stack from '@mui/material/Stack';
+import { loadStripe } from '@stripe/stripe-js';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Slide } from '@mui/material';
@@ -21,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+const stripePromise = loadStripe('pk_test_51NHUznSDz600njLaI05KqqnqDZnLkdbltASDz4ZXbIc3ydgMcHy5D787yviVgVubJkJYZiNXDYuA3NgAEZhVXBrm00n1lhApaG');
 
 function ComplaintForm(props) {
   const dispatch = useDispatch();
@@ -69,21 +71,46 @@ function ComplaintForm(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setVisible(true);
-    console.log(props, location, complaint);
   };
 
-  const emergencyschedule = () => {
-    setLoading(true);
-    axios.post('/user/appointment', { ...props.data, location, complaint, userId }).then((response) => {
-      console.log(response.data);
-      setVisible(false);
-      setOpen(true);
-      dispatch({type:'refresh'});
-      setTimeout(() => {
-        setLoading(false);
-        navigate('/success');
-      }, 3000);
-    });
+   
+  
+  const emergencyschedule = async() => {
+    if (props.data.mechanic.booking === 'Scheduled booking') {
+      const minAmount = props.data.mechanic.minAmount;
+      const stripe = await stripePromise;
+    
+      try {
+        const response = await axios.post('http://localhost:4000/user/stripepayment', {
+          minAmount: minAmount,...props.data, location, complaint, userId 
+        });
+    
+        const { sessionId } = response.data;
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: sessionId,
+        });
+    
+        if (error) {
+          console.error(error);
+          // Handle the error condition
+        }  
+      } catch (error) {
+        console.error(error);
+      }
+    
+    }else{
+      setLoading(true);
+      axios.post('/user/appointment', { ...props.data, location, complaint, userId }).then((response) => {
+        console.log(response.data);
+        setVisible(false);
+        setOpen(true);
+        dispatch({type:'refresh'});
+        setTimeout(() => {
+          setLoading(false);
+          navigate('/success');
+        }, 3000);
+      });
+    }
   };
 
   const handleClose = (event, reason) => {
