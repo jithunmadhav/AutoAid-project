@@ -45,4 +45,9 @@
   .cards-mechanics-time .MuiCard-root {
     transition: background-color 0.3s ease;
   }
-  
+  .no-slot{
+    position: absolute;
+    left: 44%;
+    color: white;
+    
+  }

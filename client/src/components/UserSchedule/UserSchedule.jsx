@@ -12,17 +12,20 @@ import {
   CModalBody,
   CModalFooter,
 } from '@coreui/react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function UserSchedule() {
+  const location = useLocation();
+  const mech_details = location.state;
   const { user } = useSelector(state => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [result, setresult] = useState([]);
   const mechanic_id = user.details._id;
   const [visible, setVisible] = useState(false);
   const [refresh, setRefresh] = useState(false); // Add a refresh state
-  const [scheduledDate, setScheduledDate] = useState([]);
-  console.log("*********",scheduledDate);
+  const [scheduledDate, setScheduledDate] = useState(mech_details.scheduledDate);
+
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [selectedTime, setSelectedTime] = useState([]);
@@ -60,15 +63,9 @@ function UserSchedule() {
       slots: []
     };
 
-    for (let j = 9; j <= 23; j++) {
-      const hour12 = j > 12 ? j - 12 : j;
-      const meridiem = j >= 12 ? 'PM' : 'AM';
-      const time = hour12.toString().padStart(2, '0') + ':00 ' + meridiem;
-
-      dateObj.slots.push({
-        value: time
-      });
-    }
+    // Replace the commented block with your logic to fetch time slots for each date
+    // In this example, we assume there are no time slots available
+    // If there are time slots available, populate the `dateObj.slots` array accordingly
 
     timeSlots.push(dateObj);
   }
@@ -76,43 +73,38 @@ function UserSchedule() {
   const [findDate, setFindDate] = useState(timeSlots[0].slots);
 
   const handleDateCardClick = (index, date) => {
-    const result = timeSlots.find(slot => slot.date.getTime() === date.getTime());
-    const selectResult = new Date(result.date).toISOString();
     const matchingIndices = [];
+    let matchedDate = scheduledDate.find(item => {
+        const itemDate = new Date(item.date);
+        return itemDate.toISOString().split('T')[0] === date.toISOString().split('T')[0];
+      });
+      
+      if (!matchedDate) {
+        setresult([])
+    }else{
+        setresult(matchedDate.selectedTime)
 
-    scheduledDate.forEach(item => {
-      if (item.date.split('T')[0] === selectResult.split('T')[0]) {
-        const indices = item.selectedTime
-          .filter(time => time.index !== undefined)
-          .map(time => result.slots.findIndex(slot => slot.value === time.value));
-        matchingIndices.push(...indices);
-        dispatch({ type: 'refresh' });
-      }
-    });
-
+    }
+      
+      
     setSelectedTime([]);
     setSelectedTimeSlots([]);
     setMatchedIndex(matchingIndices);
 
-    setFindDate(result.slots);
     setSelectedDate(date);
     setSelectedCardIndex(index);
   };
 
   const handleTimeSlotClick = (index, data) => {
-    const selectedSlots = [...selectedTimeSlots];
-    const existingIndex = selectedSlots.indexOf(index);
+    const selectedSlotIndex = selectedTimeSlots[0]; // Get the currently selected slot index
 
-    // Check if the slot is selectable
-    if (findDate[index].selectable) {
-      if (existingIndex !== -1) {
-        selectedSlots.splice(existingIndex, 1);
-      } else {
-        selectedSlots.push(index);
-        setSelectedTime([...selectedTime, data]);
-      }
-
-      setSelectedTimeSlots(selectedSlots);
+    // Check if the clicked slot is different from the currently selected slot
+    if (index !== selectedSlotIndex) {
+      setSelectedTimeSlots([index]); // Select the clicked slot
+      setSelectedTime([data]); // Update the selectedTime state
+    } else {
+      setSelectedTimeSlots([]); // Deselect the clicked slot
+      setSelectedTime([]); // Clear the selectedTime state
     }
   };
 
@@ -127,10 +119,9 @@ function UserSchedule() {
             const selectable = !selectedTimeSlots.includes(index);
             return { ...card, backgroundColor, selectable };
           });
-           
+
           setVisible(!visible);
-          
-  
+
           // Update the scheduledDate state
           const updatedScheduledDate = [...scheduledDate, {
             date: selecteddate,
@@ -143,34 +134,16 @@ function UserSchedule() {
         console.log(err);
       });
   };
-  
-  
-  useEffect(() => {
-    // Set initial selected date and slots
-    if (scheduledDate.length > 0) {
-      const firstSelectedDate = new Date(scheduledDate[0].date);
-      setSelectedDate(firstSelectedDate);
-      setSelectedCardIndex(0);
 
-      const firstSelectedSlots = scheduledDate[0].selectedTime.map(time => {
-        const index = findDate.findIndex(slot => slot.value === time.value);
-        return { ...time, index };
-      });
-      setSelectedTime(firstSelectedSlots);
+ useEffect(() => {
+    handleDateCardClick(0, cardData[0].date);
 
-      const matchingIndices = firstSelectedSlots.map(slot => slot.index);
-      setMatchedIndex(matchingIndices);
-    }
-  }, [scheduledDate]);
+ }, [])
 
   useEffect(() => {
-    const updatedFindDate = findDate.map((card, index) => {
-      const backgroundColor = matchedIndex.includes(index) ? '#999191' : 'none';
-      const selectable = !matchedIndex.includes(index);
-      return { ...card, backgroundColor, selectable, index };
-    });
-    setFindDate(updatedFindDate);
-  }, [matchedIndex]);
+    console.log(result);
+    setFindDate(result);
+  }, [result]);
 
   return (
     <>
@@ -203,29 +176,35 @@ function UserSchedule() {
           ))}
         </div>
         <div className='cards-mechanics-time'>
-          {findDate.map((card, index) => (
-            <Card
-              key={index}
-              sx={{ maxWidth: 180 }}
-              style={{
-                borderRadius: '15px',
-                width: '280px',
-                height: '70px',
-                backgroundColor: card.backgroundColor,
-                border: selectedTimeSlots.includes(index) ? '4px solid #1df11d' : 'none',
-              }}
-              onClick={() => handleTimeSlotClick(index, card)}
-            >
-              <CardActionArea>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'unset', textAlign: 'center', fontSize: '25px' }}>
-                    {card.value}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          ))}
-        </div>
+          {findDate.length > 0 ? (
+            findDate.map((card, index) => (
+              <Card
+                key={index}
+                sx={{ maxWidth: 180 }}
+                style={{
+                  borderRadius: '15px',
+                  width: '280px',
+                  height: '70px',
+                  backgroundColor: card.backgroundColor,
+                  border: selectedTimeSlots.includes(index) ? '4px solid #1df11d' : 'none',
+                }}
+                onClick={() => handleTimeSlotClick(index, card)}
+              >
+                <CardActionArea>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'unset', textAlign: 'center', fontSize: '25px' }}>
+                      {card.value}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            ))
+            ) : (
+                <Typography variant="h5" component="div"className='no-slot'>
+              No slots available
+            </Typography>
+          )}
+          </div>
         <button onClick={() => setVisible(!visible)} className='mechanic-schedule-btn'>SAVE</button>
       </div>
       <CModal alignment="center" visible={visible} onClose={() => setVisible(false)} className="custom-modal">
