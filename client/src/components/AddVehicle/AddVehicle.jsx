@@ -9,6 +9,7 @@ import ComplaintForm from '../ComplaintForm/ComplaintForm'
 
 function AddVehicle() {
   const location = useLocation()
+  console.log(location);
    const [mechanic, setmechanic] = useState(location.state)
   const { user, refresh } = useSelector(state => state)
   const id = user.details._id

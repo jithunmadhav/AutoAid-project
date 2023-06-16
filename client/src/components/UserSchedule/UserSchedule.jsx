@@ -4,8 +4,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import axios from '../../axios';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   CButton,
   CModal,
@@ -17,13 +15,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 function UserSchedule() {
   const location = useLocation();
   const mech_details = location.state;
-  const { user } = useSelector(state => state);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [result, setresult] = useState([]);
-  const mechanic_id = user.details._id;
   const [visible, setVisible] = useState(false);
-  const [refresh, setRefresh] = useState(false); // Add a refresh state
   const [scheduledDate, setScheduledDate] = useState(mech_details.scheduledDate);
 
   const currentDate = new Date();
@@ -31,7 +25,6 @@ function UserSchedule() {
   const [selectedTime, setSelectedTime] = useState([]);
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
-  const [matchedIndex, setMatchedIndex] = useState([]);
   const cardData = [];
   const timeSlots = [];
 
@@ -63,10 +56,6 @@ function UserSchedule() {
       slots: []
     };
 
-    // Replace the commented block with your logic to fetch time slots for each date
-    // In this example, we assume there are no time slots available
-    // If there are time slots available, populate the `dateObj.slots` array accordingly
-
     timeSlots.push(dateObj);
   }
 
@@ -89,28 +78,28 @@ function UserSchedule() {
       
     setSelectedTime([]);
     setSelectedTimeSlots([]);
-    setMatchedIndex(matchingIndices);
+    
 
     setSelectedDate(date);
     setSelectedCardIndex(index);
   };
 
   const handleTimeSlotClick = (index, data) => {
-    const selectedSlotIndex = selectedTimeSlots[0]; // Get the currently selected slot index
+    const selectedSlotIndex = selectedTimeSlots[0];  
 
-    // Check if the clicked slot is different from the currently selected slot
+     
     if (index !== selectedSlotIndex) {
-      setSelectedTimeSlots([index]); // Select the clicked slot
-      setSelectedTime([data]); // Update the selectedTime state
+      setSelectedTimeSlots([index]);  
+      setSelectedTime([data]);  
     } else {
-      setSelectedTimeSlots([]); // Deselect the clicked slot
-      setSelectedTime([]); // Clear the selectedTime state
+      setSelectedTimeSlots([]);  
+      setSelectedTime([]);  
     }
   };
 
   const handleSubmit = () => {
     const selecteddate = selectedDate.toISOString();
-    console.log(selecteddate, selectedTime[0].value, mechanic_id);
+    navigate('/addvehicle',{state:{...mech_details,booking:'Scheduled booking',selectedDate:selecteddate,selectedTime:selectedTime[0].value}})
   };
 
  useEffect(() => {
