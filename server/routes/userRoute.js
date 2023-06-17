@@ -1,5 +1,5 @@
 import  express  from 'express';
-import { emergencySchedule, stripePayment, webhookHandler }  from '../controller/appointmentController.js';
+import { emergencySchedule, generateRazorpay, stripePayment, verifyPayment, webhookHandler }  from '../controller/appointmentController.js';
 import { addVehicle, allVehicle, deleteVehicle, editVehicle, editVehicleDetails } from '../controller/serviceController.js';
 import { forgotPassword, resendOtp, resetpassword, userLogin, userLogout, userSignup, VerifyResetOtp, verifyUserSignup } from '../controller/userController.js';
 import { userCheckAuth } from '../middleware/userAuth.js';
@@ -15,4 +15,5 @@ router.post('/login',userLogin).get('/logout',userLogout)
 
 router.post('/stripepayment',stripePayment)
 router.post('/webhook',express.raw({ type: 'application/json' }), webhookHandler);
+router.post('/createOrder',generateRazorpay).post('/verifyPayment',verifyPayment)
 export default router                                  

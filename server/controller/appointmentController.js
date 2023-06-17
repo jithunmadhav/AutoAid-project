@@ -1,6 +1,13 @@
+import crypto from 'crypto'
 import stripe from 'stripe';
+import { randomNumber } from '../helper/randomNum.js';
 import appiontmentModel from "../model/appointmentModel.js"
+import Razorpay from 'razorpay';
 
+const instance = new Razorpay({
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.KEY_SECRET,
+});
 
 export const emergencySchedule=async(req,res)=>{
     try {
@@ -149,8 +156,27 @@ const webhookHandler = async (req, res) => {
 };
 
 
+ export const generateRazorpay=(req,res)=>{
+  const orderID=randomNumber()
+  const options={
+    amount: 100*100,
+    currency: "INR",
+    receipt: orderID 
+  };
 
-// Middleware to capture the raw request body
-
+ instance.orders.create(options,(err,order)=>{
+  res.json({orderId:order})
+ });
+ }
+ export const verifyPayment=(req,res)=>{
+        let hamc =crypto.createHmac('sha256', process.env.KEY_SECRET)
+        hamc.update(req.body.payment.razorpay_order_id+'|'+req.body.payment.razorpay_payment_id)
+        hamc=hamc.digest('hex')
+        if(hamc==req.body.payment.razorpay_signature){
+          res.json({success:true})
+        }else{
+          res.json({success:false})
+        }
+ }
 
 export { stripePayment, webhookHandler };

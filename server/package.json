@@ -31,6 +31,7 @@
     "pdf-poppler": "^0.2.1",
     "pdf2pic": "^2.2.1",
     "pdfjs-dist": "^3.7.107",
+    "razorpay": "^2.8.6",
     "stripe": "^8.165.0",
     "twilio": "^4.11.1"
   }
