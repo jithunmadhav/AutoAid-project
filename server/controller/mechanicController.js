@@ -164,7 +164,7 @@ export const mechanicLogin=async(req,res)=>{
     
 export const scheduledDate = async (req, res) => {
     const { selecteddate, selectedTime, mechanic_id } = req.body;
-    const currDate=new Date( new Date(selecteddate).toISOString().split('T')[0])
+    const currDate=new Date( new Date(selecteddate).toISOString().split('T')[0]).toLocaleDateString()
     const date = new Date(selecteddate);
     const expirationDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
     const existingDate = await mechanicModel.findOne({ 

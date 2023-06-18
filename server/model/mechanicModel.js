@@ -61,8 +61,11 @@ const mechanicSchema=mongoose.Schema({
     scheduledDate:{
         type:Array,
         default:[]
+    },
+    booked:{
+        type:Array,
+        default:[]
     }
-    
     
     
 })

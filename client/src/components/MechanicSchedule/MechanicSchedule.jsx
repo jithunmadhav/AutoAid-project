@@ -168,7 +168,7 @@ function MechanicDashboard() {
     const updatedFindDate = findDate.map((card, index) => {
       const backgroundColor = matchedIndex.includes(index) ? '#999191' : 'none';
       const selectable = !matchedIndex.includes(index);
-      return { ...card, backgroundColor, selectable, index };
+      return { ...card, backgroundColor, selectable, index,booked:false };
     });
     setFindDate(updatedFindDate);
   }, [matchedIndex]);

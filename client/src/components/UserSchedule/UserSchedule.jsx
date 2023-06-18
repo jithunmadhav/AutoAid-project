@@ -111,7 +111,7 @@ function UserSchedule() {
     console.log(result);
     setFindDate(result);
   }, [result]);
-
+ console.log(selectedDate,selectedTime);
   return (
     <>
       <div className='dashboard-background'>

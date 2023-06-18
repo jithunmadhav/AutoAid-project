@@ -54,7 +54,7 @@ export const  createInvoice=(invoiceData, filePath)=> {
 
   // Add total amount below the table
   const totalAmountTop = tableBodyBottom + 100;
-  doc.fontSize(12).text(`Total Amount: $${invoiceData.totalAmount}`, tableLeft, totalAmountTop, { align: 'right' });
+  doc.fontSize(12).text(`Total Amount: ${invoiceData.totalAmount} /-`, tableLeft, totalAmountTop, { align: 'right' });
 
   // Save and finalize the PDF document
   doc.end();

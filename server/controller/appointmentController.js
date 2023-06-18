@@ -6,6 +6,7 @@ import Razorpay from 'razorpay';
 import { createInvoice } from '../helper/invoice/pdfkit.js';
 import userModel from '../model/userModel.js';
 import { sendInvoice } from '../helper/mail.js';
+import mechanicModel from '../model/mechanicModel.js';
 
 const instance = new Razorpay({
   key_id: process.env.KEY_ID,
@@ -55,7 +56,9 @@ export const emergencySchedule=async(req,res)=>{
 const stripePayment = async (req, res) => {
   const minAmount = req.body.minAmount;
   const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
+  console.log(req.body.mechanic.selectedDate);
   const currDate=new Date( new Date(req.body.mechanic.selectedDate).toISOString().split('T')[0])
+  console.log(currDate);
 
   try {
     const customer = await stripeInstance.customers.create({
@@ -133,13 +136,43 @@ const webhookHandler = async (req, res) => {
           selectedVehicle_id: customer.metadata.selectedVehicle_id,
           userLocation: customer.metadata.userLocation,
           complaint: customer.metadata.complaint,
-          selectedDate: customer.metadata.selectedDate,
+          selectedDate: new Date(customer.metadata.selectedDate * 1000),
           selectedTime: customer.metadata.selectedTime,
           userId: customer.metadata.userId,
            
         };
-        await appiontmentModel.create(appointmentData)
-       await userModel.findOne({_id:customer.metadata.userId}).then((result)=>{
+        // console.log(customer.metadata.mechanic_id,customer.metadata.selectedDate);
+        // await appiontmentModel.create(appointmentData)
+        const timestamp = customer.metadata.selectedDate * 1000; // Multiply by 1000 to convert from seconds to milliseconds
+        const date = new Date(timestamp);
+        const existingDate = await mechanicModel.findOne({_id: customer.metadata.mechanic_id});
+        if (existingDate) {
+          const result = existingDate.booked.find(e => e.currDate === date.toLocaleDateString());
+          const newTimeArray={value:customer.metadata.selectedTime}
+          const selectedtime = [...result.selectedTime, newTimeArray];
+        
+          await mechanicModel
+            .updateOne(
+              { _id: customer.metadata.mechanic_id, 'booked.currDate':date.toLocaleDateString() },
+              { $set: { 'booked.$.selectedTime': selectedtime } }
+            )
+          }else{
+            await mechanicModel
+            .updateOne(
+              { _id: customer.metadata.mechanic_id },
+              {
+                $addToSet: {
+                  booked: {
+                    currDate:date.toLocaleDateString(),
+                    date: date,
+                    selectedTime: [{value:customer.metadata.selectedTime}],                    
+                  },
+                },
+              }
+            )
+          }
+        
+        await userModel.findOne({_id:customer.metadata.userId}).then((result)=>{
          const num=randomNumber()
          const invoice={
            invoiceNumber: `INV-${num}`,
@@ -181,7 +214,6 @@ const webhookHandler = async (req, res) => {
  });
  }
  export const verifyPayment=async(req,res)=>{
-  console.log(req.body);
         let hamc =crypto.createHmac('sha256', process.env.KEY_SECRET)
         hamc.update(req.body.payment.razorpay_order_id+'|'+req.body.payment.razorpay_payment_id)
         hamc=hamc.digest('hex')
@@ -199,6 +231,34 @@ const webhookHandler = async (req, res) => {
             selectedTime:req.body.mechanic.selectedTime,
             userId:req.body.userId
         })
+        const timestamp = new Date( new Date(req.body.mechanic.selectedDate).toISOString().split('T')[0]).toLocaleDateString()
+        const date = new Date(req.body.mechanic.selectedDate);
+        const existingDate = await mechanicModel.findOne({_id: req.body.mechanic._id});
+        if (existingDate) {
+          const result = existingDate.booked.find(e => e.currDate === timestamp);
+          const newTimeArray={value:req.body.mechanic.selectedTime}
+          const selectedtime = [...result.selectedTime, newTimeArray];
+        
+          await mechanicModel
+            .updateOne(
+              { _id:  req.body.mechanic._id, 'booked.currDate':timestamp},
+              { $set: { 'booked.$.selectedTime': selectedtime } }
+            )
+          }else{
+            await mechanicModel
+            .updateOne(
+              { _id: req.body.mechanic._id },
+              {
+                $addToSet: {
+                  booked: {
+                    currDate:timestamp,
+                    date: date,
+                    selectedTime: [{value:req.body.mechanic.selectedTime}],                    
+                  },
+                },
+              }
+            )
+          }
         await userModel.findOne({_id:req.body.userId}).then((result)=>{
           const num=randomNumber()
           const invoice={
