@@ -76,7 +76,7 @@ const stripePayment = async (req, res) => {
           price_data: {
             currency: 'inr',
             product_data: {
-              name: 'T-shirt',
+              name: req.body.mechanic.booking,
             },
             unit_amount: minAmount * 100,
           },
@@ -112,22 +112,17 @@ const webhookHandler = async (req, res) => {
 
   try {
     let event = stripe.webhooks.constructEvent(payloadString, header, webhookSecret);
-    console.log("#####",event);
-    console.log("%",event.data.object);
+    
     
     switch (event.type) {
       case 'checkout.session.completed':
         const session = event.data.object;
         const customerId = session.customer;
-        console.log("!!!!!!!!!!!!!!!!!!",customerId);
+ 
         const customer = await stripeInstance.customers.retrieve(customerId);
-        console.log("@@@@@@@@@@@@@@@@@@@@@@@",customer);
-
-         
+    
 
         const appointmentData = {
-          // Extract relevant appointment data from the session object or req.body
-          // Adjust the properties based on your appointment model
           mechanic_id: customer.metadata.mechanic_id,
           selectedService: customer.metadata.selectedService,
           booking_type: customer.metadata.booking_type,
@@ -139,8 +134,6 @@ const webhookHandler = async (req, res) => {
           userId: customer.metadata.userId,
            
         };
-
-        // Create the appointment in the database
         await appiontmentModel.create(appointmentData);
         console.log('Appointment created:', appointmentData);
         break;
@@ -159,7 +152,7 @@ const webhookHandler = async (req, res) => {
  export const generateRazorpay=(req,res)=>{
   const orderID=randomNumber()
   const options={
-    amount: 100*100,
+    amount: req.body.mechanic.minAmount*100,
     currency: "INR",
     receipt: orderID 
   };
@@ -168,14 +161,29 @@ const webhookHandler = async (req, res) => {
   res.json({orderId:order})
  });
  }
- export const verifyPayment=(req,res)=>{
+ export const verifyPayment=async(req,res)=>{
+  console.log(req.body);
         let hamc =crypto.createHmac('sha256', process.env.KEY_SECRET)
         hamc.update(req.body.payment.razorpay_order_id+'|'+req.body.payment.razorpay_payment_id)
         hamc=hamc.digest('hex')
         if(hamc==req.body.payment.razorpay_signature){
-          res.json({success:true})
-        }else{
-          res.json({success:false})
+          const currDate=new Date( new Date(req.body.mechanic.selectedDate).toISOString().split('T')[0])
+          await appiontmentModel.create({
+            mechanic_id:req.body.mechanic._id,
+            selectedService:req.body.mechanic.selectedService,
+            coordinates:req.body.mechanic.coordinates,
+            booking_type:req.body.mechanic.booking,
+            selectedVehicle_id:req.body.selectedVehicle,
+            userLocation:req.body.location,
+            complaint:req.body.complaint,
+            selectedDate:currDate,
+            selectedTime:req.body.mechanic.selectedTime,
+            userId:req.body.userId
+        }).then((result)=>{
+            res.status(200).json({err:false})
+        }).catch(err=>console.log(err))        
+      }else{
+          res.json({err:true})
         }
  }
 

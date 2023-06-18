@@ -76,6 +76,7 @@ function AddVehicle() {
                           value={item.Id}
                           checked={selectedVehicle === item.Id}
                           onChange={() => handleVehicleSelection(item.Id)}
+                          required
                         />
                       </div>
                       <div style={{ width: '50%', height: '100px', textAlign: 'left', paddingLeft: '60px' }}>
