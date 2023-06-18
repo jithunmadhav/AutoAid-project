@@ -31,8 +31,12 @@
     "pdf-poppler": "^0.2.1",
     "pdf2pic": "^2.2.1",
     "pdfjs-dist": "^3.7.107",
+    "pdfkit": "^0.13.0",
     "razorpay": "^2.8.6",
     "stripe": "^8.165.0",
     "twilio": "^4.11.1"
+  },
+  "devDependencies": {
+    "@types/pdfkit": "^0.12.10"
   }
 }

@@ -161,3 +161,43 @@ export const rejectMail=(email,name)=> {
 // }).catch((err) => {
 //     console.log("failed");
 // });
+
+import fs from 'fs';
+
+export const  sendInvoice=async(email,invoice)=> {
+  try {
+    // Create a Nodemailer transporter
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
+        }
+    });
+
+    // Read the invoice PDF file
+    const invoicePath = `/home/jithun/Desktop/AutoAid/server/helper/invoice/${invoice}`;
+    const invoiceContent = fs.readFileSync(invoicePath);
+
+    // Create a mail options object
+    const mailOptions = {
+        from:process.env.EMAIL,
+      to: email,
+      subject: 'Invoice',
+      text: 'Please find the attached invoice.',
+      attachments: [
+        {
+          filename: `${invoice}`,
+          content: invoiceContent,
+        },
+      ],
+    };
+
+    // Send the email
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent:', info.messageId);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+}
+

@@ -3,6 +3,9 @@ import stripe from 'stripe';
 import { randomNumber } from '../helper/randomNum.js';
 import appiontmentModel from "../model/appointmentModel.js"
 import Razorpay from 'razorpay';
+import { createInvoice } from '../helper/invoice/pdfkit.js';
+import userModel from '../model/userModel.js';
+import { sendInvoice } from '../helper/mail.js';
 
 const instance = new Razorpay({
   key_id: process.env.KEY_ID,
@@ -58,6 +61,7 @@ const stripePayment = async (req, res) => {
     const customer = await stripeInstance.customers.create({
       metadata: {
         mechanic_id: req.body.mechanic._id,
+        minAmount:req.body.mechanic.minAmount,
         selectedService: req.body.mechanic.selectedService,
         booking_type: req.body.mechanic.booking,
         selectedVehicle_id: req.body.selectedVehicle,
@@ -134,8 +138,23 @@ const webhookHandler = async (req, res) => {
           userId: customer.metadata.userId,
            
         };
-        await appiontmentModel.create(appointmentData);
-        console.log('Appointment created:', appointmentData);
+        await appiontmentModel.create(appointmentData)
+       await userModel.findOne({_id:customer.metadata.userId}).then((result)=>{
+         const num=randomNumber()
+         const invoice={
+           invoiceNumber: `INV-${num}`,
+           date: new Date(),
+           customerName: result.name,
+           amount: customer.metadata.minAmount,
+           id: `BA-${result._id}`,
+           totalAmount: customer.metadata.minAmount,
+         }
+         createInvoice(invoice,`/home/jithun/Desktop/AutoAid/server/helper/invoice/invoice${num}.pdf`)
+         setTimeout(() => {
+           sendInvoice(result.email,`invoice${num}.pdf`)
+         }, 2000);
+        
+       })
         break;
       default:
         console.log(`Unhandled event type: ${event.type}`);
@@ -179,9 +198,23 @@ const webhookHandler = async (req, res) => {
             selectedDate:currDate,
             selectedTime:req.body.mechanic.selectedTime,
             userId:req.body.userId
-        }).then((result)=>{
-            res.status(200).json({err:false})
-        }).catch(err=>console.log(err))        
+        })
+        await userModel.findOne({_id:req.body.userId}).then((result)=>{
+          const num=randomNumber()
+          const invoice={
+            invoiceNumber: `INV-${num}`,
+            date: new Date(),
+            customerName: result.name,
+            amount: req.body.mechanic.minAmount,
+            id: `BA-${result._id}`,
+            totalAmount: req.body.mechanic.minAmount,
+          }
+          createInvoice(invoice,`/home/jithun/Desktop/AutoAid/server/helper/invoice/invoice${num}.pdf`)
+         setTimeout(() => {
+           sendInvoice(result.email,`invoice${num}.pdf`)
+         }, 2000);
+         res.status(200).json({err:false})
+        }).catch(err=>console.log(err))      
       }else{
           res.json({err:true})
         }
