@@ -30,6 +30,7 @@ function ComplaintForm(props) {
   const [complaint, setComplaint] = useState('');
   const vehicleId = props.data.selectedVehicle;
   const userId = user.details._id;
+  const username=user.details.name;
   const [vehicleDetails, setVehicleDetails] = useState('');
   const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
@@ -58,7 +59,7 @@ function ComplaintForm(props) {
         ...props.data,
         location,
         complaint,
-        userId
+        userId,username
       });
       const { sessionId, metadata } = response.data;
       console.log(sessionId, metadata);
@@ -113,7 +114,7 @@ function ComplaintForm(props) {
       handleConfirm();
     } else {
       setLoading(true);
-      axios.post('/user/appointment', { ...props.data, location, complaint, userId }).then((response) => {
+      axios.post('/user/appointment', { ...props.data, location, complaint, userId,username }).then((response) => {
         console.log(response.data);
         handleCloseModal()
         setOpen(true);
@@ -208,7 +209,7 @@ function ComplaintForm(props) {
   const verifyPayment = async (payment, orderId) => {
     try {
     
-      const response = await axios.post('/user/verifyPayment', {payment,orderId, ...props.data, location, complaint, userId });
+      const response = await axios.post('/user/verifyPayment', {payment,orderId, ...props.data, location, complaint, userId,username });
       console.log(response);
       if (!response.data.err) {
         navigate('/success')

@@ -28,7 +28,8 @@ export const emergencySchedule=async(req,res)=>{
           complaint:req.body.complaint,
           selectedDate:currDate,
           selectedTime:req.body.mechanic.selectedTime,
-          userId:req.body.userId
+          userId:req.body.userId,
+          username:req.body.username
       }).then((result)=>{
           res.status(200).json({err:false})
       }).catch(err=>console.log(err))
@@ -42,6 +43,9 @@ export const emergencySchedule=async(req,res)=>{
             userLocation:req.body.location,
             complaint:req.body.complaint,
             userId:req.body.userId
+            , username:req.body.username
+
+            
         }).then((result)=>{
             res.status(200).json({err:false})
         }).catch(err=>console.log(err))
@@ -73,6 +77,8 @@ const stripePayment = async (req, res) => {
         selectedDate: currDate,
         selectedTime: req.body.mechanic.selectedTime,
         userId: req.body.userId,
+        username:req.body.username
+
       },
     });
 
@@ -139,7 +145,7 @@ const webhookHandler = async (req, res) => {
           selectedDate: new Date(customer.metadata.selectedDate * 1000),
           selectedTime: customer.metadata.selectedTime,
           userId: customer.metadata.userId,
-           
+          username: customer.metadata.username,
         };
         // console.log(customer.metadata.mechanic_id,customer.metadata.selectedDate);
         // await appiontmentModel.create(appointmentData)
@@ -232,7 +238,9 @@ const webhookHandler = async (req, res) => {
             complaint:req.body.complaint,
             selectedDate:currDate,
             selectedTime:req.body.mechanic.selectedTime,
-            userId:req.body.userId
+            userId:req.body.userId,
+            username:req.body.username
+
         })
         const timestamp = new Date( new Date(req.body.mechanic.selectedDate).toISOString().split('T')[0]).toLocaleDateString()
         const date = new Date(req.body.mechanic.selectedDate);
@@ -288,7 +296,7 @@ const webhookHandler = async (req, res) => {
  export const getscheduledApp=async(req,res)=>{
   try {
     const id=req.params.id;
-    const result=await appiontmentModel.find({mechanic_id:id,booking_type:'Scheduled booking'})
+    const result=await appiontmentModel.find({mechanic_id:id,booking_type:'Scheduled booking'}).lean()
     if(result){
       res.status(200).json({err:false,result})
     }else{
