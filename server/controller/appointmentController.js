@@ -285,6 +285,19 @@ const webhookHandler = async (req, res) => {
           res.json({err:true})
         }
  }
+ export const getscheduledApp=async(req,res)=>{
+  try {
+    const result=await appiontmentModel.find({mechanic_id:id})
+    if(result){
+      res.status(200).json({err:false,result})
+    }else{
+      res.status(404).json({err:true})
+    }
+  } catch (error) {
+    res.status(500).json({err:true,error})
+    console.log(error);
+  }
+ }
 
 
 
@@ -297,6 +310,5 @@ const webhookHandler = async (req, res) => {
 
 
 
- 
 export { stripePayment, webhookHandler };
 
