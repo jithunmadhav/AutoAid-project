@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
  
 import { styled } from '@mui/material/styles';
@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import './MechanicAppMange.css'
 import axios from '../../axios';
+import { useSelector } from 'react-redux';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -32,8 +33,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function MechanicAppManage() {
+
+    const [result, setresult] = useState([])
+    const {mechanic} = useSelector(state => state)
+    const id=mechanic.details[0]._id;
   useEffect(() => {
-   axios.get()
+   axios.get(`/mechanic/getscheduledApp/${id}`).then((response)=>{
+    if(!response.data.err){
+        setresult(response.data.result)
+    }
+   })
   }, [])
 
 

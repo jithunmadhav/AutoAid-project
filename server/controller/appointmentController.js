@@ -287,7 +287,8 @@ const webhookHandler = async (req, res) => {
  }
  export const getscheduledApp=async(req,res)=>{
   try {
-    const result=await appiontmentModel.find({mechanic_id:id})
+    const id=req.params.id;
+    const result=await appiontmentModel.find({mechanic_id:id,booking_type:'Scheduled booking'})
     if(result){
       res.status(200).json({err:false,result})
     }else{
