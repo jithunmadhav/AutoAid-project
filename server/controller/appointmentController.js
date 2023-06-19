@@ -145,7 +145,10 @@ const webhookHandler = async (req, res) => {
         // await appiontmentModel.create(appointmentData)
         const timestamp = customer.metadata.selectedDate * 1000; // Multiply by 1000 to convert from seconds to milliseconds
         const date = new Date(timestamp);
-        const existingDate = await mechanicModel.findOne({_id: customer.metadata.mechanic_id});
+        const existingDate = await mechanicModel.findOne({ 
+          _id: customer.metadata.mechanic_id, 
+          booked: { $elemMatch: { currDate: date.toLocaleDateString() } } 
+        });
         if (existingDate) {
           const result = existingDate.booked.find(e => e.currDate === date.toLocaleDateString());
           const newTimeArray={value:customer.metadata.selectedTime}
@@ -233,8 +236,11 @@ const webhookHandler = async (req, res) => {
         })
         const timestamp = new Date( new Date(req.body.mechanic.selectedDate).toISOString().split('T')[0]).toLocaleDateString()
         const date = new Date(req.body.mechanic.selectedDate);
-        const existingDate = await mechanicModel.findOne({_id: req.body.mechanic._id});
-        if (existingDate) {
+        const existingDate = await mechanicModel.findOne({ 
+          _id: req.body.mechanic._id, 
+          booked: { $elemMatch: { currDate: timestamp } } 
+        });
+          if (existingDate) {
           const result = existingDate.booked.find(e => e.currDate === timestamp);
           const newTimeArray={value:req.body.mechanic.selectedTime}
           const selectedtime = [...result.selectedTime, newTimeArray];
@@ -280,4 +286,17 @@ const webhookHandler = async (req, res) => {
         }
  }
 
+
+
+
+
+
+
+
+
+
+
+
+ 
 export { stripePayment, webhookHandler };
+

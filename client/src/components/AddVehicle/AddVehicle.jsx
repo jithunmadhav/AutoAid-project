@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import EditVehicle from './EditVehicle'
 import { useLocation } from 'react-router-dom'
 import ComplaintForm from '../ComplaintForm/ComplaintForm'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function AddVehicle() {
   const location = useLocation()
   console.log(location);
@@ -16,7 +17,9 @@ function AddVehicle() {
   const [vehicleResult, setVehicleResult] = useState([])
   const [selectedVehicle, setSelectedVehicle] = useState(null); // State to store the selected vehicle
   const dispatch = useDispatch()
-  
+  const [err, seterr] = useState('')
+  const notify = (err) => toast(err);
+
   useEffect(() => {
     axios.get(`/user/allvehicle/${id}`).then((response) => {
       if (!response.data.err) {
@@ -52,14 +55,31 @@ function AddVehicle() {
     setSelectedVehicle(vehicle); // Set the selected vehicle in state
   }
   const openComplaintForm=()=>{
-    setopenComplaint(true)
-  }
+    if(selectedVehicle==null){
+  notify('please select a vehicle')
+    }else{
 
+      setopenComplaint(true)
+    }
+  }
+console.log("Selected",selectedVehicle);
   return (
     openForm ? <AddVehicleForm /> :
       openEdit ? <EditVehicle data={{ editResult }} /> :
       openComplaint ?<ComplaintForm data={{mechanic,selectedVehicle}} /> :
         <div className='vehicle-background'>
+           <ToastContainer
+      position="top-center"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+        />
           <div className='vehicle-inner-div'>
             <h4 className='vehicle-heading'>My Vehicle</h4>
             <button onClick={openFormHandler} className='vehicle-btn'>+</button>

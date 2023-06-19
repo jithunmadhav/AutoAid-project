@@ -10,6 +10,8 @@ import {
   CModalBody,
   CModalFooter,
 } from '@coreui/react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function UserSchedule() {
@@ -19,12 +21,13 @@ function UserSchedule() {
   const [result, setresult] = useState([]);
   const [visible, setVisible] = useState(false);
   const [scheduledDate, setScheduledDate] = useState(mech_details.scheduledDate);
-
+  const notify = (err) => toast(err);
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [selectedTime, setSelectedTime] = useState([]);
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
+  const [err, seterr] = useState('')
   const cardData = [];
   const timeSlots = [];
 
@@ -60,19 +63,31 @@ function UserSchedule() {
   }
 
   const [findDate, setFindDate] = useState(timeSlots[0].slots);
-
   const handleDateCardClick = (index, date) => {
     const matchingIndices = [];
     let matchedDate = scheduledDate.find(item => {
-        const itemDate = new Date(item.date);
-        return itemDate.toISOString().split('T')[0] === date.toISOString().split('T')[0];
-      });
-      
+      const itemDate = new Date(item.date);
+      return itemDate.toISOString().split('T')[0] === date.toISOString().split('T')[0];
+    });
+    const bookedDate = mech_details.booked.find(e => e.currDate === new Date(date).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' }));
+
+
+    if(bookedDate){
+
+      const bookedTimeSlot = matchedDate.selectedTime.filter((item) => !bookedDate.selectedTime.some((bookedItem) => bookedItem.value === item.value));
+      if (!matchedDate) {
+        setresult([])
+    }else{
+        setresult(bookedTimeSlot)
+
+    }
+    }else{
       if (!matchedDate) {
         setresult([])
     }else{
         setresult(matchedDate.selectedTime)
 
+    }
     }
       
       
@@ -83,7 +98,6 @@ function UserSchedule() {
     setSelectedDate(date);
     setSelectedCardIndex(index);
   };
-
   const handleTimeSlotClick = (index, data) => {
     const selectedSlotIndex = selectedTimeSlots[0];  
 
@@ -98,8 +112,12 @@ function UserSchedule() {
   };
 
   const handleSubmit = () => {
-    const selecteddate = selectedDate.toISOString();
-    navigate('/addvehicle',{state:{...mech_details,booking:'Scheduled booking',selectedDate:selecteddate,selectedTime:selectedTime[0].value}})
+    if(selectedTime.length===0){
+      notify('Please select time')
+    }else{
+      const selecteddate = selectedDate.toISOString();
+      navigate('/addvehicle',{state:{...mech_details,booking:'Scheduled booking',selectedDate:selecteddate,selectedTime:selectedTime[0].value}})
+    }
   };
 
  useEffect(() => {
@@ -108,13 +126,23 @@ function UserSchedule() {
  }, [])
 
   useEffect(() => {
-    console.log(result);
     setFindDate(result);
   }, [result]);
- console.log(selectedDate,selectedTime);
   return (
     <>
       <div className='dashboard-background'>
+      <ToastContainer
+      position="top-center"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+        />
         <h5 className='date-heading'>Date :</h5>
         <div className='cards-mechanics'>
           {cardData.map((card, index) => (

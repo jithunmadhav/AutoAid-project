@@ -13,7 +13,7 @@ function OtpVerification(props) {
   const [timer, setTimer] = useState(60);
   const [resendAttempts, setResendAttempts] = useState(0);
   const [showReset, setshowReset] = useState(false)
-
+  const [err, seterr] = useState('')
   useEffect(() => {
     let intervalId;
 
@@ -36,7 +36,7 @@ function OtpVerification(props) {
         if (!response.data.err) {
           setshowReset(true)
         } else {
-          console.log(response.data.message);
+          seterr(response.data.message)
         }
       });
     } else if(props.data.reset==='signup') {
@@ -45,7 +45,7 @@ function OtpVerification(props) {
           dispatch({ type: 'refresh' });
           navigate('/');
         } else {
-          console.log(response.data.message);
+          seterr(response.data.message)
         }
       });
     }else if(props.data.reset==='mechanicsignup'){
@@ -56,7 +56,7 @@ function OtpVerification(props) {
           dispatch({ type: 'refresh' });
           navigate('/mechanic/login');
         } else {
-          console.log(response.data.message);
+          seterr(response.data.message)
         }
       });
     }else if(props.data.reset==='forgotmechanic'){
@@ -64,7 +64,7 @@ function OtpVerification(props) {
         if (!response.data.err) {
           setshowReset(true)
         } else {
-          console.log(response.data.message);
+          seterr(response.data.message)
         }
       });
     }
@@ -87,6 +87,7 @@ function OtpVerification(props) {
         <div className="signup">
           <div className="signup-connect-otp"></div>
           <div className="signup-classic">
+          <p className='errorMessage'>{err}</p>
             <form className="form" onSubmit={handleSubmit}>
               <p className="paraStyle">Please enter the OTP.</p>
               <OTPInput

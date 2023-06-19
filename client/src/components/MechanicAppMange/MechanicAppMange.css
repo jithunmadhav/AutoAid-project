@@ -1,0 +1,24 @@
+.dashboard-background{
+    /* background: linear-gradient(to right, #111111,#0e1136) !important; */
+    background: #cfc7b1;
+    height: 1200px;
+    padding-top: 1px;
+}
+ 
+.nav-bg{
+    background: linear-gradient(to right, #111111,#0e1136) !important;
+
+}
+.cards-mechanics{
+    display: flex;
+    justify-content: space-around;
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-top: 170px;
+    border-radius: 30px;
+    margin-bottom: 150px;
+  }
+  .table-div{
+    margin: 100px;
+    margin-top: 180px;
+  }

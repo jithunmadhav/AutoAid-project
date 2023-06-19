@@ -25,6 +25,7 @@ import StripeSample from './components/StripeSample';
 import AppointmentSuccess from './components/AppoinmentSuccess/AppointmentSuccess';
 import MechanicSchedulePage from './Pages/MechanicSchedulePage';
 import UserSchedulePage from './Pages/UserSchedulePage';
+import MechanicAppManagePage from './Pages/MechanicAppManagePage';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -111,15 +112,25 @@ function App() {
               <Route element={<MechanicDashboardPage />} path="/mechanic/dashboard" />
               <Route element={<MechanicProfilePage/>} path={'/mechanic/profile'} />
               <Route element={<MechanicSchedulePage/>} path={'/mechanic/schedule'}/>
+              <Route element={<MechanicAppManagePage/>} path={'/mechanic/appoinmentManage'}/>
+              <Route element={<Navigate to={'/mechanic/dashboard'} />} path="/mechanic/login" />
+              <Route element={<Navigate to={'/mechanic/dashboard'} />} path="/mechanic/signup" />
+              <Route element={<Navigate to={'/mechanic/dashboard'} />} path="/forgotMechanicPassword" />
+
+
+
             </>
           )}
 
           {!mechanic.mechLog && (
             <>
+              <Route element={<Navigate to={'/mechanic/login'} />} path="/mechanic/dashboard" />
+              <Route element={<Navigate to={'/mechanic/login'} />} path="/mechanic/schedule" />
+              <Route element={<Navigate to={'/mechanic/login'} />} path="/mechanic/profile" />
+              <Route element={<Navigate to={'/mechanic/login'} />} path="/mechanic/appoinmentManage" />
               <Route element={<MechanicLoginPage />} path="/mechanic/login" />
               <Route element={<MechanicSignupPage />} path="/mechanic/signup" />
               <Route element={<ForgotMechanicPage />} path="/forgotMechanicPassword" />
-              
             </>
           )}
         </Routes>
