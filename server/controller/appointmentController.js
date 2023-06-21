@@ -323,6 +323,14 @@ const webhookHandler = async (req, res) => {
   }
  }
 
+ export const customerDetails=async(req,res)=>{
+  await userModel.findOne({_id:req.params.id}).then((result)=>{
+    res.status(200).json({err:false,result})
+  }).catch((error)=>{
+    res.status(404).json({err:true,error})
+  })
+ }
+
 
 
 

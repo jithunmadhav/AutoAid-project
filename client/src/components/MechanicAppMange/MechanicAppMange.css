@@ -37,11 +37,31 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-    width: 1200px;
+    width: 1000px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-     
-    height: 700px ;
+    height: 600px ;
+    display: flex;
+}
+.bookingdetials-heading{
+  text-align: center;
+  margin: 20px;
+  font-family: 'Monomaniac One', sans-serif;
+  margin-top: 20px;
+}
+.bookingdetials-inner-right{
+  width: 50%;
+  height: 600px ;
+}
+.bookingdetials-inner-left{
+  width: 50%;
+  height: 600px ;
+}
+.bookingdetials-para{
+    margin: 5px;
+    margin-left: 100px;
+    text-align: left;
+    font-family: serif;
 }

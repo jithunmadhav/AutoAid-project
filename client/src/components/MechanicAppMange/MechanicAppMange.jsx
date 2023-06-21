@@ -13,6 +13,7 @@ import './MechanicAppMange.css'
 import axios from '../../axios';
 import { useSelector } from 'react-redux';
 import QuickService from './QuickService';
+import BookingDetails from './BookingDetails';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -36,8 +37,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function MechanicAppManage() {
     const [openQuickservice, setopenQuickservice] = useState(false)
     const [result, setresult] = useState([])
+    const [details, setdetails] = useState([])
     const {mechanic} = useSelector(state => state)
     const id=mechanic.details[0]._id;
+    const [openDetails, setopenDetails] = useState(false)
+
   useEffect(() => {
    axios.get(`/mechanic/getscheduledApp/${id}`).then((response)=>{
     if(!response.data.err){
@@ -49,6 +53,7 @@ function MechanicAppManage() {
 
   return (
     openQuickservice ? (<QuickService/>):
+    openDetails? <BookingDetails data ={{...details,type:'scheduled'}}/> :
   <>
   <div className='dashboard-background'>
     <Button className='serviceschedule-btn' style={{ position:'absolute' }} onClick={()=>setopenQuickservice(true)}  variant='outlined' color='secondary' >Emergency schedule</Button>
@@ -62,7 +67,7 @@ function MechanicAppManage() {
             <StyledTableCell align="center">selected service</StyledTableCell>
             <StyledTableCell align="center">complaint&nbsp;</StyledTableCell>
             <StyledTableCell align="center">Date&nbsp;</StyledTableCell>
-            <StyledTableCell align="center">Time&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Action&nbsp;</StyledTableCell>
 
           </TableRow>
         </TableHead>
@@ -76,7 +81,7 @@ function MechanicAppManage() {
               <StyledTableCell align="center">{row.selectedService}</StyledTableCell>
               <StyledTableCell align="center">{row.complaint}</StyledTableCell>
               <StyledTableCell align="center">{new Date(row.selectedDate).toLocaleDateString()}</StyledTableCell>
-              <StyledTableCell align="center">{row.selectedTime}</StyledTableCell>
+              <StyledTableCell align="center"><Button onClick={()=>{setopenDetails(true); setdetails(row)}}>View Details</Button></StyledTableCell>
 
             </StyledTableRow>
           ))}
