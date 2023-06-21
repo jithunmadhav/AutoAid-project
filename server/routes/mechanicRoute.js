@@ -1,5 +1,5 @@
 import express  from 'express';
-import { customerDetails, getEmergencyApp, getscheduledApp } from '../controller/appointmentController.js';
+import { customerDetails, getEmergencyApp, getscheduledApp, updateStatus } from '../controller/appointmentController.js';
 import { mechanicLogin, mechanicLogout, mechanicSignup1, mechanicSignup2, mechResetpassword, mechVerifyResetOtp, scheduledDate, verifyMechanicSignup } from '../controller/mechanicController.js'
 import upload from '../helper/multer.js';
 import { mechCheckAuth } from '../middleware/mechAuth.js';
@@ -11,6 +11,7 @@ router.post('/mechVerifyReset',mechVerifyResetOtp).post('/resetPassword',mechRes
 router.post('/scheduleddate',scheduledDate)
 router.get('/getscheduledApp/:id',getscheduledApp).get('/getEmergencyApp/:id',getEmergencyApp)
 router.get('/customerDetails/:id',customerDetails)
+router.patch('/updatestatus',updateStatus)
 router.post('/login',mechanicLogin)
 router.get('/logout',mechanicLogout)
 

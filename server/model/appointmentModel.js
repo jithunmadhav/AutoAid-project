@@ -41,6 +41,10 @@ const appointmentSchema=mongoose.Schema({
     },
     selectedTime:{
         type:String
+    },
+    status:{
+        type:String,
+        default:'waiting for confirmation'
     }
 })
 
