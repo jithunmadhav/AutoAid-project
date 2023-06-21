@@ -168,19 +168,20 @@ export const mechanicLogin=async(req,res)=>{
       // Get current date in Indian time zone
       const currentDate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
       const today = new Date(currentDate);
-      today.setHours(23, 59, 0, 0);
-      const expirationDate = today;
+      today.setUTCHours(23, 59, 0, 0);
+      const expirationDate = today.toISOString();
       const existingDate = await mechanicModel.findOne({
         _id: mechanic_id,
         scheduledDate: { $elemMatch: { currDate: currDate } },
       });
     
       if (existingDate) {
+        console.log("Exci :",existingDate);
         const result = existingDate.scheduledDate.find((e) => e.currDate === currDate);
         const existingDateArray = result.selectedTime.map((time) => time.value);
         const newTimeArray = selectedTime.filter((time) => !existingDateArray.includes(time.value));
         const selectedtime = [...result.selectedTime, ...newTimeArray];
-    
+    console.log(selectedtime);
         await mechanicModel
           .updateOne(
             { _id: mechanic_id, 'scheduledDate.currDate': currDate },

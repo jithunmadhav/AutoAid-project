@@ -12,7 +12,6 @@ import Paper from '@mui/material/Paper';
 import './MechanicAppMange.css'
 import axios from '../../axios';
 import { useSelector } from 'react-redux';
-import QuickService from './QuickService';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -33,14 +32,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function MechanicAppManage() {
-    const [openQuickservice, setopenQuickservice] = useState(false)
-    console.log("/////////",openQuickservice);
+function QuickService() {
+
     const [result, setresult] = useState([])
     const {mechanic} = useSelector(state => state)
     const id=mechanic.details[0]._id;
   useEffect(() => {
-   axios.get(`/mechanic/getscheduledApp/${id}`).then((response)=>{
+   axios.get(`/mechanic//${id}`).then((response)=>{
     if(!response.data.err){
         setresult(response.data.result)
     }
@@ -48,11 +46,22 @@ function MechanicAppManage() {
   }, [])
 
 
+
+  function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
+  const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+  ];
+
   return (
-    openQuickservice ? (<QuickService/>):
-  <>
+   <>
   <div className='dashboard-background'>
-    <Button className='serviceschedule-btn' style={{ position:'absolute' }} onClick={()=>setopenQuickservice(true)}  variant='outlined' color='secondary' >Emergency schedule</Button>
+    <Button className='serviceschedule-btn' style={{ position:'absolute' }} variant='outlined' color='secondary' >Scheduled service</Button>
         <div className='table-div'>
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -91,4 +100,4 @@ function MechanicAppManage() {
   )
 }
 
-export default MechanicAppManage
+export default QuickService;

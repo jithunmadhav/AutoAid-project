@@ -22,3 +22,8 @@
     margin: 100px;
     margin-top: 180px;
   }
+  .serviceschedule-btn{
+    position: absolute;
+    top: 13%;
+    right: 6%;
+  }
