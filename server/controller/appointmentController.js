@@ -331,14 +331,16 @@ const webhookHandler = async (req, res) => {
   })
  }
 
- export const updateStatus=async(req,res)=>{
-  console.log(req.body);
-  await appiontmentModel.updateOne({_id:req.body.id},{$set:{status:req.body.status}}).then((result)=>{
-    res.status(200).json({err:false,result})
-  }).then((error)=>{
-    res.status(500).json({err:true,error})
-  })
- }
+ export const updateStatus = async (req, res) => {
+  try {
+    const { id, status } = req.body;
+    await appiontmentModel.updateOne({ _id: id }, { $set: { status } });
+    res.status(200).json({ err: false });
+  } catch (error) {
+    res.status(500).json({ err: true, error });
+  }
+};
+
 
 
 
