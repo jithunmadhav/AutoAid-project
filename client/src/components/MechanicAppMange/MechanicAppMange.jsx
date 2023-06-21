@@ -35,7 +35,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function MechanicAppManage() {
     const [openQuickservice, setopenQuickservice] = useState(false)
-    console.log("/////////",openQuickservice);
     const [result, setresult] = useState([])
     const {mechanic} = useSelector(state => state)
     const id=mechanic.details[0]._id;

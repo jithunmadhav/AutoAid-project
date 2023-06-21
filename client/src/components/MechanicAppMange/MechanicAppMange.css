@@ -27,3 +27,21 @@
     top: 13%;
     right: 6%;
   }
+  .bookingdetials-background{
+    background: linear-gradient(to right, #111111,#0e1136) !important;
+    height: 100vh;
+}
+.bookingdetials-inner-div{
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 1200px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+     
+    height: 700px ;
+}

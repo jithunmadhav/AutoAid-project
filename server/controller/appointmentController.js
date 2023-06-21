@@ -308,7 +308,20 @@ const webhookHandler = async (req, res) => {
   }
  }
 
-
+ export const getEmergencyApp=async(req,res)=>{
+  try {
+    const id=req.params.id;
+    const result=await appiontmentModel.find({mechanic_id:id,booking_type:'Emergency booking'}).lean()
+    if(result){
+      res.status(200).json({err:false,result})
+    }else{
+      res.status(404).json({err:true})
+    }
+  } catch (error) {
+    res.status(500).json({err:true,error})
+    console.log(error);
+  }
+ }
 
 
 
