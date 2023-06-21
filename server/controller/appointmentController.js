@@ -148,7 +148,7 @@ const webhookHandler = async (req, res) => {
           username: customer.metadata.username,
         };
         // console.log(customer.metadata.mechanic_id,customer.metadata.selectedDate);
-        // await appiontmentModel.create(appointmentData)
+        await appiontmentModel.create(appointmentData)
         const timestamp = customer.metadata.selectedDate * 1000; // Multiply by 1000 to convert from seconds to milliseconds
         const date = new Date(timestamp);
         const existingDate = await mechanicModel.findOne({ 

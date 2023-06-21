@@ -128,7 +128,7 @@ function MechanicDashboard() {
             const selectable = !selectedTimeSlots.includes(index);
             return { ...card, backgroundColor, selectable };
           });
-           
+           console.log("11111111",updatedFindDate);
           setVisible(!visible);
           
   

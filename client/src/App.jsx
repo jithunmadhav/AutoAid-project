@@ -88,6 +88,7 @@ function App() {
               <Route element={<Navigate to={'/user/login'} />} path="/user/profile" />
               <Route element={<Navigate to={'/user/login'} />} path={'/location'} />
               <Route element={<Navigate to={'/user/login'} />} path='/addvehicle'/>
+              <Route element={<Navigate to={'/user/login'} />} path='/success'/>
 
             </>
           )}

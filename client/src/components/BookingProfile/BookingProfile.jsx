@@ -11,6 +11,8 @@ import {
   CModalBody,
   CModalFooter,
 } from '@coreui/react';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
 function BookingProfile(props) {
   const navigate=useNavigate()
@@ -21,9 +23,20 @@ function BookingProfile(props) {
   if(visible){
     navigate('/addvehicle',{state:{...props.data,booking:'Emergency booking'}})
   }else if(visibleSchedule){
-    navigate('/user/schedule',{state:{...props.data,booking:'scheduled booking'}})
+    handleOpen()
+    setTimeout(() => {
+      handleClose()
+      navigate('/user/schedule',{state:{...props.data,booking:'scheduled booking'}})
+    }, 1000);
   }
  }
+ const [open, setOpen] = React.useState(false);
+ const handleClose = () => {
+   setOpen(false);
+ };
+ const handleOpen = () => {
+   setOpen(true);
+ };
 
   return (
     <div className='profile-background'>
@@ -101,7 +114,13 @@ function BookingProfile(props) {
     <CButton onClick={selectVehicle} color="success">Continue</CButton>
   </CModalFooter>
 </CModal>
-
+<Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
   </div>
   )
 }

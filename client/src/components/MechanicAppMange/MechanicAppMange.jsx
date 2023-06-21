@@ -67,23 +67,27 @@ function MechanicAppManage() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell>Customer name</StyledTableCell>
+            <StyledTableCell align="center">location</StyledTableCell>
+            <StyledTableCell align="center">selected service</StyledTableCell>
+            <StyledTableCell align="center">complaint&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Date&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Time&nbsp;</StyledTableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
           {result.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.username}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="center">{row.userLocation}</StyledTableCell>
+              <StyledTableCell align="center">{row.selectedService}</StyledTableCell>
+              <StyledTableCell align="center">{row.complaint}</StyledTableCell>
+              <StyledTableCell align="center">{new Date(row.selectedDate).toLocaleDateString()}</StyledTableCell>
+              <StyledTableCell align="center">{row.selectedTime}</StyledTableCell>
+
             </StyledTableRow>
           ))}
         </TableBody>

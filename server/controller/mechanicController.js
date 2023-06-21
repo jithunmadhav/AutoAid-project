@@ -161,60 +161,63 @@ export const mechanicLogin=async(req,res)=>{
         })
     }
 
+    export const scheduledDate = async (req, res) => {
+      const { selecteddate, selectedTime, mechanic_id } = req.body;
+      const currDate = new Date(selecteddate).toLocaleDateString();
+      const date = new Date(selecteddate);
+      // Get current date in Indian time zone
+      const currentDate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+      const today = new Date(currentDate);
+      today.setHours(23, 59, 0, 0);
+      const expirationDate = today;
+      const existingDate = await mechanicModel.findOne({
+        _id: mechanic_id,
+        scheduledDate: { $elemMatch: { currDate: currDate } },
+      });
     
-export const scheduledDate = async (req, res) => {
-    const { selecteddate, selectedTime, mechanic_id } = req.body;
-    const currDate=new Date( new Date(selecteddate).toISOString().split('T')[0]).toLocaleDateString()
-    const date = new Date(selecteddate);
-    const expirationDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
-    const existingDate = await mechanicModel.findOne({ 
-      _id: mechanic_id, 
-      scheduledDate: { $elemMatch: { currDate: currDate } } 
-    });
-    if (existingDate) {
-      const result = existingDate.scheduledDate.find(e => e.currDate.getTime() === currDate.getTime());
-      const existingDateArray = result.selectedTime.map(time => time.value);
-      const newTimeArray = selectedTime.filter(time => !existingDateArray.includes(time.value));
-      const selectedtime = [...result.selectedTime, ...newTimeArray];
+      if (existingDate) {
+        const result = existingDate.scheduledDate.find((e) => e.currDate === currDate);
+        const existingDateArray = result.selectedTime.map((time) => time.value);
+        const newTimeArray = selectedTime.filter((time) => !existingDateArray.includes(time.value));
+        const selectedtime = [...result.selectedTime, ...newTimeArray];
     
-      await mechanicModel
-        .updateOne(
-          { _id: mechanic_id, 'scheduledDate.currDate': currDate },
-          { $set: { 'scheduledDate.$.selectedTime': selectedtime } }
-        )
-        .then(result => {
-          res.status(200).json({ err: false, result });
-        })
-        .catch(error => {
-          res.status(500).json({ err: true, error });
-        });
-    }else{
-      await mechanicModel
-        .updateOne(
-          { _id: mechanic_id },
-          {
-            $addToSet: {
-              scheduledDate: {
-                currDate:currDate,
-                date: date,
-                selectedTime: selectedTime,                    
-                expirationDate: expirationDate,
+        await mechanicModel
+          .updateOne(
+            { _id: mechanic_id, 'scheduledDate.currDate': currDate },
+            { $set: { 'scheduledDate.$.selectedTime': selectedtime } }
+          )
+          .then((result) => {
+            res.status(200).json({ err: false, result });
+          })
+          .catch((error) => {
+            res.status(500).json({ err: true, error });
+          });
+      } else {
+        await mechanicModel
+          .updateOne(
+            { _id: mechanic_id },
+            {
+              $addToSet: {
+                scheduledDate: {
+                  currDate: currDate,
+                  date: date,
+                  selectedTime: selectedTime,
+                  expirationDate: expirationDate,
+                },
               },
-            },
-          }
-        )
-        .then((result) => {
-          mechanicModel.createIndexes({ scheduledDate: 1 }, { expireAfterSeconds: 0 });
+            }
+          )
+          .then((result) => {
+            mechanicModel.createIndexes({ 'scheduledDate.expirationDate': 1 }, { expireAfterSeconds: 0 });
     
-          res.status(200).json({ err: false, result });
-        })
-        .catch((error) => {
-          res.status(500).json({ err: true, error });
-        });
-    }
-    }
-
-    export const mechanicLogout = (req, res) => {
+            res.status(200).json({ err: false, result });
+          })
+          .catch((error) => {
+            res.status(500).json({ err: true, error });
+          });
+      }
+    };
+        export const mechanicLogout = (req, res) => {
         console.log("sdfds");
         return res
           .cookie('mechanictoken', '', {
