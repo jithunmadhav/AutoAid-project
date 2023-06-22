@@ -70,7 +70,7 @@ const mechanicSchema = mongoose.Schema({
       selectedTime: [],
       expirationDate: {
         type: Date,
-        index: { expires: 0 },
+        expires: 0 ,
       },
     },
   ],

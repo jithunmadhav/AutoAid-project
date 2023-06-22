@@ -6,6 +6,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import { Button } from '@mui/material';
 function BookingDetails(props) {
     const [showSchedule, setshowSchedule] = useState(false)
     const [showEmergency, setshowEmergency] = useState(false)
@@ -13,7 +16,13 @@ function BookingDetails(props) {
     const [result, setresult] = useState('')
     const [user, setuser] = useState('')
     const [status, setstatus] = React.useState('');
-
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => {
+      setOpen(false);
+    };
+    const handleOpen = () => {
+      setOpen(true);
+    };
     const handleChange = (event) => {
     setstatus(event.target.value);
     };
@@ -26,9 +35,22 @@ function BookingDetails(props) {
         axios.get(`/mechanic/customerDetails/${userId}`).then((response)=>{
             setuser(response.data.result)
         })
-        axios.post()
-        console.log(status);
-        },[userId,status])
+        },[])
+        
+        const statusupdate=()=>{
+          const id=details._id;
+           if(status.trim()){
+          axios.patch('/mechanic/updatestatus',{status,id}).then((response)=>{
+              if(!response.data.err){
+                  handleOpen()
+                  setTimeout(() => {
+                      handleClose()
+                      details.type? setshowSchedule(true):setshowEmergency(true);
+                  }, 1500);
+              }
+          })
+        }
+        }
 
   return (
     showSchedule? <MechanicAppManage/>:
@@ -65,6 +87,7 @@ function BookingDetails(props) {
         </div>
         <div className='bookingdetials-inner-right'>
         <h4 className='bookingdetials-heading' style={{ textAlign:'left' }}>Status updation :</h4>
+        <div style={{ display:'flex' }}>
         <FormControl  sx={{ m: 1, minWidth: 200 }} size="small">
       <InputLabel  id="demo-select-small-label">status</InputLabel>
       <Select 
@@ -75,15 +98,23 @@ function BookingDetails(props) {
         onChange={handleChange}
       >
         
-        <MenuItem value={'confirm'}>confirm</MenuItem>
+        <MenuItem value={'confirmed'}>confirm</MenuItem>
         <MenuItem value={'work progressing'}>work progressing</MenuItem>
         <MenuItem value={'completed'}>completed</MenuItem>
       </Select>
     </FormControl>
-
+    <Button onClick={()=>statusupdate()} className='status-save-button' variant='outlined' color='secondary'>Save</Button>
+    </div>
         </div>
 
     </div>
+    <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
   </div>
   )
 }

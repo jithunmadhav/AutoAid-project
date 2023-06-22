@@ -65,3 +65,8 @@
     text-align: left;
     font-family: serif;
 }
+.status-save-button{
+    height: 49px;
+    margin-top: 8px !important;
+     
+}

@@ -12,8 +12,19 @@ import Paper from '@mui/material/Paper';
 import './MechanicAppMange.css'
 import axios from '../../axios';
 import { useSelector } from 'react-redux';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import QuickService from './QuickService';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import BookingDetails from './BookingDetails';
+
+// Custom styled component for the TextField label
+const WhiteLabel = styled('label')({
+  color: 'white',
+});
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -35,20 +46,30 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function MechanicAppManage() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
     const [openQuickservice, setopenQuickservice] = useState(false)
     const [result, setresult] = useState([])
     const [details, setdetails] = useState([])
     const {mechanic} = useSelector(state => state)
     const id=mechanic.details[0]._id;
     const [openDetails, setopenDetails] = useState(false)
-
+    const [search, setSearch] = useState('');
   useEffect(() => {
-   axios.get(`/mechanic/getscheduledApp/${id}`).then((response)=>{
+   axios.get(`/mechanic/getscheduledApp`,{params: {
+    search: search,
+    page: currentPage,
+    id
+  }}).then((response)=>{
     if(!response.data.err){
         setresult(response.data.result)
+        setTotalPages(response.data.totalPages);
     }
    })
-  }, [])
+  }, [search])
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+  };
 
 
   return (
@@ -56,8 +77,33 @@ function MechanicAppManage() {
     openDetails? <BookingDetails data ={{...details,type:'scheduled'}}/> :
   <>
   <div className='dashboard-background'>
+  <Box
+          component="form"
+          sx={{
+            '& > :not(style)': { m: 1, width: '25ch' },
+            position: 'absolute',
+            right: '22%',
+            top: '11%',
+          }}
+          noValidate
+          autoComplete="off"
+        >
+   <TextField
+  id="standard-basic"
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+  label={
+    <WhiteLabel>
+      search
+    </WhiteLabel>
+  }
+  variant="standard"
+/>   
+        </Box>
     <Button className='serviceschedule-btn' style={{ position:'absolute' }} onClick={()=>setopenQuickservice(true)}  variant='outlined' color='secondary' >Emergency schedule</Button>
+   
         <div className='table-div'>
+        {result.length!==0 ?
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -67,10 +113,12 @@ function MechanicAppManage() {
             <StyledTableCell align="center">selected service</StyledTableCell>
             <StyledTableCell align="center">complaint&nbsp;</StyledTableCell>
             <StyledTableCell align="center">Date&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Status&nbsp;</StyledTableCell>
             <StyledTableCell align="center">Action&nbsp;</StyledTableCell>
 
           </TableRow>
         </TableHead>
+        
         <TableBody>
           {result.map((row) => (
             <StyledTableRow key={row.name}>
@@ -81,14 +129,27 @@ function MechanicAppManage() {
               <StyledTableCell align="center">{row.selectedService}</StyledTableCell>
               <StyledTableCell align="center">{row.complaint}</StyledTableCell>
               <StyledTableCell align="center">{new Date(row.selectedDate).toLocaleDateString()}</StyledTableCell>
+              <StyledTableCell align="center">{row.status}</StyledTableCell>
               <StyledTableCell align="center"><Button onClick={()=>{setopenDetails(true); setdetails(row)}}>View Details</Button></StyledTableCell>
 
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer> :
+    <Typography variant="h6" style={{ color:'white' }} component="h6" textAlign='center'>
+    No Mechanics found.
+  </Typography>        }
         </div>
+        <Stack spacing={2} sx={{position: 'absolute', bottom: 50, left: '50%', transform: 'translateX(-50%)'}}>
+          <Pagination
+          variant="outlined"
+            count={totalPages}
+            color="primary"
+            page={currentPage}
+            onChange={handlePageChange}
+          />
+        </Stack>
     </div>
  
    </>

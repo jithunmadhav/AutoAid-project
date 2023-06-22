@@ -67,6 +67,7 @@ function QuickService() {
             <StyledTableCell align="center">location</StyledTableCell>
             <StyledTableCell align="center">selected service</StyledTableCell>
             <StyledTableCell align="center">complaint&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Status&nbsp;</StyledTableCell>
             <StyledTableCell align="center">Action&nbsp;</StyledTableCell>
            
 
@@ -81,6 +82,7 @@ function QuickService() {
               <StyledTableCell align="center">{row.userLocation}</StyledTableCell>
               <StyledTableCell align="center">{row.selectedService}</StyledTableCell>
               <StyledTableCell align="center">{row.complaint}</StyledTableCell>
+              <StyledTableCell align="center">{row.status}</StyledTableCell>
               <StyledTableCell align="center"><Button onClick={()=>{setopenDetails(true); setdetails(row)}}>View Details</Button></StyledTableCell>
 
             </StyledTableRow>
