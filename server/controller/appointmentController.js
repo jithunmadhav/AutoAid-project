@@ -322,21 +322,49 @@ const webhookHandler = async (req, res) => {
   }
 };
 
-
- export const getEmergencyApp=async(req,res)=>{
+export const getEmergencyApp = async (req, res) => {
   try {
-    const id=req.params.id;
-    const result=await appiontmentModel.find({mechanic_id:id,booking_type:'Emergency booking'}).lean()
-    if(result){
-      res.status(200).json({err:false,result})
-    }else{
-      res.status(404).json({err:true})
+    const { search, page } = req.query;
+    const perPage = 8;
+    const currentPage = parseInt(page) || 1;
+    const id = req.query.id;
+    const query = {
+      mechanic_id: id,
+      booking_type: 'Emergency booking',
+      username: new RegExp(search, 'i')
+    };
+    const totalAppointments = await appiontmentModel.countDocuments(query);
+    const totalPages = Math.ceil(totalAppointments / perPage);
+    const result = await appiontmentModel
+      .find({ ...query })
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage)
+      .lean();
+    if (result) {
+      res.status(200).json({ err: false, result, totalPages });
+    } else {
+      res.status(404).json({ err: true });
     }
   } catch (error) {
-    res.status(500).json({err:true,error})
     console.log(error);
+    res.status(500).json({ err: true, error });
   }
- }
+};
+
+//  export const getEmergencyApp=async(req,res)=>{
+//   try {
+//     const id=req.params.id;
+//     const result=await appiontmentModel.find({mechanic_id:id,booking_type:'Emergency booking'}).lean()
+//     if(result){
+//       res.status(200).json({err:false,result})
+//     }else{
+//       res.status(404).json({err:true})
+//     }
+//   } catch (error) {
+//     res.status(500).json({err:true,error})
+//     console.log(error);
+//   }
+//  }
 
  export const customerDetails=async(req,res)=>{
   await userModel.findOne({_id:req.params.id}).then((result)=>{

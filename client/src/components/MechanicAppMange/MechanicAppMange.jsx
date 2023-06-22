@@ -48,13 +48,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function MechanicAppManage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState('');
     const [openQuickservice, setopenQuickservice] = useState(false)
     const [result, setresult] = useState([])
     const [details, setdetails] = useState([])
     const {mechanic} = useSelector(state => state)
     const id=mechanic.details[0]._id;
     const [openDetails, setopenDetails] = useState(false)
-    const [search, setSearch] = useState('');
   useEffect(() => {
    axios.get(`/mechanic/getscheduledApp`,{params: {
     search: search,
@@ -138,7 +138,7 @@ function MechanicAppManage() {
       </Table>
     </TableContainer> :
     <Typography variant="h6" style={{ color:'white' }} component="h6" textAlign='center'>
-    No Mechanics found.
+    No data found.
   </Typography>        }
         </div>
         <Stack spacing={2} sx={{position: 'absolute', bottom: 50, left: '50%', transform: 'translateX(-50%)'}}>

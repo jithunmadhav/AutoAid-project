@@ -8,12 +8,22 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import './MechanicAppMange.css'
 import axios from '../../axios';
 import { useSelector } from 'react-redux';
 import MechanicAppManage from './MechanicAppMange';
 import BookingDetails from './BookingDetails';
+// Custom styled component for the TextField label
+const WhiteLabel = styled('label')({
+  color: 'white',
+});
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -35,6 +45,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function QuickService() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState('');
     const [openDetails, setopenDetails] = useState(false)
     const [openSchedule, setopenSchedule] = useState(false)
     const [details, setdetails] = useState([])
@@ -42,23 +55,54 @@ function QuickService() {
     const {mechanic} = useSelector(state => state)
     const id=mechanic.details[0]._id;
   useEffect(() => {
-   axios.get(`/mechanic/getEmergencyApp/${id}`).then((response)=>{
-    if(!response.data.err){
-        setresult(response.data.result)
-    }
-   })
-  }, [])
-
+    axios.get(`/mechanic/getEmergencyApp`,{params: {
+     search: search,
+     page: currentPage,
+     id
+   }}).then((response)=>{
+     if(!response.data.err){
+         setresult(response.data.result)
+         setTotalPages(response.data.totalPages);
+     }
+    })
+   }, [search])
+   const handlePageChange = (event, page) => {
+     setCurrentPage(page);
+   };
 
  console.log(openSchedule,openDetails);
 
   return (
     openSchedule ? <MechanicAppManage/> :
     openDetails ? <BookingDetails data={details} /> :
-   <>
+ 
   <div className='dashboard-background'>
+  <Box
+          component="form"
+          sx={{
+            '& > :not(style)': { m: 1, width: '25ch' },
+            position: 'absolute',
+            right: '22%',
+            top: '11%',
+          }}
+          noValidate
+          autoComplete="off"
+        >
+   <TextField
+  id="standard-basic"
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+  label={
+    <WhiteLabel>
+      search
+    </WhiteLabel>
+  }
+  variant="standard"
+/>   
+        </Box>
     <Button className='serviceschedule-btn' onClick={()=>setopenSchedule(true)} style={{ position:'absolute' }} variant='outlined' color='secondary' >Scheduled service</Button>
         <div className='table-div'>
+        {result.length!==0 ?
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -89,11 +133,23 @@ function QuickService() {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer>:
+     <Typography variant="h6" style={{ color:'white' }} component="h6" textAlign='center'>
+     No data found.
+   </Typography>        }
         </div>
+        <Stack spacing={2} sx={{position: 'absolute', bottom: 50, left: '50%', transform: 'translateX(-50%)'}}>
+          <Pagination
+          variant="outlined"
+            count={totalPages}
+            color="primary"
+            page={currentPage}
+            onChange={handlePageChange}
+          />
+        </Stack>
     </div>
  
-   </>
+ 
   )
 }
 
