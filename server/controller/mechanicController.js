@@ -270,17 +270,3 @@ export const mechanicLogin=async(req,res)=>{
         }
       }
 
-      export const paymentRequest=(req,res)=>{
-       const {accno,name,branch,amount}=req.body;
-         paymentModel.create({
-          accountnumber:accno,
-          name:name,
-          branch:branch,
-          amount:amount
-        }).then(()=>{
-          res.status(200).json({err:false})
-        }).catch((error)=>{
-          console.log(error);
-          res.status(500).json({err:true,message:'something went wrong'})
-        })
-      }

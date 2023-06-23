@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './MechanicPayment.css'
 import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
@@ -10,7 +10,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import PaymentWithdrawForm from './PaymentWithdrawForm';
-
+import { useSelector } from 'react-redux';
+import axios from '../../axios'
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -33,19 +34,18 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   
 function MechanicPayment() {
      const [openPaymentWithdraw, setopenPaymentWithdraw] = useState(false)
-      function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-      }
-      const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-        
-        
-      ];
+     const {mechanic} = useSelector(state => state)
+     const mechanic_id=mechanic.details[0]._id;
+     const [result, setresult] = useState([])
+     useEffect(() => {
+       axios.get('/mechanic/paymentrequest',{params:{id:mechanic_id}}).then((response)=>{
+         if(!response.data.err){
+           setresult(response.data.result)
+         }
+       }).catch((err)=>{
+        console.log(err);
+       })
+     }, [])
 
 
     
@@ -66,21 +66,26 @@ function MechanicPayment() {
           <TableRow>
             <StyledTableCell>Acc No</StyledTableCell>
             <StyledTableCell align="center">Name</StyledTableCell>
+            <StyledTableCell align="center">Bank&nbsp; </StyledTableCell>
             <StyledTableCell align="center">Branch&nbsp; </StyledTableCell>
-            <StyledTableCell align="center">IFSC&nbsp; </StyledTableCell>
             <StyledTableCell align="center">Amount&nbsp; </StyledTableCell>
+            <StyledTableCell align="center">status&nbsp; </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {result.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.accountnumber}
               </StyledTableCell>
-              <StyledTableCell align="center">{row.calories}</StyledTableCell>
-              <StyledTableCell align="center">{row.fat}</StyledTableCell>
-              <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="center">{row.protein}</StyledTableCell>
+              <StyledTableCell align="center">{row.name}</StyledTableCell>
+              <StyledTableCell align="center">{row.bankname}</StyledTableCell>
+              <StyledTableCell align="center">{row.branch}</StyledTableCell>
+              <StyledTableCell align="center">{row.amount}</StyledTableCell>
+              {row.paymentstatus=='pending' ?
+              <StyledTableCell style={{ color:'red' }} align="center">{row.paymentstatus}</StyledTableCell>:
+              <StyledTableCell style={{ color:'green' }} align="center">{row.paymentstatus}</StyledTableCell>
+              }
             </StyledTableRow>
           ))}
         </TableBody>

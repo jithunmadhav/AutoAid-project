@@ -13,6 +13,10 @@ const paymentSchema=mongoose.Schema({
         type:String,
         required:true
     },
+    bankname:{
+        type:String,
+        required:true
+    },
     amount:{
         type:Number,
         required:true

@@ -1,85 +1,100 @@
-import React, { useState } from 'react'
-import './PaymentWithdrawForm.css'
-import validator from 'validator';
+import React from 'react';
+import './PaymentWithdrawForm.css';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from '../../axios';
 import MechanicPaymentPage from '../../Pages/MechanicPaymentPage';
 import { useDispatch, useSelector } from 'react-redux';
-function PaymentWithdrawForm() {
-    const {mechanic} = useSelector(state => state)
-    const mechanic_id=mechanic.details[0]._id;
-    const dispatch = useDispatch()
-    const [accno, setaccno] = useState('')
-    const [name, setname] = useState('')
-    const [branch, setbranch] = useState('')
-    const [amount, setamount] = useState('')
-    const [err, seterr] = useState('')
-    const [openMechanicPayment, setopenMechanicPayment] = useState(false)
-    const isBankAccountNumberValid = (bankAccountNumber) => {
-        const cleanedBankAccountNumber = bankAccountNumber.replace(/\s+/g, '');
-      
-        if (validator.isNumeric(cleanedBankAccountNumber) && validator.isLength(cleanedBankAccountNumber, { min: 9, max:18 })) {
-          return true;
-        }
-      
-        return false;
-      };
-    
-    const handleSubmit=(e)=>{
-        e.preventDefault()
-        const accnoValid=isBankAccountNumberValid(accno);
-        if(accnoValid){
-          if(name.trim() && branch.trim() && amount.trim()){
-            if( validator.isNumeric(amount)){
-                axios.post('/mechanic/paymentrequest',{accno,name,branch,amount,mechanic_id}).then((response)=>{
-                   if(!response.data.err){
-                       dispatch({type:'refresh'})
-                       setopenMechanicPayment(true)
-                   }else{
-                       seterr('something went wrong')
-                   }
-                })
-            }else{
-                seterr('Enter a valid amount')
-            }
-          }else{
-            seterr('All fields are required')
-          }
-        }else{
-            seterr('Invalid account number')
-        }
+import * as Yup from 'yup';
 
-    }
+const validationSchema = Yup.object().shape({
+  accno: Yup.string().required('Account number is required').test('is-valid-accno', 'Invalid account number', (value) => {
+    return value && /^\d{9,18}$/.test(value.replace(/\s+/g, ''));
+  }),
+  name: Yup.string().required('Name is required'),
+  branch: Yup.string().required('Branch is required'),
+  amount: Yup.string()
+    .required('Amount is required')
+    .test('is-valid-amount', 'Invalid amount', (value) => {
+      return value && /^\d+$/.test(value);
+    }),
+  bank: Yup.string().required('Bank name is required'),
+});
+
+function PaymentWithdrawForm() {
+  const { mechanic } = useSelector((state) => state);
+  const mechanic_id = mechanic.details[0]._id;
+  const dispatch = useDispatch();
+  const [err, setErr] = useState('');
+  const [openMechanicPayment, setOpenMechanicPayment] = useState(false);
+
+  const handleSubmit = (values) => {
+    axios
+      .post('/mechanic/paymentrequest', { ...values, mechanic_id })
+      .then((response) => {
+        if (!response.data.err) {
+          dispatch({ type: 'refresh' });
+          setOpenMechanicPayment(true);
+        } else {
+          setErr('Something went wrong');
+        }
+      })
+      .catch((response) => {
+        console.log(response.response.data.message);
+        setErr(response.response.data.message);
+      });
+  };
+
   return (
-    openMechanicPayment ? <MechanicPaymentPage/> :
-    <div>
-    <div className='withdraw-background'>
-     <div className='withdraw'>
-   <div className='withdraw-connect-mechanic '>
-   </div>
-   <div className='withdraw-classic'>
-  <p className="errorMessage">{err}</p>
-  <form  onSubmit={handleSubmit} className='Form'>
-    <fieldset className='username'>
-      <input type="text" value={accno} onChange={(e=>setaccno(e.target.value))} placeholder="Acc no" required/>
-    </fieldset>
-    <fieldset className='email'>
-      <input type="text"  value={name} onChange={(e=>setname(e.target.value))} placeholder="Name" required/>
-    </fieldset>
-    <fieldset className='password'>
-      <input type="text"  value={branch} onChange={(e=>setbranch(e.target.value))} placeholder="Branch"  required/>
-    </fieldset>
- 
-    <fieldset className='password'>
-      <input type="text"  value={amount} onChange={(e=>setamount(e.target.value))} placeholder="Amount"  required/>
-    </fieldset>
-   
-    <button type="submit" style={{ color:'white' }}  className="btn">submit</button>
-  </form>
-</div>
-</div>
-  </div>
-  </div>
-  )
+    openMechanicPayment ? (
+      <MechanicPaymentPage />
+    ) : (
+      <div>
+        <div className='withdraw-background'>
+          <div className='withdraw'>
+            <div className='withdraw-connect-mechanic'></div>
+            <div className='withdraw-classic'>
+              <p className="errorMessage">{err}</p>
+              <Formik
+                initialValues={{
+                  accno: '',
+                  name: '',
+                  branch: '',
+                  amount: '',
+                  bank: '',
+                }}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                <Form className='Form'>
+                  <fieldset className='username'>
+                    <Field type="text" name="accno" placeholder="Acc no" required />
+                    <ErrorMessage name="accno" component="div" className="errorMessage" />
+                  </fieldset>
+                  <fieldset className='email'>
+                    <Field type="text" name="name" placeholder="Name" required />
+                    <ErrorMessage name="name" component="div" className="errorMessage" />
+                  </fieldset>
+                  <fieldset className='password'>
+                    <Field type="text" name="bank" placeholder="Bank name" required />
+                    <ErrorMessage name="bank" component="div" className="errorMessage" />
+                  </fieldset>
+                  <fieldset className='password'>
+                    <Field type="text" name="branch" placeholder="Branch" required />
+                    <ErrorMessage name="branch" component="div" className="errorMessage" />
+                  </fieldset>
+                  <fieldset className='password'>
+                    <Field type="text" name="amount" placeholder="Amount" required />
+                    <ErrorMessage name="amount" component="div" className="errorMessage" />
+                  </fieldset>
+                  <button type="submit" style={{ color: 'white' }} className="btn">Submit</button>
+                </Form>
+              </Formik>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  );
 }
 
-export default PaymentWithdrawForm
+export default PaymentWithdrawForm;
