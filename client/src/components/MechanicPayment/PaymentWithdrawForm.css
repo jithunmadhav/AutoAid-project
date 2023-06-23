@@ -6,7 +6,7 @@
 
   .withdraw-background  {
     background: linear-gradient(to right, #111111,#0e1136) !important;
-    height: 91vh;
+    height: 100vh;
     animation: colorChange 10s ease-in-out infinite;
   }
   
@@ -114,7 +114,7 @@
 .withdraw-connect-mechanic  {
     
     margin-top: 50px ;
-    background-image: url("https://st2.depositphotos.com/1157310/8702/v/450/depositphotos_87024270-stock-illustration-mechanic-holding-spanner.jpg") ; 
+    background-image: url("https://img.freepik.com/free-photo/3d-render-online-payment-transaction-security_107791-16637.jpg?w=826&t=st=1687508468~exp=1687509068~hmac=b98f81367c3ec9836b2700237e6526ec0c985632a5b99f9c1a7891eaa6dd05f4") ; 
     background-size: contain ;
     background-repeat: no-repeat ;
 }

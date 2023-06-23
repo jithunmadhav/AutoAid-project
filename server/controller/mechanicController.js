@@ -5,6 +5,7 @@ import { sentOTP, signupMail } from '../helper/mail.js'
 import { randomNumber } from '../helper/randomNum.js'
 import convertPDFToImages from 'pdf-img-convert'
 import fs from 'fs';
+import paymentModel from '../model/paymentModel.js'
 
 
 
@@ -253,17 +254,33 @@ export const mechanicLogin=async(req,res)=>{
 
       export const updateProfile=async(req,res)=>{
         try {
-          const {id,name,mobile,location,service,experience,minAmount}=req.body;
+          const {id,name,mobile,location,service,experience,minAmount,mechanic_id}=req.body;
          await mechanicModel.updateOne({_id:id},{$set:{
           name:name,
           mobile:mobile,
           location:location,
           service:service,
           experience:experience,
-          minAmount:minAmount
+          minAmount:minAmount,
+          mechanic_id:mechanic_id
          }})
          res.status(200).json({err:false})
         } catch (error) {
           res.status(500).json({err:true,message:'something went wrong'})
         }
+      }
+
+      export const paymentRequest=(req,res)=>{
+       const {accno,name,branch,amount}=req.body;
+         paymentModel.create({
+          accountnumber:accno,
+          name:name,
+          branch:branch,
+          amount:amount
+        }).then(()=>{
+          res.status(200).json({err:false})
+        }).catch((error)=>{
+          console.log(error);
+          res.status(500).json({err:true,message:'something went wrong'})
+        })
       }

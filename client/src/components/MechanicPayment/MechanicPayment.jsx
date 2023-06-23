@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './MechanicPayment.css'
 import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
@@ -9,6 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import PaymentWithdrawForm from './PaymentWithdrawForm';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -31,7 +32,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }));
   
 function MechanicPayment() {
- 
+     const [openPaymentWithdraw, setopenPaymentWithdraw] = useState(false)
       function createData(name, calories, fat, carbs, protein) {
         return { name, calories, fat, carbs, protein };
       }
@@ -46,16 +47,15 @@ function MechanicPayment() {
         
       ];
 
-      const handleWithdraw=()=>{
-        
-      }
+
     
   return (
+    openPaymentWithdraw ? <PaymentWithdrawForm/>:
     <div className='mechanic-payment-bg'>
     <div className='mechanic-payment-inner-div'>
       <h6 className='mechanic-payment-heading'>wallet</h6>
       <p className='mechanic-payment-para'>Balance : 2500</p>
-     <Button className='mechanic-payment-button'>withdraw</Button>
+     <Button onClick={()=>setopenPaymentWithdraw(true)} className='mechanic-payment-button'>withdraw</Button>
     </div>
     
       <div className='mechanic-payment-maindiv-2'>
