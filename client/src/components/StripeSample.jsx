@@ -1,106 +1,106 @@
-import React, { useState, useEffect } from 'react';
-import axios from '../axios';
+// import React from 'react';
+// import Swal from 'sweetalert2';
 
-function RazorpayPaymentPage() {
-  const [orderId, setOrderId] = useState('');
-  const [paymentError, setPaymentError] = useState('');
+// function ExampleComponent() {
+//   const showAlert = () => {
+//     Swal.fire({
+//       title: 'Sweet Alert!',
+//       text: 'This is a sweet alert message!',
+//       icon: 'warning',
+//       dangerMode:true,
+//       confirmButtonText: 'OK',
+//     });
+//   };
 
-  useEffect(() => {
-    loadRazorpayScript();
-  }, []);
+//   return (
+//     <div>
+//       <button onClick={showAlert}>Show Alert</button>
+//     </div>
+//   );
+// }
 
-  const loadRazorpayScript = () => {
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.async = true;
-    script.onload = handleRazorpayScriptLoad;
-    document.body.appendChild(script);
+// export default ExampleComponent;
+
+import React, { useState } from 'react';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
+
+function ExampleModal() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const openModal = () => {
+    setIsOpen(true);
   };
 
-  const handleRazorpayScriptLoad = () => {
-    // Razorpay script has been loaded
-    // You can initialize the payment here or wait for user interaction
+  const closeModal = () => {
+    setIsOpen(false);
   };
 
-  const createOrder = async () => {
-    try {
-      const response = await axios.post('/user/createOrder');
-      const { orderId } = response.data;
-      setOrderId(orderId);
-      setPaymentError('');
-      initiateRazorpayPayment(orderId);
-    } catch (error) {
-      setOrderId('');
-      setPaymentError('Failed to create order');
-      console.error(error);
-    }
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const initiateRazorpayPayment = (orderId) => {
-    const options = {
-      key: 'rzp_test_CbGFfMm3j0aAgq',
-      amount: 50000, // Amount in paise (e.g., 50000 for ₹500)
-      currency: 'INR',
-      name: 'GadgetZon', // Your business name
-      description: 'Online Transaction',
-      image: 'https://i.ibb.co/zSMfgvM/Logo.png',
-      order_id: orderId.id,
-      handler: async (response) => {
-        try {
-          await verifyPayment(response, orderId);
-        } catch (error) {
-          console.error(error);
-          setPaymentError('Payment verification failed');
-        }
-      },
-      prefill: {
-        name: 'John Doe', // Customer's name
-        email: 'john@example.com', // Customer's email
-        contact: '9876543210', // Customer's contact number
-      },
-      notes: {
-        address: 'Razorpay Corporate Office',
-      },
-      theme: {
-        color: '#3399cc',
-      },
-    };
-
-    if (window.Razorpay) {
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } else {
-      console.error('Razorpay script is not loaded');
-    }
-  };
-
-  const verifyPayment = async (payment, orderId) => {
-    try {
-    
-      const response = await axios.post('/user/verifyPayment', {payment,orderId});
-      console.log(response);
-      if (response.data.success) {
-        // Payment successful
-        console.log('Payment successful');
-      } else {
-        // Payment failed
-        console.log('Payment failed');
-      }
-    } catch (error) {
-      console.error(error);
-      setPaymentError('Payment verification failed');
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform form submission logic here, e.g., send data to the server
+    console.log(formData);
+    closeModal();
   };
 
   return (
     <div>
-      {paymentError && <p>{paymentError}</p>}
-      {!orderId && <button onClick={createOrder}>Make Payment</button>}
+      <button onClick={openModal}>Open Modal</button>
+
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={closeModal}
+        contentLabel="Example Modal"
+      >
+        <h2>Modal Title</h2>
+
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+
+          <label htmlFor="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+          />
+
+          <button type="submit">Submit</button>
+        </form>
+
+        <button onClick={closeModal}>Close Modal</button>
+      </Modal>
     </div>
   );
 }
 
-export default RazorpayPaymentPage;
-
-
-
+export default ExampleModal;

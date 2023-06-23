@@ -50,7 +50,7 @@ function MechanicNav() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/mechanic/dashboard" onClick={closeNavbar}>
+                <Link className="nav-link" to="/mechanic/payment" onClick={closeNavbar}>
                 payment
                 </Link>
               </li>

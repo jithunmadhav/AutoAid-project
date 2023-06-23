@@ -7,6 +7,10 @@ import axios from '../../axios'
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import './EditMechanicProfile.css'
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import MechanicaProfile from './MechanicProfile'
+import { useDispatch } from 'react-redux';
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -26,16 +30,17 @@ function getStyles(name, personName, theme) {
     };
   }
 function EditMechanicProfile(props) {
+  const dispatch=useDispatch()
     console.log("+++++++++",props.data);
     const theme = useTheme();
     const [name, setname] = useState(props.data.name)
     const [mobile, setmobile] = useState(props.data.mobile)
-    const [email, setemail] = useState(props.data.email)
+    const [location, setlocation] = useState(props.data.location)
     const [experience, setexperience] = useState(props.data.experience)
     const [minAmount, setminAmount] = useState(props.data.minAmount)
     const [service, setservice] = useState(props.data.service)
     const [serviceResult, setserviceResult] = useState([])
-    
+    const [openProfile, setopenProfile] = useState(false)
     const handleChange = (event) => {
         const {
           target: { value },
@@ -53,9 +58,29 @@ function EditMechanicProfile(props) {
         })
        }, [])
        const handleSubmit=(e)=>{
-        
+        e.preventDefault()
+        const id=props.data._id;
+        axios.patch('/mechanic/updateProfile',{id,name,mobile,location,experience,minAmount,service}).then((response)=>{
+          if(!response.data.err){
+            handleOpen()
+            setTimeout(() => {
+              handleClose()
+              dispatch({type:'refresh'})
+              setopenProfile(true)
+            }, 1000);
+          }
+        })
        }
+
+       const [open, setOpen] = React.useState(false);
+       const handleClose = () => {
+         setOpen(false);
+       };
+       const handleOpen = () => {
+         setOpen(true);
+       };
   return (
+    openProfile ? <MechanicaProfile/> :
     <div className="edit-mechanic-bg">
     <div className="edit-mechanic-inner-div">
       <h3 className="edit-mechanic-heading">Edit Form</h3>
@@ -67,8 +92,8 @@ function EditMechanicProfile(props) {
             <input className="edit-mechanic-input-field" value={name} type="text" onChange={(e)=>setname(e.target.value)} />
             <label>Mobile:</label>
             <input className="edit-mechanic-input-field" value={mobile} onChange={(e)=>setmobile(e.target.value)} type="text"  />
-            <label>Email:</label>
-            <input className="edit-mechanic-input-field" value={email} onChange={(e)=>setemail(e.target.value)} type="text"  />
+            <label>Location:</label>
+            <input className="edit-mechanic-input-field" value={location} onChange={(e)=>setlocation(e.target.value)} type="text"  />
          
           </div>
           <div className="edit-mechanic-form-div2">
@@ -108,6 +133,13 @@ function EditMechanicProfile(props) {
       </form>
 
     </div>
+    <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
   </div>
   )
 }

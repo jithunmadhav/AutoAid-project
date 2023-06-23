@@ -235,4 +235,35 @@ export const mechanicLogin=async(req,res)=>{
           })
           .json({ err: false, message: 'Logged out successfully' });
       };
+
       
+      export const mechanicProfile=async(req,res)=>{
+        try {
+         let result= await mechanicModel.findOne({_id:req.params.id})
+         if(result){
+          res.status(200).json({err:false,result})
+         }else{
+          res.status(404).json({err:true})
+         }
+        } catch (error) {
+          res.status(500).json({err:true,message:'something went wrong'})
+        }
+      }
+
+
+      export const updateProfile=async(req,res)=>{
+        try {
+          const {id,name,mobile,location,service,experience,minAmount}=req.body;
+         await mechanicModel.updateOne({_id:id},{$set:{
+          name:name,
+          mobile:mobile,
+          location:location,
+          service:service,
+          experience:experience,
+          minAmount:minAmount
+         }})
+         res.status(200).json({err:false})
+        } catch (error) {
+          res.status(500).json({err:true,message:'something went wrong'})
+        }
+      }

@@ -59,21 +59,7 @@ const mechanicSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  scheduledDate: [
-    {
-      currDate: {
-        type: String,
-      },
-      date: {
-        type: Date,
-      },
-      selectedTime: [],
-      expirationDate: {
-        type: Date,
-        expires: 0 ,
-      },
-    },
-  ],
+  scheduledDate: [],
   booked: {
     type: Array,
     default: [],

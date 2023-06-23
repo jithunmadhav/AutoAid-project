@@ -56,6 +56,8 @@ function MechanicProfile() {
            </ul>
            <p style={{ marginTop:'-17px' }} className='name'>Email :{mechanic.details[0].email}</p>
             <p style={{ marginTop:'-17px' }} className='name'>Experience :{mechanic.details[0].experience} years </p>
+            <p style={{ marginTop:'-17px' }} className='name'>Minimum amount :{mechanic.details[0].minAmount} /- </p>
+
           </div>
         </div>
       </div>

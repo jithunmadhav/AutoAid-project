@@ -49,7 +49,7 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/blog" onClick={closeNavbar}>
+                <Link className="nav-link" to="/" onClick={closeNavbar}>
                 Contact
                 </Link>
               </li>

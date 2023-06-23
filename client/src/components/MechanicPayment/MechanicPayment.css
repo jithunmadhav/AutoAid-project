@@ -1,0 +1,76 @@
+.mechanic-payment-bg{
+    background: linear-gradient(to right, #111111,#0e1136) !important;
+    height: 100vh;
+}
+.mechanic-payment-inner-div{
+    position: absolute;
+    top: 47%;
+    left: 24%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    height: 400px ;
+    
+}
+.mechanic-payment-inner-div2{
+    display: flex;
+    margin-top: 70px;
+    padding: 5%;
+    justify-content: center;
+}
+.mechanic-payment-div2-sub1{
+    height: 500px;
+    width: 30%;
+}
+.mechanic-payment-div2-sub2{
+    height: 500px;
+    background-color: cadetblue;
+    width: 70%;
+}
+.mechanic-payment-profile-img{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+.mechanic-payment-maindiv-2{
+    position: absolute;
+    top: 48%;
+    left: 64%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 1000px;
+    overflow: hidden;
+    height: 500px ;
+}
+ .mechanic-payment-heading{
+    text-align: center;
+    font-size: 28px;
+    font-family: monospace;
+    font-weight: bolder;
+    margin-top: 80px;
+ }
+ .mechanic-payment-para{
+    text-align: center;
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: bolder;
+    margin-top: 10px;
+ }
+ 
+ .mechanic-payment-button {
+    width: 50%;
+    outline: none !important;
+    background: linear-gradient(-5deg,  #111111,#0e1136);
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    box-shadow: 0 3px 0px rgba(115, 136, 89, 0.2);
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    margin-left: 93px !important;
+    margin-top: 50px !important;
+    color: white !important;
+}
