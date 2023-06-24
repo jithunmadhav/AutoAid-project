@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './PaymentManagement.css'
 import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
@@ -9,6 +9,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import axios from '../../axios';
+import {
+    CButton,
+    CModal,
+    CModalHeader,
+    CModalTitle,
+    CModalBody,
+    CModalFooter,
+  } from '@coreui/react';
+import { useDispatch } from 'react-redux';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -29,18 +39,115 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 function PaymentManagement() {
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
+    const dispatch = useDispatch()
+    const [result, setresult] = useState([])
+    const [visible, setVisible] = useState(false)
+    const [data, setdata] = useState('')
+    useEffect(() => {
+      axios.get('/admin/paymentrequest').then((response)=>{
+        setresult(response.data.result)
+      }).catch((error)=>{
+        console.log(error);
+      })
+    }, [visible])
+
+    const handlePayment=()=>{
+     createOrder()
+    }
+    
+  const [orderId, setOrderId] = useState('');
+  const [paymentError, setPaymentError] = useState('');
+
+  useEffect(() => {
+    loadRazorpayScript();
+  }, []);
+
+  const loadRazorpayScript = () => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.onload = handleRazorpayScriptLoad;
+    document.body.appendChild(script);
+  };
+
+  const handleRazorpayScriptLoad = () => {
+    // Razorpay script has been loaded
+    // You can initialize the payment here or wait for user interaction
+  };
+
+  const createOrder = async () => {
+    try {
+      const response = await axios.post('/admin/createpayment',{...data});
+      const { orderId } = response.data;
+      setOrderId(orderId);
+      setPaymentError('');
+      initiateRazorpayPayment(orderId);
+    } catch (error) {
+      setOrderId('');
+      setPaymentError('Failed to create order');
+      console.error(error);
+    }
+  };
+
+  const initiateRazorpayPayment = (orderId) => {
+    const options = {
+      key: 'rzp_test_CbGFfMm3j0aAgq',
+      amount: data.amount*100, // Amount in paise (e.g., 50000 for ₹500)
+      currency: 'INR',
+      name: 'AUTO AID', // Your business name
+      description: 'Online Transaction',
+      image: 'https://i.ibb.co/zSMfgvM/Logo.png',
+      order_id: orderId.id,
+      handler: async (response) => {
+        try {
+          await verifyPayment(response, orderId);
+        } catch (error) {
+          console.error(error);
+          setPaymentError('Payment verification failed');
+        }
+      },
+      prefill: {
+        name: 'John Doe', // Customer's name
+        email: 'john@example.com', // Customer's email
+        contact: '9876543210', // Customer's contact number
+      },
+      notes: {
+        address: 'Razorpay Corporate Office',
+      },
+      theme: {
+        color: '#3399cc',
+      },
+    };
+
+    if (window.Razorpay) {
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } else {
+      console.error('Razorpay script is not loaded');
+    }
+  };
+
+  const verifyPayment = async (payment, orderId) => {
+    try {
+    
+      const response = await axios.post('/admin/verifyPayment', {data,payment,orderId });
+      console.log(response);
+      if (!response.data.err) {
+          dispatch({type:'refresh'})
+          setVisible(false)
+      } else {
+        // Payment failed
+        console.log('Payment failed');
       }
-      const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-      ];
+    } catch (error) {
+      console.error(error);
+      setPaymentError('Payment verification failed');
+    }
+  };
+   
   return (
-    <div>
+ 
+    <div >
           <Button
           style={{ position: 'absolute', right: '101px', top: '105px' }}
           variant="outlined"
@@ -52,30 +159,51 @@ function PaymentManagement() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell>Mechanic name</StyledTableCell>
+            <StyledTableCell align="center">Amount</StyledTableCell>
+            <StyledTableCell align="center">Account no&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Bank&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Branch&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {result.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="center">{row.amount}</StyledTableCell>
+              <StyledTableCell align="center">{row.accountnumber}</StyledTableCell>
+              <StyledTableCell align="center">{row.bankname}</StyledTableCell>
+              <StyledTableCell align="center">{row.branch}</StyledTableCell>
+              <StyledTableCell align="center"><Button onClick={()=>{setVisible(true); setdata(row)}}>Approve</Button></StyledTableCell>
+
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+        <CModal alignment="center" visible={visible} onClose={() => setVisible(false)} className="custom-modal">
+  <CModalHeader style={{ justifyContent: 'center' }} closeButton={false} className="custom-modal-header">
+    <CModalTitle>Confirmation</CModalTitle>
+  </CModalHeader>
+  <CModalBody className="custom-modal-body">
+    <p style={{ textAlign:'center' }}>Are you sure to approve the payment ?</p>
+  
+  </CModalBody>
+  <CModalFooter  style={{ justifyContent: 'space-evenly' }} className="custom-modal-footer">
+    <Button variant='outlined'  color="error" onClick={() => setVisible(false)}>
+      Cancel
+    </Button>
+    <Button onClick={()=>handlePayment()} variant='outlined'  color="success">
+      Continue
+    </Button>
+  </CModalFooter>
+</CModal>
         </div>
     </div>
+ 
   )
 }
 

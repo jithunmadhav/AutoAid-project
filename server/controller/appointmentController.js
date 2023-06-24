@@ -2,11 +2,11 @@ import crypto from 'crypto'
 import stripe from 'stripe';
 import { randomNumber } from '../helper/randomNum.js';
 import appiontmentModel from "../model/appointmentModel.js"
-import Razorpay from 'razorpay';
 import { createInvoice } from '../helper/invoice/pdfkit.js';
 import userModel from '../model/userModel.js';
 import { sendInvoice } from '../helper/mail.js';
 import mechanicModel from '../model/mechanicModel.js';
+import Razorpay from 'razorpay';
 
 const instance = new Razorpay({
   key_id: process.env.KEY_ID,
