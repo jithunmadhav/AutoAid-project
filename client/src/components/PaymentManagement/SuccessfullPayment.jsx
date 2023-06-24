@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './PaymentManagement.css'
 import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
@@ -9,6 +9,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import axios from '../../axios';
+import PaymentManagement from './PaymentManagement';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -29,19 +31,20 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 function SuccessfullPayment() {
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-      }
-      const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-      ];
+    const [result, setresult] = useState([])
+    const [openPaymentmanagement, setopenPaymentmanagement] = useState(false)  
+      useEffect(() => {
+        axios.get('/admin/successpayment').then((response)=>{
+          setresult(response.data.result)
+        }).catch((error)=>{
+          console.log(error);
+        })
+      }, [])
   return (
-    <div className='admin-bg'>
+    openPaymentmanagement ? <PaymentManagement/> :
+    <div >
           <Button
+          onClick={()=>setopenPaymentmanagement(true)}
           style={{ position: 'absolute', right: '101px', top: '105px' }}
           variant="outlined"
         >
@@ -52,23 +55,23 @@ function SuccessfullPayment() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+          <StyledTableCell>Mechanic name</StyledTableCell>
+            <StyledTableCell align="center">Amount</StyledTableCell>
+            <StyledTableCell align="center">Account no&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Bank&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Branch&nbsp;</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {result.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="center">{row.amount}</StyledTableCell>
+              <StyledTableCell align="center">{row.accountnumber}</StyledTableCell>
+              <StyledTableCell align="center">{row.bankname}</StyledTableCell>
+              <StyledTableCell align="center">{row.branch}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

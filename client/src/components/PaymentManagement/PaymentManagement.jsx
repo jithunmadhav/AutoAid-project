@@ -19,6 +19,7 @@ import {
     CModalFooter,
   } from '@coreui/react';
 import { useDispatch } from 'react-redux';
+import SuccessfullPayment from './SuccessfullPayment';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -43,6 +44,7 @@ function PaymentManagement() {
     const [result, setresult] = useState([])
     const [visible, setVisible] = useState(false)
     const [data, setdata] = useState('')
+    const [openSuccessPayment, setopenSuccessPayment] = useState(false)
     useEffect(() => {
       axios.get('/admin/paymentrequest').then((response)=>{
         setresult(response.data.result)
@@ -146,9 +148,10 @@ function PaymentManagement() {
   };
    
   return (
- 
+  openSuccessPayment ? <SuccessfullPayment/> :
     <div >
           <Button
+          onClick={()=>setopenSuccessPayment(true)}
           style={{ position: 'absolute', right: '101px', top: '105px' }}
           variant="outlined"
         >

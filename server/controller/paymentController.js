@@ -40,7 +40,19 @@ export const allPendingPayment=async(req,res)=>{
       res.status(500).json({err:true,message:'something went wrong'})
   }
   }
-  
+  export const allSuccessPayment=async(req,res)=>{
+    try {
+        const result = await paymentModel.find({paymentstatus:'success'}).lean()
+        if(result){
+            res.status(200).json({err:false,result})
+        }else{
+            res.status(404).json({err:true})
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({err:true,message:'something went wrong'})
+    }
+    } 
 
 export const paymentRequest = async (req, res) => {
   try {
