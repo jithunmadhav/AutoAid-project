@@ -64,6 +64,10 @@ const mechanicSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
+  wallet:{
+    type:Number,
+    default:0
+  }
 });
 
 const mechanicModel = mongoose.model("mechanicDetails", mechanicSchema);

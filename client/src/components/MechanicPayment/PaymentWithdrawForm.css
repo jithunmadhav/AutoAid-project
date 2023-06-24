@@ -71,7 +71,7 @@
 }
 .Form fieldset input {
     width: 100%;
-    height: 48px;
+    height: 46px;
     color: #333;
     padding: 15px 40px 15px 15px;
     border-radius: 5px;
@@ -80,6 +80,7 @@
     border: 1px solid rgba(0, 0, 0, 0.3);
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
     vertical-align: top;
+
 }
 .Form button {
     width: 100%;
@@ -120,8 +121,8 @@
 }
  
 .errorMessage{
-    margin-top: -15px;
-    height: 20px;
+    height: 15px;
+    padding-top: 13px;
     text-align: center;
     color: orangered;
 }

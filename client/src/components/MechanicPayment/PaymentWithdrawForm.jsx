@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './PaymentWithdrawForm.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from '../../axios';
@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
-  accno: Yup.string().required('Account number is required').test('is-valid-accno', 'Invalid account number', (value) => {
-    return value && /^\d{9,18}$/.test(value.replace(/\s+/g, ''));
-  }),
+  accno: Yup.string()
+    .required('Account number is required')
+    .test('is-valid-accno', 'Invalid account number', (value) => {
+      return value && /^\d{9,18}$/.test(value.replace(/\s+/g, ''));
+    }),
   name: Yup.string().required('Name is required'),
   branch: Yup.string().required('Branch is required'),
   amount: Yup.string()
@@ -28,20 +30,25 @@ function PaymentWithdrawForm() {
   const [openMechanicPayment, setOpenMechanicPayment] = useState(false);
 
   const handleSubmit = (values) => {
-    axios
-      .post('/mechanic/paymentrequest', { ...values, mechanic_id })
-      .then((response) => {
-        if (!response.data.err) {
-          dispatch({ type: 'refresh' });
-          setOpenMechanicPayment(true);
-        } else {
-          setErr('Something went wrong');
-        }
-      })
-      .catch((response) => {
-        console.log(response.response.data.message);
-        setErr(response.response.data.message);
-      });
+    if(parseInt(values.amount) <=parseInt(mechanic.details[0].wallet)){
+
+      axios
+        .post('/mechanic/paymentrequest', { ...values, mechanic_id })
+        .then((response) => {
+          if (!response.data.err) {
+            dispatch({ type: 'refresh' });
+            setOpenMechanicPayment(true);
+          } else {
+            setErr('Something went wrong');
+          }
+        })
+        .catch((response) => {
+          console.log(response.response.data.message);
+          setErr(response.response.data.message);
+        });
+    }else{
+      setErr('Enter amount less than wallet')
+    }
   };
 
   return (
@@ -53,7 +60,6 @@ function PaymentWithdrawForm() {
           <div className='withdraw'>
             <div className='withdraw-connect-mechanic'></div>
             <div className='withdraw-classic'>
-              <p className="errorMessage">{err}</p>
               <Formik
                 initialValues={{
                   accno: '',
@@ -66,6 +72,7 @@ function PaymentWithdrawForm() {
                 onSubmit={handleSubmit}
               >
                 <Form className='Form'>
+                  <div className="errorMessage">{err}</div>
                   <fieldset className='username'>
                     <Field type="text" name="accno" placeholder="Acc no" required />
                     <ErrorMessage name="accno" component="div" className="errorMessage" />

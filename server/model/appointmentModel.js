@@ -48,5 +48,5 @@ const appointmentSchema=mongoose.Schema({
     }
 })
 
-const appiontmentModel=mongoose.model('appointmentDetails',appointmentSchema)
+const appiontmentModel=mongoose.model('appointment',appointmentSchema)
 export default appiontmentModel

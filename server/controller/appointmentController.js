@@ -163,22 +163,23 @@ const webhookHandler = async (req, res) => {
           await mechanicModel
             .updateOne(
               { _id: customer.metadata.mechanic_id, 'booked.currDate':date.toLocaleDateString() },
-              { $set: { 'booked.$.selectedTime': selectedtime } }
+              { $set: { 'booked.$.selectedTime': selectedtime } ,$inc: { wallet: parseInt(customer.metadata.minAmount) }}
             )
           }else{
-            await mechanicModel
-            .updateOne(
+            await mechanicModel.updateOne(
               { _id: customer.metadata.mechanic_id },
               {
                 $addToSet: {
                   booked: {
-                    currDate:date.toLocaleDateString(),
+                    currDate: date.toLocaleDateString(),
                     date: date,
-                    selectedTime: [{value:customer.metadata.selectedTime}],                    
+                    selectedTime: [{ value: customer.metadata.selectedTime }],
                   },
                 },
+                $inc: { wallet: parseInt(customer.metadata.minAmount) },
               }
-            )
+            );
+            
           }
         
         await userModel.findOne({_id:customer.metadata.userId}).then((result)=>{
@@ -256,7 +257,7 @@ const webhookHandler = async (req, res) => {
           await mechanicModel
             .updateOne(
               { _id:  req.body.mechanic._id, 'booked.currDate':timestamp},
-              { $set: { 'booked.$.selectedTime': selectedtime } }
+              { $set: { 'booked.$.selectedTime': selectedtime } ,$inc:{'wallet':parseInt(req.body.mechanic.minAmount)} }
             )
           }else{
             await mechanicModel
@@ -269,7 +270,7 @@ const webhookHandler = async (req, res) => {
                     date: date,
                     selectedTime: [{value:req.body.mechanic.selectedTime}],                    
                   },
-                },
+                },$inc:{'wallet':parseInt(req.body.mechanic.minAmount)}
               }
             )
           }
@@ -351,20 +352,7 @@ export const getEmergencyApp = async (req, res) => {
   }
 };
 
-//  export const getEmergencyApp=async(req,res)=>{
-//   try {
-//     const id=req.params.id;
-//     const result=await appiontmentModel.find({mechanic_id:id,booking_type:'Emergency booking'}).lean()
-//     if(result){
-//       res.status(200).json({err:false,result})
-//     }else{
-//       res.status(404).json({err:true})
-//     }
-//   } catch (error) {
-//     res.status(500).json({err:true,error})
-//     console.log(error);
-//   }
-//  }
+ 
 
  export const customerDetails=async(req,res)=>{
   await userModel.findOne({_id:req.params.id}).then((result)=>{

@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import PaymentWithdrawForm from './PaymentWithdrawForm';
 import { useSelector } from 'react-redux';
+import Typography from '@mui/material/Typography';
 import axios from '../../axios'
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -54,12 +55,16 @@ function MechanicPayment() {
     <div className='mechanic-payment-bg'>
     <div className='mechanic-payment-inner-div'>
       <h6 className='mechanic-payment-heading'>wallet</h6>
-      <p className='mechanic-payment-para'>Balance : 2500</p>
+      <p className='mechanic-payment-para'>Balance : {mechanic.details[0].wallet}</p>
      <Button onClick={()=>setopenPaymentWithdraw(true)} className='mechanic-payment-button'>withdraw</Button>
     </div>
     
       <div className='mechanic-payment-maindiv-2'>
        <h6 style={{ color:'white',fontFamily:'monospace' }}>Payment history :</h6>
+       {result.length ===0 ?
+          <Typography variant="h6" component="h6" textAlign='center' style={{ color:'white' }}>
+          No history found.
+        </Typography>:
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 400 }} aria-label="customized table">
         <TableHead>
@@ -90,8 +95,8 @@ function MechanicPayment() {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
-      
+    </TableContainer> 
+      }
       </div>
       
   </div>

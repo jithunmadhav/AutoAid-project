@@ -55,6 +55,9 @@ function AdminNav() {
           <Button color="inherit" sx={{ display: 'block', my: 1 }}>
             <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/servicemanagement'}>SERVICE MANAGEMENT</Link>
           </Button>
+          <Button color="inherit" sx={{ display: 'block', my: 1 }}>
+            <Link style={{ textDecoration:'none',color:'white' }} to={'/admin/paymentmanagement'}>PAYMENT MANAGEMENT</Link>
+          </Button>
           <Button onClick={handleLogout} color="inherit" sx={{ display: 'block', my: 1 ,color:'white' }}>
            LOGOUT
           </Button>

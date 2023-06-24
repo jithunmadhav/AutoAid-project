@@ -27,6 +27,7 @@ import MechanicSchedulePage from './Pages/MechanicSchedulePage';
 import UserSchedulePage from './Pages/UserSchedulePage';
 import MechanicAppManagePage from './Pages/MechanicAppManagePage';
 import MechanicPaymentPage from './Pages/MechanicPaymentPage';
+import PaymentMangementPage from './Pages/PaymentMangementPage';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -61,10 +62,10 @@ function App() {
               <>
               <Route element={<AdminLoginPage />} path="/admin/login" />
               <Route element={<Navigate to={'/admin/login'} />} path={'/admin/dashboard'}/>
-              <Route element={<Navigate to={'/admin/login'} />} path={'admin/usermanagement'} />
+              <Route element={<Navigate to={'/admin/login'} />} path={'/admin/usermanagement'} />
               <Route element={<Navigate to={'/admin/login'} />} path={'/admin/mechanicmanagement'} />
               <Route element={<Navigate to={'/admin/login'} />} path={'/admin/servicemanagement'} />
-
+              <Route element={<Navigate to={'/admin/login'} />} path={'/admin/paymentmanagement'} />
               </>
             )
           }
@@ -76,7 +77,7 @@ function App() {
               <Route element={<UserManagementPage/>} path={'/admin/usermanagement'} />
               <Route element={<MechanicManagement/>} path={'/admin/mechanicmanagement'} />
               <Route element={<ServiceManagementPage/>} path={'/admin/servicemanagement'} />
-
+              <Route element={<PaymentMangementPage/>} path={'/admin/paymentmanagement'}/>
               </>
             )
           }
