@@ -40,7 +40,7 @@
 }
 
 #progressbar-2 #step4:before {
-  content: '\f111';
+  content: '\f058';
   font-family: "Font Awesome 5 Free";
   color: #fff;
   width: 37px;
@@ -76,12 +76,12 @@
 #progressbar-2 li:nth-child(2):after {
   left: 1%;
   width: 100%;
+
 }
 
 #progressbar-2 li:nth-child(3):after {
   left: 1%;
   width: 100%;
-  background: #c5cae9 !important;
 }
 
 #progressbar-2 li:nth-child(4) {
@@ -90,11 +90,11 @@
 }
 
 #progressbar-2 li:nth-child(4):after {
-  left: 0;
-  width: 0;
+  left: 1%;
+  width: 100%;
 }
 
 #progressbar-2 li.active:before,
 #progressbar-2 li.active:after {
-  background: #6520ff;
+  background: #5125af;
 }
