@@ -17,7 +17,7 @@ function MechanicLogin() {
         console.log(response.data);
         if(!response.data.err){
           dispatch({type:'refresh'})
-          navigate("/mechanic/dashboard")
+          navigate("/mechanic/schedule")
         }else{
           seterr(response.data.message)
         }

@@ -104,3 +104,17 @@ export const adminVerifyPayment=async(req,res)=>{
     res.json({err:true})
   }
 }
+
+export const refund=async(req,res)=>{
+  const { paymentId, refundAmount } = req.body;
+
+  try {
+    const refund = await instance.payments.refund(paymentId, {
+      amount: refundAmount,
+    });
+
+    res.status(200).json({ success: true, refund });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+}

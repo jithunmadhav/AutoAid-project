@@ -10,6 +10,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mapbox/mapbox-gl-geocoder": "^5.0.1",
     "@mapbox/search-js-react": "^1.0.0-beta.16",
+    "@mui/lab": "^5.0.0-alpha.134",
     "@mui/material": "^5.13.3",
     "@react-google-maps/api": "^2.18.1",
     "@stripe/stripe-js": "^1.54.0",

@@ -36,7 +36,7 @@ function AppointmentSuccess() {
             <img className='success-img' src="http://www.clipartbest.com/cliparts/niX/8Mp/niX8MpbGT.png" alt="success logo" />
           </div>
           <p className='second-para'>We will notify you when the technician accepts your request.</p>
-          <Link to={'/'}>
+          <Link to={'/user/history'}>
             <button className='coninue-button '>Continue</button></Link>
         </>
       )}

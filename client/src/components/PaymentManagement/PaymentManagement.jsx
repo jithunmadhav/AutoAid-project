@@ -8,6 +8,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import axios from '../../axios';
 import {
@@ -158,6 +159,10 @@ function PaymentManagement() {
           Successfull payment
         </Button>
               <div className='paymentmanagement-table-div'>
+                {result.length ===0 ?
+                 <Typography variant="h6" component="h6" textAlign='center'>
+                 No new applications.
+               </Typography> :
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -187,6 +192,7 @@ function PaymentManagement() {
         </TableBody>
       </Table>
     </TableContainer>
+    }
         <CModal alignment="center" visible={visible} onClose={() => setVisible(false)} className="custom-modal">
   <CModalHeader style={{ justifyContent: 'center' }} closeButton={false} className="custom-modal-header">
     <CModalTitle>Confirmation</CModalTitle>

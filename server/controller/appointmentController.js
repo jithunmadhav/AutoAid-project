@@ -36,6 +36,8 @@ export const emergencySchedule=async(req,res)=>{
       }else{
         await appiontmentModel.create({
             mechanic_id:req.body.mechanic._id,
+            mechanic_name:req.body.mechanic.name,
+            mechanic_mobile:req.body.mechanic.mobile,
             selectedService:req.body.mechanic.selectedService,
             coordinates:req.body.mechanic.coordinates,
             booking_type:req.body.mechanic.booking,
@@ -68,6 +70,8 @@ const stripePayment = async (req, res) => {
     const customer = await stripeInstance.customers.create({
       metadata: {
         mechanic_id: req.body.mechanic._id,
+        mechanic_name:req.body.mechanic.name,
+        mechanic_mobile:req.body.mechanic.mobile,
         minAmount:req.body.mechanic.minAmount,
         selectedService: req.body.mechanic.selectedService,
         booking_type: req.body.mechanic.booking,
@@ -137,6 +141,8 @@ const webhookHandler = async (req, res) => {
 
         const appointmentData = {
           mechanic_id: customer.metadata.mechanic_id,
+          mechanic_name:customer.metadata.mechanic_name,
+          mechanic_mobile:customer.metadata.mechanic_mobile,
           selectedService: customer.metadata.selectedService,
           booking_type: customer.metadata.booking_type,
           selectedVehicle_id: customer.metadata.selectedVehicle_id,
@@ -224,6 +230,7 @@ const webhookHandler = async (req, res) => {
  });
  }
  export const verifyPayment=async(req,res)=>{
+  console.log(req.body);
         let hamc =crypto.createHmac('sha256', process.env.KEY_SECRET)
         hamc.update(req.body.payment.razorpay_order_id+'|'+req.body.payment.razorpay_payment_id)
         hamc=hamc.digest('hex')
@@ -231,6 +238,8 @@ const webhookHandler = async (req, res) => {
           const currDate=new Date( new Date(req.body.mechanic.selectedDate).toISOString().split('T')[0])
           await appiontmentModel.create({
             mechanic_id:req.body.mechanic._id,
+            mechanic_name:req.body.mechanic.name,
+            mechanic_mobile:req.body.mechanic.mobile,
             selectedService:req.body.mechanic.selectedService,
             coordinates:req.body.mechanic.coordinates,
             booking_type:req.body.mechanic.booking,
@@ -373,7 +382,33 @@ export const getEmergencyApp = async (req, res) => {
 };
 
 
-
+export const bookingHistory = async (req, res) => {
+  try {
+    const { search, page } = req.query;
+    const perPage = 8;
+    const currentPage = parseInt(page) || 1;
+    const id = req.query.id;
+    const query = {
+      userId: id,
+      username: new RegExp(search, 'i')
+    };
+    const totalAppointments = await appiontmentModel.countDocuments(query);
+    const totalPages = Math.ceil(totalAppointments / perPage);
+    const result = await appiontmentModel
+      .find({ ...query })
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage)
+      .lean();
+    if (result) {
+      res.status(200).json({ err: false, result, totalPages });
+    } else {
+      res.status(404).json({ err: true });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ err: true, error });
+  }
+};
 
 
 

@@ -9,6 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import axios from '../../axios';
 import PaymentManagement from './PaymentManagement';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -51,6 +52,10 @@ function SuccessfullPayment() {
           pending payment
         </Button>
               <div className='paymentmanagement-table-div'>
+              {result.length ===0 ?
+                 <Typography variant="h6" component="h6" textAlign='center'>
+                 No successfull payments.
+               </Typography> :
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -77,6 +82,7 @@ function SuccessfullPayment() {
         </TableBody>
       </Table>
     </TableContainer>
+}
         </div>
     </div>
   )

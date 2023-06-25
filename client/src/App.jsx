@@ -21,13 +21,14 @@ import ErrorPage from './Pages/ErrorPage';
 import ServiceManagementPage from './Pages/ServiceManagementPage';
 import PlacePage from './Pages/PlacePage';
 import AddVehiclePage from './Pages/AddVehiclePage';
-import StripeSample from './components/StripeSample';
+import StripeSample from './components/Sample/StripeSample';
 import AppointmentSuccess from './components/AppoinmentSuccess/AppointmentSuccess';
 import MechanicSchedulePage from './Pages/MechanicSchedulePage';
 import UserSchedulePage from './Pages/UserSchedulePage';
 import MechanicAppManagePage from './Pages/MechanicAppManagePage';
 import MechanicPaymentPage from './Pages/MechanicPaymentPage';
 import PaymentMangementPage from './Pages/PaymentMangementPage';
+import UserBookingHistoryPage from './Pages/UserBookingHistoryPage';
 
 function App() {
   const { user, refresh, mechanic,admin } = useSelector((state) => state);
@@ -107,19 +108,20 @@ function App() {
               <Route element={<StripeSample/>} path='/stripe'/>
               <Route element={<UserSchedulePage/>} path={'/user/schedule'}/>
               <Route element={<AppointmentSuccess/>} path={'/success'}/>
+              <Route element={<UserBookingHistoryPage/>} path={'/user/history'}/>
             </>
           )}
 
           {mechanic.mechLog && (
             <>
-              <Route element={<MechanicDashboardPage />} path="/mechanic/dashboard" />
-              <Route element={<MechanicProfilePage/>} path={'/mechanic/profile'} />
               <Route element={<MechanicSchedulePage/>} path={'/mechanic/schedule'}/>
+              {/* <Route element={<MechanicDashboardPage />} path="/mechanic/dashboard" /> */}
+              <Route element={<MechanicProfilePage/>} path={'/mechanic/profile'} />
               <Route element={<MechanicPaymentPage/>} path={'/mechanic/payment'}/>
               <Route element={<MechanicAppManagePage/>} path={'/mechanic/appoinmentManage'}/>
-              <Route element={<Navigate to={'/mechanic/dashboard'} />} path="/mechanic/login" />
-              <Route element={<Navigate to={'/mechanic/dashboard'} />} path="/mechanic/signup" />
-              <Route element={<Navigate to={'/mechanic/dashboard'} />} path="/forgotMechanicPassword" />
+              <Route element={<Navigate to={'/mechanic/schedule'} />} path="/mechanic/login" />
+              <Route element={<Navigate to={'/mechanic/schedule'} />} path="/mechanic/signup" />
+              <Route element={<Navigate to={'/mechanic/schedule'} />} path="/forgotMechanicPassword" />
 
 
 

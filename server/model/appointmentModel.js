@@ -5,6 +5,14 @@ const appointmentSchema=mongoose.Schema({
         type:String,
         required:true
     },
+    mechanic_name:{
+        type:String,
+        required:true
+    },
+    mechanic_mobile:{
+        type:Number,
+        required:true
+    },
     selectedService:{
         type:String,
         required:true

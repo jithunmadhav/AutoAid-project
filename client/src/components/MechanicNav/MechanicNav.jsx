@@ -34,11 +34,11 @@ function MechanicNav() {
           </button>
           <div  style={{ justifyContent:'flex-end' }}  className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
             <ul  className="navbar-nav ml-auto ">
-              <li  className="nav-item">
+              {/* <li  className="nav-item">
                 <Link className="nav-link" to="/mechanic/dashboard" onClick={closeNavbar}>
                   Dashboard
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link className="nav-link" to="/mechanic/schedule" onClick={closeNavbar}>
                   Schedule
