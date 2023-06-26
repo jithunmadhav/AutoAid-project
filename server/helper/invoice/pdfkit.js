@@ -15,7 +15,7 @@ export const  createInvoice=(invoiceData, filePath)=> {
   // Add invoice details
   doc.moveDown();
   doc.fontSize(12).text(`Invoice Number: ${invoiceData.invoiceNumber}`);
-  doc.fontSize(12).text(`Date: ${invoiceData.date}`);
+  doc.fontSize(12).text(`Date: ${new Date(invoiceData.date).toLocaleDateString()}`);
 
   // Add table header
   doc.moveDown();
@@ -36,7 +36,7 @@ export const  createInvoice=(invoiceData, filePath)=> {
   // Add table header content
   doc.fontSize(12).text('Customer Name', tableLeft + 5, tableTop + 5, { underline: false });
   doc.fontSize(12).text('Amount', tableLeft + tableCol1Width + 5, tableTop + 5, { underline: false });
-  doc.fontSize(12).text('ID', tableLeft + tableCol1Width + tableCol2Width + 5, tableTop + 5, { underline: false });
+  doc.fontSize(12).text('Payment ID', tableLeft + tableCol1Width + tableCol2Width + 5, tableTop + 5, { underline: false });
 
   // Calculate table body height
   const availableHeight = doc.page.height - tableTop - 100;

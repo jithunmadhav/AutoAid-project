@@ -23,6 +23,7 @@ import {
   MDBTextArea,
   MDBInput,
 } from 'mdb-react-ui-kit';
+import axios from '../../axios';
 function BookingStatus(props) {
   const [status, setStatus] = useState(null); // Initial status is 0, indicating the first step
 const [closeStatus, setcloseStatus] = useState(false)
@@ -43,7 +44,10 @@ const [paymentId, setpaymentId] = useState('');
 const [paymentAmount, setpaymentAmount] = useState('')
 const handleSubmit=(e)=>{
   e.preventDefault()
-console.log("*****",reason,paymentAmount,paymentId);
+  const mechanic_id=props.data.mechanic_id;
+  const userId=props.data.userId;
+  const appointment_id=props.data._id
+  axios.post('/user/cancelbooking',{reason,paymentAmount,paymentId,mechanic_id,userId,appointment_id})
 }
 
  return (

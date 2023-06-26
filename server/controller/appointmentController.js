@@ -7,6 +7,7 @@ import userModel from '../model/userModel.js';
 import { sendInvoice } from '../helper/mail.js';
 import mechanicModel from '../model/mechanicModel.js';
 import Razorpay from 'razorpay';
+import cancelbookingModel from '../model/bookingCancelModel.js';
 
 const instance = new Razorpay({
   key_id: process.env.KEY_ID,
@@ -292,7 +293,7 @@ const webhookHandler = async (req, res) => {
             date: new Date(),
             customerName: result.name,
             amount: req.body.mechanic.minAmount,
-            id: `BA-${result._id}`,
+            id: req.body.payment.razorpay_payment_id,
             totalAmount: req.body.mechanic.minAmount,
           }
           createInvoice(invoice,`/home/jithun/Desktop/AutoAid/server/helper/invoice/invoice${num}.pdf`)
@@ -442,8 +443,11 @@ export const newBooking = async (req, res) => {
   }
 };
 
-export const bookingCancel=(req,res)=>{
-  
+export const cancelBooking=async(req,res)=>{
+  console.log(req.body);
+  const {reason,paymentId,paymentAmount,mechanic_id,userId,appointment_id}=req.body
+//  await cancelbookingModel.create({reason,paymentId,paymentAmount,mechanic_id,userId,appointment_id})
+
 }
 
 
