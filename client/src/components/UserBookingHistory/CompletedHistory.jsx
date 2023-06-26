@@ -19,6 +19,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import BookingStatus from '../BookingStatus/BookingStatus';
 import UserBookingHistory from './UserBookingHistory';
+import ViewDetails from './ViewDetails';
 
 // Custom styled component for the TextField label
 const WhiteLabel = styled('label')({
@@ -54,7 +55,8 @@ function CompletedHistory() {
     const [details, setdetails] = useState([])
     const {user} = useSelector(state => state)
     const id=user.details._id;
-    const [openDetails, setopenDetails] = useState(false)
+    const [viewDetails, setviewDetails] = useState(false)
+    const [data, setdata] = useState('')
   useEffect(() => {
    axios.get(`/user/bookinghistory`,{params: {
     search: search,
@@ -74,6 +76,7 @@ function CompletedHistory() {
 
   return (
     openHistory ? <UserBookingHistory/> :
+    viewDetails ? <ViewDetails data={{...data}}/> :
       <>
   <div className='dashboard-background'>
   <Box
@@ -113,6 +116,8 @@ function CompletedHistory() {
             <StyledTableCell align="center">complaint&nbsp;</StyledTableCell>
             <StyledTableCell align="center">Mechanic mobile&nbsp;</StyledTableCell>
             <StyledTableCell align="center">Status&nbsp;</StyledTableCell>
+            <StyledTableCell align="center">Action&nbsp;</StyledTableCell>
+
 
           </TableRow>
         </TableHead>
@@ -128,6 +133,8 @@ function CompletedHistory() {
               <StyledTableCell align="center">{row.complaint}</StyledTableCell>
               <StyledTableCell align="center">{row.mechanic_mobile}</StyledTableCell>
               <StyledTableCell align="center">{row.status}</StyledTableCell>
+              <StyledTableCell align="center"><Button onClick={()=>{setviewDetails(true); setdata(row) }}>View Details</Button></StyledTableCell>
+
             </StyledTableRow>
           ))}
         </TableBody>

@@ -9,6 +9,10 @@ const appointmentSchema=mongoose.Schema({
         type:String,
         required:true
     },
+    amount:{
+        type:Number,
+    },
+    
     mechanic_mobile:{
         type:Number,
         required:true
@@ -53,6 +57,10 @@ const appointmentSchema=mongoose.Schema({
     status:{
         type:String,
         default:'waiting for confirmation'
+    },
+    cancelStatus:{
+        type:String,
+        default:'none'
     }
 })
 

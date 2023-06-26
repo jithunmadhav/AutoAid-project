@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import UserBookingHistory from '../UserBookingHistory/UserBookingHistory'
+import { Button } from '@mui/material';
 import './BookingStatus.css'
 import {
   MDBCard,
@@ -10,6 +11,18 @@ import {
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
+import {
+  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
+  MDBTextArea,
+  MDBInput,
+} from 'mdb-react-ui-kit';
 function BookingStatus(props) {
   const [status, setStatus] = useState(null); // Initial status is 0, indicating the first step
 const [closeStatus, setcloseStatus] = useState(false)
@@ -24,7 +37,14 @@ const [closeStatus, setcloseStatus] = useState(false)
     setStatus(3);
   }
 }, []); // Empty dependency array to run the effect only once
-
+const [varyingModal, setVaryingModal] = useState(false);
+const [reason, setreason] = useState('');
+const [paymentId, setpaymentId] = useState('');
+const [paymentAmount, setpaymentAmount] = useState('')
+const handleSubmit=(e)=>{
+  e.preventDefault()
+console.log("*****",reason,paymentAmount,paymentId);
+}
 
  return (
   closeStatus ? <UserBookingHistory/> :
@@ -51,13 +71,14 @@ const [closeStatus, setcloseStatus] = useState(false)
                          {props.data.mechanic_name}
                        </span>
                      </MDBTypography>
-                   </div>
-                   <div className="text-end">
                      <p className="mb-0">
                     Technician Mobile :<span>{props.data.mechanic_mobile}</span>                     </p>
                      <p className="mb-0">
                        call and confirm for speedy service
                      </p>
+                   </div>
+                   <div className="text-end">
+                    <Button  onClick={() => {setVaryingModal(!varyingModal);}} variant='outlined' color='error'>Cancel booking</Button>
                    </div>
                  </div>
                  <ul
@@ -135,6 +156,57 @@ const [closeStatus, setcloseStatus] = useState(false)
            </MDBCol>
          </MDBRow>
        </MDBContainer>
+
+      <MDBModal show={varyingModal} setShow={setVaryingModal} tabIndex='-1'>
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Cancel booking</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={() => setVaryingModal(!varyingModal)}></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+              <form onSubmit={handleSubmit}>
+                <div className='mb-3'>
+                  {varyingModal && (
+                    <MDBTextArea
+                    placeholder='Reason to cancel booking'
+                      value={reason}
+                      onChange={(e)=>{setreason(e.target.value)}}
+                       
+                    />
+                  )}
+                </div>
+                <div className='mb-3'>
+                  {varyingModal && (
+                    <MDBInput
+                    placeholder='Enter payment Id'
+                      value={paymentId}
+                      onChange={(e)=>{setpaymentId(e.target.value)}}
+                      
+                      
+                    />
+                  )}
+                </div>
+                <div className='mb-3'>
+                  {varyingModal && (
+                    <MDBInput
+                    placeholder='Enter amount'
+                      value={paymentAmount}
+                      onChange={(e)=>{setpaymentAmount(e.target.value)}}
+                      type='number'
+                      
+                    />
+                  )}
+                </div>
+                <div style={{ display:'flex',justifyContent:'space-evenly',marginTop:'80px' }}>
+                  <Button variant='outlined' color='error'>close</Button>
+                  <Button type='submit' variant='outlined' color='success'>confirm</Button>
+                </div>
+              </form>
+            </MDBModalBody>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
      </section>
    </>
  );

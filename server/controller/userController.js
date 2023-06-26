@@ -5,6 +5,7 @@ import { sentOTP } from '../helper/mail.js';
 import { mobileOTP } from '../helper/twilioOT.js';
 import { randomNumber } from '../helper/randomNum.js';
 import { mobileOTP2 } from '../helper/vonageOTP.js';
+import mechanicModel from '../model/mechanicModel.js';
  
     export const userSignup=async(req,res)=>{
         try {
@@ -170,7 +171,15 @@ import { mobileOTP2 } from '../helper/vonageOTP.js';
           console.log(error);
         }
       }
-
+    export const rating=async(req,res)=>{
+        const {rating,mechanic_id} =req.body;
+        console.log(req.body);
+      let count=  await mechanicModel.findOne({_id:mechanic_id},{ratingCount:1,rating:1})
+      const ratingCount=count.ratingCount;
+      const currRating=count.rating;
+      const newRating = Math.floor((rating + currRating) / (ratingCount + 1));
+      await mechanicModel.updateOne({_id:mechanic_id},{$set:{rating:parseInt(newRating)},$inc:{'ratingCount':1}})
+    }
 
     
     export const userLogout = (req, res) => {

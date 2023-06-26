@@ -12,7 +12,7 @@ function AppointmentSuccess() {
     setTimeout(() => {
       setShowBackdrop(false);
       setShowSuccessPage(true);
-    }, 2000);
+    }, 1500);
   }, []);
 
   return (

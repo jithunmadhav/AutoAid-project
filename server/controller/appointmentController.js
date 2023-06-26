@@ -71,6 +71,7 @@ const stripePayment = async (req, res) => {
       metadata: {
         mechanic_id: req.body.mechanic._id,
         mechanic_name:req.body.mechanic.name,
+        amount:req.body.mechanic.minAmount,
         mechanic_mobile:req.body.mechanic.mobile,
         minAmount:req.body.mechanic.minAmount,
         selectedService: req.body.mechanic.selectedService,
@@ -142,6 +143,7 @@ const webhookHandler = async (req, res) => {
         const appointmentData = {
           mechanic_id: customer.metadata.mechanic_id,
           mechanic_name:customer.metadata.mechanic_name,
+          amount:customer.metadata.amount,
           mechanic_mobile:customer.metadata.mechanic_mobile,
           selectedService: customer.metadata.selectedService,
           booking_type: customer.metadata.booking_type,
@@ -230,7 +232,6 @@ const webhookHandler = async (req, res) => {
  });
  }
  export const verifyPayment=async(req,res)=>{
-  console.log(req.body);
         let hamc =crypto.createHmac('sha256', process.env.KEY_SECRET)
         hamc.update(req.body.payment.razorpay_order_id+'|'+req.body.payment.razorpay_payment_id)
         hamc=hamc.digest('hex')
@@ -239,6 +240,7 @@ const webhookHandler = async (req, res) => {
           await appiontmentModel.create({
             mechanic_id:req.body.mechanic._id,
             mechanic_name:req.body.mechanic.name,
+            amount:parseInt(req.body.mechanic.minAmount),
             mechanic_mobile:req.body.mechanic.mobile,
             selectedService:req.body.mechanic.selectedService,
             coordinates:req.body.mechanic.coordinates,
@@ -440,7 +442,9 @@ export const newBooking = async (req, res) => {
   }
 };
 
-
+export const bookingCancel=(req,res)=>{
+  
+}
 
 
 

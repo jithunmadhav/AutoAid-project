@@ -44,6 +44,10 @@ const mechanicSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  ratingCount: {
+    type: Number,
+    default: 0,
+  },
   proof: {
     type: Object,
     required: true,
@@ -70,6 +74,6 @@ const mechanicSchema = mongoose.Schema({
   }
 });
 
-const mechanicModel = mongoose.model("mechanicDetails", mechanicSchema);
+const mechanicModel = mongoose.model("mechanic", mechanicSchema);
 
 export default mechanicModel;

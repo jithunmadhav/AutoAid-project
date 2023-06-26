@@ -45,87 +45,92 @@
 // };
 
 // export default RefundForm;
-import React, { useState } from "react";
-import "./sample.css";
+
+import React, { ChangeEvent, useState } from 'react';
+import { Button } from '@mui/material';
 import {
-  MDBCard,
-  MDBCardBody,
-  MDBCol,
-  MDBContainer,
-  MDBIcon,
-  MDBRow,
-  MDBTypography,
-} from "mdb-react-ui-kit";
+  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
+  MDBTextArea,
+  MDBInput,
+} from 'mdb-react-ui-kit';
 
-export default function OrderDetails6() {
-  const [status, setStatus] = useState(0); // Initial status is 0, indicating the first step
+export default function App() {
+  const [varyingState, setVaryingState] = useState('');
+  const [varyingModal, setVaryingModal] = useState(false);
+  const [varyingRecipient, setVaryingRecipient] = useState('');
+  const [varyingMessage, setVaryingMessage] = useState('');
 
-  const handleStatusChange = (newStatus) => {
-    setStatus(newStatus);
-  };
+  // const onChangeRecipient = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setVaryingRecipient(event.target.value);
+  // };
+
+  // const onChangeMessage = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  //   setVaryingMessage(event.target.value);
+  // };
 
   return (
-    <MDBContainer fluid className="vh-100 bg-primary">
-      <MDBRow className="vh-100 align-items-center">
-        <MDBCol md="8" className="mx-auto">
-          <MDBCard className="card-stepper text-black" style={{ borderRadius: "16px" }}>
-            <MDBCardBody className="p-5">
-              <div className="d-flex justify-content-between align-items-center mb-5">
-                <div>
-                  <MDBTypography tag="h5" className="mb-0">
-                    INVOICE <span className="text-primary font-weight-bold">#Y34XDHR</span>
-                  </MDBTypography>
-                </div>
-                <div className="text-end">
-                  <p className="mb-0">
-                    Expected Arrival <span>01/12/19</span>
-                  </p>
-                  <p className="mb-0">
-                    USPS <span className="font-weight-bold">234094567242423422898</span>
-                  </p>
-                </div>
-              </div>
-              <ul className="progressbar-2 d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
-                <li className={`step0 ${status >= 0 ? "active" : ""} text-center`} id="step1"></li>
-                <li className={`step0 ${status >= 1 ? "active" : ""} text-center`} id="step2"></li>
-                <li className={`step0 ${status >= 2 ? "active" : ""} text-center`} id="step3"></li>
-                <li className={`step0 ${status >= 3 ? "active" : ""} text-center`} id="step4"></li>
-              </ul>
+    <>
+    <button   onClick={() => {setVaryingModal(!varyingModal);}}>hello</button>
+     
+   
 
-              <div className="d-flex justify-content-between flex-wrap">
-                <div className="d-flex align-items-center mb-4 mb-md-0">
-                  <MDBIcon fas icon="clipboard-list me-4" size="3x" />
-                  <div>
-                    <p className="fw-bold mb-1">Order</p>
-                    <p className="fw-bold mb-0">Processed</p>
-                  </div>
+      <MDBModal show={varyingModal} setShow={setVaryingModal} tabIndex='-1'>
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Cancel booking</MDBModalTitle>
+              <MDBBtn className='btn-close' color='none' onClick={() => setVaryingModal(!varyingModal)}></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+              <form>
+                <div className='mb-3'>
+                  {varyingModal && (
+                    <MDBTextArea
+                    placeholder='Reason to cancel booking'
+                      value={varyingMessage}
+                      onChange={(e)=>{setVaryingMessage(e.target.value)}}
+                       
+                    />
+                  )}
                 </div>
-                <div className="d-flex align-items-center mb-4 mb-md-0">
-                  <MDBIcon fas icon="box-open me-4" size="3x" />
-                  <div>
-                    <p className="fw-bold mb-1">Order</p>
-                    <p className="fw-bold mb-0">Shipped</p>
-                  </div>
+                <div className='mb-3'>
+                  {varyingModal && (
+                    <MDBInput
+                    placeholder='Enter payment Id'
+                      value={varyingRecipient}
+                      onChange={(e)=>{setVaryingRecipient(e.target.value)}}
+                      
+                      
+                    />
+                  )}
                 </div>
-                <div className="d-flex align-items-center mb-4 mb-md-0">
-                  <MDBIcon fas icon="shipping-fast me-4" size="3x" />
-                  <div>
-                    <p className="fw-bold mb-1">Order</p>
-                    <p className="fw-bold mb-0">En Route</p>
-                  </div>
+                <div className='mb-3'>
+                  {varyingModal && (
+                    <MDBInput
+                    placeholder='Enter amount'
+                      value={varyingRecipient}
+                      onChange={(e)=>{setVaryingRecipient(e.target.value)}}
+                      
+                      
+                    />
+                  )}
                 </div>
-                <div className="d-flex align-items-center">
-                  <MDBIcon fas icon="home me-4" size="3x" />
-                  <div>
-                    <p className="fw-bold mb-1">Order</p>
-                    <p className="fw-bold mb-0">Arrived</p>
-                  </div>
+                <div style={{ display:'flex',justifyContent:'space-evenly',marginTop:'80px' }}>
+                  <Button variant='outlined' color='error'>close</Button>
+                  <Button variant='outlined' color='success'>confirm</Button>
                 </div>
-              </div>
-            </MDBCardBody>
-          </MDBCard>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+              </form>
+            </MDBModalBody>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+    </>
   );
 }
