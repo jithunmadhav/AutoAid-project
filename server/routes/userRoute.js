@@ -1,5 +1,5 @@
 import  express  from 'express';
-import { bookingHistory, emergencySchedule, generateRazorpay, stripePayment, verifyPayment, webhookHandler }  from '../controller/appointmentController.js';
+import {  completedBookingHistory, emergencySchedule, generateRazorpay, newBooking, stripePayment, verifyPayment, webhookHandler }  from '../controller/appointmentController.js';
 import { refund } from '../controller/paymentController.js';
 import { addVehicle, allVehicle, deleteVehicle, editVehicle, editVehicleDetails } from '../controller/serviceController.js';
 import { forgotPassword, resendOtp, resetpassword, userLogin, userLogout, userSignup, VerifyResetOtp, verifyUserSignup } from '../controller/userController.js';
@@ -18,5 +18,5 @@ router.post('/stripepayment',stripePayment)
 router.post('/webhook',express.raw({ type: 'application/json' }), webhookHandler);
 router.post('/createOrder',generateRazorpay).post('/verifyPayment',verifyPayment)
 router.post('/refund',refund)
-router.get('/bookinghistory',bookingHistory)
+router.get('/bookinghistory',completedBookingHistory).get('/newbooking',newBooking)
 export default router                                  

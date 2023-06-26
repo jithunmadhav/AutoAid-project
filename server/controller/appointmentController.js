@@ -382,7 +382,7 @@ export const getEmergencyApp = async (req, res) => {
 };
 
 
-export const bookingHistory = async (req, res) => {
+export const completedBookingHistory = async (req, res) => {
   try {
     const { search, page } = req.query;
     const perPage = 8;
@@ -390,6 +390,36 @@ export const bookingHistory = async (req, res) => {
     const id = req.query.id;
     const query = {
       userId: id,
+      status:'completed',
+      username: new RegExp(search, 'i')
+    };
+    const totalAppointments = await appiontmentModel.countDocuments(query);
+    const totalPages = Math.ceil(totalAppointments / perPage);
+    const result = await appiontmentModel
+      .find({ ...query })
+      .skip((currentPage - 1) * perPage)
+      .limit(perPage)
+      .lean();
+    if (result) {
+      res.status(200).json({ err: false, result, totalPages });
+    } else {
+      res.status(404).json({ err: true });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ err: true, error });
+  }
+};
+
+export const newBooking = async (req, res) => {
+  try {
+    const { search, page } = req.query;
+    const perPage = 8;
+    const currentPage = parseInt(page) || 1;
+    const id = req.query.id;
+    const query = {
+      userId: id,
+      status: { $ne: 'completed' },
       username: new RegExp(search, 'i')
     };
     const totalAppointments = await appiontmentModel.countDocuments(query);

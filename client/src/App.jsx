@@ -92,6 +92,7 @@ function App() {
               <Route element={<Navigate to={'/user/login'} />} path={'/location'} />
               <Route element={<Navigate to={'/user/login'} />} path='/addvehicle'/>
               <Route element={<Navigate to={'/user/login'} />} path='/success'/>
+              <Route element={<Navigate to={'/user/login'} />} path='/user/booking'/>
 
             </>
           )}
@@ -108,7 +109,7 @@ function App() {
               <Route element={<StripeSample/>} path='/stripe'/>
               <Route element={<UserSchedulePage/>} path={'/user/schedule'}/>
               <Route element={<AppointmentSuccess/>} path={'/success'}/>
-              <Route element={<UserBookingHistoryPage/>} path={'/user/history'}/>
+              <Route element={<UserBookingHistoryPage/>} path={'/user/booking'}/>
             </>
           )}
 

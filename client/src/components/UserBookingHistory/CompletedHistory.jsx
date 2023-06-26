@@ -18,7 +18,7 @@ import TextField from '@mui/material/TextField';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import BookingStatus from '../BookingStatus/BookingStatus';
-import CompletedHistory from './CompletedHistory';
+import UserBookingHistory from './UserBookingHistory';
 
 // Custom styled component for the TextField label
 const WhiteLabel = styled('label')({
@@ -45,7 +45,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function UserBookingHistory() {
+function CompletedHistory() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState('');
@@ -56,7 +56,7 @@ function UserBookingHistory() {
     const id=user.details._id;
     const [openDetails, setopenDetails] = useState(false)
   useEffect(() => {
-   axios.get(`/user/newbooking`,{params: {
+   axios.get(`/user/bookinghistory`,{params: {
     search: search,
     page: currentPage,
     id
@@ -73,8 +73,7 @@ function UserBookingHistory() {
 
 
   return (
-    openDetails ? <BookingStatus data={{...details}} /> :
-    openHistory ? <CompletedHistory/> :
+    openHistory ? <UserBookingHistory/> :
       <>
   <div className='dashboard-background'>
   <Box
@@ -100,7 +99,7 @@ function UserBookingHistory() {
   variant="standard"
 />   
         </Box>
-    <Button className='serviceschedule-btn' style={{ position:'absolute' }} onClick={()=>setopenHistory(true)}  variant='outlined' color='secondary' >View History</Button>
+    <Button className='serviceschedule-btn' style={{ position:'absolute' }} onClick={()=>setopenHistory(true)}  variant='outlined' color='secondary' >Back</Button>
    
         <div className='table-div'>
         {result.length!==0 ?
@@ -114,7 +113,6 @@ function UserBookingHistory() {
             <StyledTableCell align="center">complaint&nbsp;</StyledTableCell>
             <StyledTableCell align="center">Mechanic mobile&nbsp;</StyledTableCell>
             <StyledTableCell align="center">Status&nbsp;</StyledTableCell>
-            <StyledTableCell align="center">Action&nbsp;</StyledTableCell>
 
           </TableRow>
         </TableHead>
@@ -130,15 +128,13 @@ function UserBookingHistory() {
               <StyledTableCell align="center">{row.complaint}</StyledTableCell>
               <StyledTableCell align="center">{row.mechanic_mobile}</StyledTableCell>
               <StyledTableCell align="center">{row.status}</StyledTableCell>
-              <StyledTableCell align="center"><Button onClick={()=>{setopenDetails(true); setdetails(row)}}>View status</Button></StyledTableCell>
-
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer> :
     <Typography variant="h6" style={{ color:'white' }} component="h6" textAlign='center'>
-    No new bookings.
+    No data found.
   </Typography>        }
         </div>
         <Stack spacing={2} sx={{position: 'absolute', bottom: 50, left: '50%', transform: 'translateX(-50%)'}}>
@@ -156,4 +152,4 @@ function UserBookingHistory() {
   )
 }
 
-export default UserBookingHistory
+export default CompletedHistory
