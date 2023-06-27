@@ -444,12 +444,26 @@ export const newBooking = async (req, res) => {
 };
 
 export const cancelBooking=async(req,res)=>{
-  console.log(req.body);
+try {
   const {reason,paymentId,paymentAmount,mechanic_id,userId,appointment_id}=req.body
-//  await cancelbookingModel.create({reason,paymentId,paymentAmount,mechanic_id,userId,appointment_id})
+ await cancelbookingModel.create({reason,paymentId,paymentAmount,mechanic_id,userId,appointment_id})
+ await appiontmentModel.updateOne({_id:appointment_id},{$set:{cancelStatus:'requested'}})
+ res.status(200).json({err:false})
 
+} catch (error) {
+  res.status(500).json({err:true,error})
+}
 }
 
+export const cancelRequest=async(req,res)=>{
+try {
+  const appointment_id=req.query.appointment_id
+  const result=await cancelbookingModel.findOne({appointment_id:appointment_id})
+  res.status(200).json({err:false,result})
+} catch (error) {
+  res.status(500).json({err:true,error})
+}
+}
 
 
 

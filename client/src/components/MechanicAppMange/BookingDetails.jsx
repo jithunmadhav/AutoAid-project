@@ -10,6 +10,15 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Button } from '@mui/material';
 function BookingDetails(props) {
+  const [cancelData, setcancelData] = useState('')
+  if(props.data.cancelStatus==='requested'){
+    axios.get('/mechanic/cancelrequest',{params:{appointment_id:props.data._id}}).then((response)=>{
+      if(!response.data.err){
+        setcancelData(response.data.result)
+      }
+    })
+  }
+  console.log(props.data);
     const [showSchedule, setshowSchedule] = useState(false)
     const [showEmergency, setshowEmergency] = useState(false)
     const [details, setdetails] = useState(props.data)
@@ -51,6 +60,7 @@ function BookingDetails(props) {
           })
         }
         }
+     
 
   return (
     showSchedule? <MechanicAppManage/>:
@@ -85,9 +95,35 @@ function BookingDetails(props) {
    <p className='bookingdetials-para'>Scheduled time : {details.selectedTime}</p> </> :''
     }
         </div>
+          {props.data.cancelStatus==='requested'? 
+             <div className='bookingdetials-inner-right'>
+             <h4 className='bookingdetials-heading' style={{ textAlign:'left' }}>Booking cancel request :</h4><br/>
+             <p>Reason : {cancelData.reason}</p>
+             <div style={{ display:'flex' }}>
+             <>
+             <FormControl  sx={{ m: 1, minWidth: 200 }} size="small">
+           <InputLabel  id="demo-select-small-label">select</InputLabel>
+           <Select 
+             labelId="demo-select-small-label"
+             id="demo-select-small"
+             value={status}
+             label="Age"
+             onChange={handleChange}
+           >
+             
+             <MenuItem value={'reject'}>Reject</MenuItem>
+             <MenuItem value={'approve'}>Approve</MenuItem>
+           </Select>
+         </FormControl>
+         <Button   className='status-save-button' variant='outlined' color='secondary'>Save</Button>
+         </>
+         </div>
+             </div>
+        :
         <div className='bookingdetials-inner-right'>
         <h4 className='bookingdetials-heading' style={{ textAlign:'left' }}>Status updation :</h4>
         <div style={{ display:'flex' }}>
+        <>
         <FormControl  sx={{ m: 1, minWidth: 200 }} size="small">
       <InputLabel  id="demo-select-small-label">status</InputLabel>
       <Select 
@@ -104,8 +140,10 @@ function BookingDetails(props) {
       </Select>
     </FormControl>
     <Button onClick={()=>statusupdate()} className='status-save-button' variant='outlined' color='secondary'>Save</Button>
+    </>
     </div>
         </div>
+  }
 
     </div>
     <Backdrop

@@ -20,7 +20,7 @@ const cancelBookingSchema=mongoose.Schema({
         type:String,
         required:true
     },
-    appoinment_id:{
+    appointment_id:{
         type:String,
         required:true
     },

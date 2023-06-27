@@ -38,8 +38,8 @@ const [closeStatus, setcloseStatus] = useState(false)
     setStatus(3);
   }
 }, []); // Empty dependency array to run the effect only once
-const [varyingModal, setVaryingModal] = useState(false);
 const [reason, setreason] = useState('');
+const [varyingModal, setVaryingModal] = useState(false);
 const [paymentId, setpaymentId] = useState('');
 const [paymentAmount, setpaymentAmount] = useState('')
 const handleSubmit=(e)=>{
@@ -47,7 +47,13 @@ const handleSubmit=(e)=>{
   const mechanic_id=props.data.mechanic_id;
   const userId=props.data.userId;
   const appointment_id=props.data._id
-  axios.post('/user/cancelbooking',{reason,paymentAmount,paymentId,mechanic_id,userId,appointment_id})
+  axios.post('/user/cancelbooking',{reason,paymentAmount,paymentId,mechanic_id,userId,appointment_id}).then((response)=>{
+    if(!response.data.err){
+    setcloseStatus(true)
+    }
+  }).catch((err)=>{
+    console.log(err);
+  })
 }
 
  return (
@@ -82,7 +88,10 @@ const handleSubmit=(e)=>{
                      </p>
                    </div>
                    <div className="text-end">
+                    {props.data.cancelStatus==='requested' ?
+                    <Button variant='outlined' color='error'>Cancel requested</Button> :
                     <Button  onClick={() => {setVaryingModal(!varyingModal);}} variant='outlined' color='error'>Cancel booking</Button>
+                  }
                    </div>
                  </div>
                  <ul
