@@ -90,6 +90,9 @@ const handleSubmit=(e)=>{
                    <div className="text-end">
                     {props.data.cancelStatus==='requested' ?
                     <Button variant='outlined' color='error'>Cancel requested</Button> :
+                    props.data.cancelStatus==='rejected' ?
+                    <Button variant='outlined' color='error'>Cancel request Rejected</Button> :
+
                     <Button  onClick={() => {setVaryingModal(!varyingModal);}} variant='outlined' color='error'>Cancel booking</Button>
                   }
                    </div>

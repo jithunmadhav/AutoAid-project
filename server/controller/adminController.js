@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import {approvedMail, rejectMail} from '../helper/mail.js' 
 import userModel from '../model/userModel.js'
+import appiontmentModel from "../model/appointmentModel.js"
 
 
    export const  adminLogin=async(req,res)=>{
@@ -210,4 +211,61 @@ import userModel from '../model/userModel.js'
           sameSite: 'none',
         }).json({ err: false, message: 'Logged out successfully' });
        }
+
+       export const monthlyRevenue=async(req,res)=>{
+       try {
+         
+        const monthlyDataArray= await appiontmentModel.aggregate([{$match:{status:'completed'}},{$group:{_id:{$month:"$selectedDate"}, sum:{$sum:"$amount"}}}])
+        let monthlyDataObject={}
+        monthlyDataArray.map(item=>{
+         monthlyDataObject[item._id]=item.sum
+       })
+       let monthlyData=[]
+        for(let i=1; i<=12; i++){
+         monthlyData[i-1]= monthlyDataObject[i] ?? 0
+        }
+       res.json({err:false,monthlyData})
+       } catch (error) {
+        res.status(500).json({err:true,error})
+       }
+       }
+
+       export const dashboardRevenue=async(req,res)=>{
+        try {
+            let total= await appiontmentModel.aggregate([{$match:{status:'completed'}},{$group:{_id:null,total:{$sum:"$amount"}}}])
+            let completedAppointments=await appiontmentModel.countDocuments({status:'completed'})
+            let pendingAppointments=await appiontmentModel.countDocuments({ status: { $ne: 'completed' }})
+            const totalRevenue=total[0].total ?? 0;
+            res.status(200).json({err:false,totalRevenue,completedAppointments,pendingAppointments})
+        } catch (error) {
+            res.status(500).json({err:true,error})
+        }
+       }
+       export const reveueReport=async(req,res)=>{
+        try {
+            const { search, page } = req.query;
+            const perPage = 8;
+            const currentPage = parseInt(page) || 1;
+            const query = {
+              status:'completed',
+              username: new RegExp(search, 'i')
+            };
+            const totalAppointments = await appiontmentModel.countDocuments(query);
+            const totalPages = Math.ceil(totalAppointments / perPage);
+            const result = await appiontmentModel
+              .find({ ...query })
+              .skip((currentPage - 1) * perPage)
+              .limit(perPage)
+              .lean();
+            if (result) {
+              res.status(200).json({ err: false, result, totalPages });
+            } else {
+              res.status(404).json({ err: true });
+            }
+          } catch (error) {
+            console.log(error);
+            res.status(500).json({ err: true, error });
+          }
+       }
       
+   

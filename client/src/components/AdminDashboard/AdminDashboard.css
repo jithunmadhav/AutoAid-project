@@ -14,3 +14,15 @@
     background: #c1bdb457;
     height: 100vh
   }
+  .graph-heading{
+    font-family: 'ui-serif';
+    position: absolute;
+    left: 12%;
+    top: 42%;
+
+  }
+  .revenue-report-button{
+    position: absolute !important;
+    right: 12%;
+    top: 42%;
+  }

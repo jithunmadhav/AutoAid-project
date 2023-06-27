@@ -131,7 +131,7 @@ const webhookHandler = async (req, res) => {
 
   try {
     let event = stripe.webhooks.constructEvent(payloadString, header, webhookSecret);
-    
+    console.log(event);
     
     switch (event.type) {
       case 'checkout.session.completed':

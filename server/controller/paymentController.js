@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import stripe from 'stripe';
 import schema from '../helper/joiValidation.js';
 import { randomNumber } from '../helper/randomNum.js';
 import paymentModel from '../model/paymentModel.js';
@@ -106,13 +107,22 @@ export const adminVerifyPayment=async(req,res)=>{
 }
 
 export const refund=async(req,res)=>{
+  const stripeInstance= stripe(process.env.STRIPE_SECRET_KEY);
   const { paymentId, refundAmount } = req.body;
 
   try {
-    const refund = await instance.payments.refund(paymentId, {
-      amount: refundAmount,
-    });
-     return ({success:true,refund})
+    stripeInstance.refunds.create(
+      {
+        payment_intent: 'PAYMENT_INTENT_ID',
+      },
+      function(err, refund) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log(refund);
+        }
+      }
+    );
   } catch (error) {
     return ({success:false})
     }
