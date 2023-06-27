@@ -131,8 +131,9 @@ function UserBookingHistory() {
               <StyledTableCell align="center">{row.mechanic_mobile}</StyledTableCell>
               <StyledTableCell align="center">{row.status}</StyledTableCell>
               <StyledTableCell align="center">
-                {row.status===''}
+                {row.status==='cancelled' ? "" :
                 <Button onClick={()=>{setopenDetails(true); setdetails(row)}}>View status</Button>
+                }
                 </StyledTableCell>
 
             </StyledTableRow>

@@ -130,7 +130,11 @@ function MechanicAppManage() {
               <StyledTableCell align="center">{row.complaint}</StyledTableCell>
               <StyledTableCell align="center">{new Date(row.selectedDate).toLocaleDateString()}</StyledTableCell>
               <StyledTableCell align="center">{row.status}</StyledTableCell>
-              <StyledTableCell align="center"><Button onClick={()=>{setopenDetails(true); setdetails(row)}}>View Details</Button></StyledTableCell>
+              <StyledTableCell align="center">
+                {row.cancelStatus==='cancelled' ? '':
+                <Button onClick={()=>{setopenDetails(true); setdetails(row)}}>View Details</Button>
+                }
+                </StyledTableCell>
 
             </StyledTableRow>
           ))}

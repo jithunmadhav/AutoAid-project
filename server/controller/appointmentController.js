@@ -467,28 +467,32 @@ try {
 
 export const cancelBookingMechanic=async(req,res)=>{
 try {
-  console.log(req.body);
-  const {paymentId,paymentAmount,mechanic_id,appointment_id}=req.body;
-  const refund = await instance.payments.refund(paymentId, {
-    amount: paymentAmount,
-  });
-  console.log(refund);
-  if(refund.status=='processed'){
-   const appointment= await appiontmentModel.findOne({_id:appointment_id})
-   const selectedDate=new Date(appointment.selectedDate).toLocaleDateString()
-   const selectedTime=appointment.selectedTime
-   const timeslot = await mechanicModel.findOne({
-    _id: mechanic_id},{booked:1});
-    const currDate=timeslot.booked.find(e=>e.currDate==selectedDate)
-    const updatedSelectedTime = currDate.selectedTime.filter((time) => time.value !== selectedTime);
-    await mechanicModel .updateOne(
-      { _id:mechanic_id, 'booked.currDate':selectedDate},
-      { $set: { 'booked.$.selectedTime': updatedSelectedTime } ,$inc:{'wallet':-parseInt(paymentAmount)} }
-    )  
-    await appiontmentModel.updateOne({_id:appointment_id},{$set:{cancelStatus:'cancelled',status:'cancelled'}})
+  const {paymentId,paymentAmount,mechanic_id,appointment_id,status}=req.body;
+  if(status=='reject'){
+    await appiontmentModel.updateOne({_id:appointment_id},{$set:{cancelStatus:'rejected'}})
     res.status(200).json({err:false})
   }else{
-    res.status(404).json({err:true})
+    const refund = await instance.payments.refund(paymentId, {
+      amount: paymentAmount,
+    });
+    console.log(refund);
+    if(refund.status=='processed'){
+     const appointment= await appiontmentModel.findOne({_id:appointment_id})
+     const selectedDate=new Date(appointment.selectedDate).toLocaleDateString()
+     const selectedTime=appointment.selectedTime
+     const timeslot = await mechanicModel.findOne({
+      _id: mechanic_id},{booked:1});
+      const currDate=timeslot.booked.find(e=>e.currDate==selectedDate)
+      const updatedSelectedTime = currDate.selectedTime.filter((time) => time.value !== selectedTime);
+      await mechanicModel .updateOne(
+        { _id:mechanic_id, 'booked.currDate':selectedDate},
+        { $set: { 'booked.$.selectedTime': updatedSelectedTime } ,$inc:{'wallet':-parseInt(paymentAmount)} }
+      )  
+      await appiontmentModel.updateOne({_id:appointment_id},{$set:{cancelStatus:'cancelled',status:'cancelled'}})
+      res.status(200).json({err:false})
+    }else{
+      res.status(404).json({err:true})
+    }
   }
 } catch (error) {
   res.status(500).json({err:true,error,message:'something went wrong'})
