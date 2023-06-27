@@ -177,7 +177,6 @@ export const mechanicLogin=async(req,res)=>{
       });
     
       if (existingDate) {
-        console.log("Exci :",existingDate);
         const result = existingDate.scheduledDate.find((e) => e.currDate === currDate);
         const existingDateArray = result.selectedTime.map((time) => time.value);
         const newTimeArray = selectedTime.filter((time) => !existingDateArray.includes(time.value));

@@ -112,9 +112,8 @@ export const refund=async(req,res)=>{
     const refund = await instance.payments.refund(paymentId, {
       amount: refundAmount,
     });
-
-    res.status(200).json({ success: true, refund });
+     return ({success:true,refund})
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
+    return ({success:false})
+    }
 }

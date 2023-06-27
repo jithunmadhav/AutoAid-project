@@ -18,7 +18,6 @@ function BookingDetails(props) {
       }
     })
   }
-  console.log(props.data);
     const [showSchedule, setshowSchedule] = useState(false)
     const [showEmergency, setshowEmergency] = useState(false)
     const [details, setdetails] = useState(props.data)
@@ -44,7 +43,7 @@ function BookingDetails(props) {
         axios.get(`/mechanic/customerDetails/${userId}`).then((response)=>{
             setuser(response.data.result)
         })
-        },[])
+        },)
         
         const statusupdate=()=>{
           const id=details._id;
@@ -59,6 +58,19 @@ function BookingDetails(props) {
               }
           })
         }
+        }
+        const cancelBooking=()=>{
+          if(status.trim()){
+            axios.post('/mechanic/cancelbooking',{...cancelData,status}).then((response)=>{
+                if(!response.data.err){
+                    handleOpen()
+                    setTimeout(() => {
+                        handleClose()
+                        details.type? setshowSchedule(true):setshowEmergency(true);
+                    }, 1500);
+                }
+            })
+          }
         }
      
 
@@ -111,11 +123,11 @@ function BookingDetails(props) {
              onChange={handleChange}
            >
              
-             <MenuItem value={'reject'}>Reject</MenuItem>
              <MenuItem value={'approve'}>Approve</MenuItem>
+             <MenuItem value={'reject'}>Reject</MenuItem>
            </Select>
          </FormControl>
-         <Button   className='status-save-button' variant='outlined' color='secondary'>Save</Button>
+         <Button  onClick={()=>cancelBooking()}  className='status-save-button' variant='outlined' color='secondary'>Save</Button>
          </>
          </div>
              </div>

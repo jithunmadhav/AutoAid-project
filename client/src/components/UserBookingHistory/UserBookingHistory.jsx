@@ -130,7 +130,10 @@ function UserBookingHistory() {
               <StyledTableCell align="center">{row.complaint}</StyledTableCell>
               <StyledTableCell align="center">{row.mechanic_mobile}</StyledTableCell>
               <StyledTableCell align="center">{row.status}</StyledTableCell>
-              <StyledTableCell align="center"><Button onClick={()=>{setopenDetails(true); setdetails(row)}}>View status</Button></StyledTableCell>
+              <StyledTableCell align="center">
+                {row.status===''}
+                <Button onClick={()=>{setopenDetails(true); setdetails(row)}}>View status</Button>
+                </StyledTableCell>
 
             </StyledTableRow>
           ))}
