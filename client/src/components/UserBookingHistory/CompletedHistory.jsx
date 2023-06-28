@@ -126,7 +126,7 @@ function CompletedHistory() {
           {result.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
-                {row.booking_type === 'scheduled booking' ? new Date(row.selectedDate).toLocaleDateString() : new Date().toLocaleDateString()}
+                {row.booking_type === 'Scheduled booking' ? new Date(row.selectedDate).toLocaleDateString() : new Date().toLocaleDateString()}
               </StyledTableCell>
               <StyledTableCell align="center">{row.mechanic_name}</StyledTableCell>
               <StyledTableCell align="center">{row.booking_type}</StyledTableCell>

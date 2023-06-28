@@ -1,5 +1,5 @@
 import express from 'express'
-import { adminLogin, adminLogout, allMechanics, appliedMechanics, approveApplication, banMechanic, bannedMechanics, bannedUsers, banUser, dashboardRevenue, getAllUsers, mechanics, monthlyRevenue, rejectApplication, reveueReport, unbanMechanic, unBanUser } from '../controller/adminController.js'
+import { adminLogin, adminLogout, allMechanics, appliedMechanics, approveApplication, banMechanic, bannedMechanics, bannedUsers, banUser, dashboardRevenue, filterDateRevenue, getAllUsers, mechanics, monthlyRevenue, rejectApplication, reveueReport, unbanMechanic, unBanUser } from '../controller/adminController.js'
 import { adminVerifyPayment, allPaymentRequest, allPendingPayment, allSuccessPayment, createPayment } from '../controller/paymentController.js'
 import { addServices, allServices, deleteService } from '../controller/serviceController.js'
 import upload from '../helper/multer.js'
@@ -21,6 +21,7 @@ router.get('/paymentrequest',allPendingPayment).get('/successpayment',allSuccess
 router.post('/createpayment',createPayment).post('/verifyPayment',adminVerifyPayment)
 router.delete('/deleteservice/:id',deleteService)
 router.get('/monthlyrevenue',monthlyRevenue).get('/dashboardRevenue',dashboardRevenue).get('/revenuereport',reveueReport)
+router.post('/filterdaterevenue',filterDateRevenue)
 router.get('/allmechanics/:service',mechanics)
 
 

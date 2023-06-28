@@ -268,4 +268,14 @@ import appiontmentModel from "../model/appointmentModel.js"
           }
        }
       
+       export const filterDateRevenue=async(req,res)=>{
+        try {
+            let result=  await appiontmentModel.find({selectedDate:{$gte:req.body.date1,$lt:req.body.date2}}).lean()
+            let filter=result.filter(e=>e.status=='completed')
+            console.log(filter);
+            res.status(200).json({err:false,filter})
+        } catch (error) {
+            res.status(500).json({err:true,error})
+        }
+       }
    

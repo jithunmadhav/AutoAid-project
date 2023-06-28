@@ -26,3 +26,8 @@
     right: 12%;
     top: 42%;
   }
+  .date-filter{
+    position: absolute;
+    left: 5%;
+    top: 15%;
+  }

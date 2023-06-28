@@ -16,11 +16,12 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import AdminDashboard from './AdminDashboard';
 
 
 // Custom styled component for the TextField label
 const WhiteLabel = styled('label')({
-  color: 'white',
+  color: 'black',
 });
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -44,10 +45,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function CompletedHistory() {
+    const [date1, setdate1] = useState('')
+    const [date2, setdate2] = useState('')
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState('');
-    const [openHistory, setopenHistory] = useState(false)
+    const [back, setback] = useState(false)
     const [result, setresult] = useState([])
   useEffect(() => {
    axios.get(`/admin/revenuereport`,{params: {
@@ -64,17 +67,34 @@ function CompletedHistory() {
   const handlePageChange = (event, page) => {
     setCurrentPage(page);
   };
-
+ const handleFilter=()=>{
+      console.log(date1,date2);
+      axios.post('/admin/filterdaterevenue',{date1,date2}).then((response)=>{
+        if(!response.data.err){
+            setresult(response.data.filter)
+        }
+      }).catch((error)=>{
+        console.log(error);
+      })
+ }
 
   return (
+    back ? <AdminDashboard/> :
       <>
-  <div className='dashboard-background'>
+  <div >
+    <div className='date-filter'>
+     <Button style={{ color:'black' }}>From</Button>
+    <input name='date1' value={date1} onChange={(e)=>setdate1(e.target.value)} type="date" />
+    <Button  style={{ color:'black' }}>To</Button>
+    <input name='date2' value={date2} onChange={(e)=>setdate2(e.target.value)} type="date" />
+    <Button onClick={()=>handleFilter()} style={{ height:'38px',marginTop:'-4px' }} variant='outlined'>Filter</Button>
+    </div>
   <Box
           component="form"
           sx={{
             '& > :not(style)': { m: 1, width: '25ch' },
             position: 'absolute',
-            right: '22%',
+            right: '14%',
             top: '11%',
           }}
           noValidate
@@ -92,9 +112,9 @@ function CompletedHistory() {
   variant="standard"
 />   
         </Box>
-    <Button className='serviceschedule-btn' style={{ position:'absolute' }} onClick={()=>setopenHistory(true)}  variant='outlined' color='secondary' >Back</Button>
+    <Button className='serviceschedule-btn' style={{ position:'absolute' }} onClick={()=>setback(true)}  variant='outlined' color='secondary' >Back</Button>
    
-        <div className='table-div'>
+        <div  className='table-div'>
         {result.length!==0 ?
         <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -116,7 +136,7 @@ function CompletedHistory() {
           {result.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row">
-                {row.booking_type === 'scheduled booking' ? new Date(row.selectedDate).toLocaleDateString() : new Date().toLocaleDateString()}
+                {row.booking_type === 'Scheduled booking' ?new Date(row.selectedDate).toLocaleDateString() : new Date().toLocaleDateString()}
               </StyledTableCell>
               <StyledTableCell align="center">{row.mechanic_name}</StyledTableCell>
               <StyledTableCell align="center">{row.username}</StyledTableCell>
