@@ -7,14 +7,14 @@ import { verifyUser } from '../middleware/userAuth.js';
 const router=express.Router()
 router.post('/login',userLogin).get('/logout',userLogout)
 router.post('/signup',userSignup).post('/verifySignup',verifyUserSignup).post('/resendOtp',resendOtp)
-
-router.get('/auth',userCheckAuth)
-router.use(verifyUser)
 router.post('/forgotPassword',forgotPassword).post('/resetPassword',resetpassword).post('/verifyResetOtp',VerifyResetOtp)
+router.get('/auth',userCheckAuth)
+
+router.use(verifyUser)
+
 router.post('/addvehicle',addVehicle).get('/allvehicle/:id',allVehicle).patch('/deletevehicle',deleteVehicle)
 router.get('/vehicleDetails',editVehicleDetails).patch('/editvehicle',editVehicle)
 router.post('/appointment',emergencySchedule)
-
 router.post('/stripepayment',stripePayment)
 router.post('/webhook',express.raw({ type: 'application/json' }), webhookHandler);
 router.post('/createOrder',generateRazorpay).post('/verifyPayment',verifyPayment)
