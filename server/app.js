@@ -20,9 +20,9 @@ app.use(express.static(path.resolve() + "/public"));
 app.use(express.json());
 app.use(cookieparser());
 app.use(express.urlencoded({ extended: true }));
-app.use('/user', userRoute);
-app.use('/mechanic', mechanicRoute);
 app.use('/admin', adminRoute);
+app.use('/mechanic', mechanicRoute);
+app.use('/user', userRoute);
 
 app.listen(4000, () => {
   console.log("localhost running on http://localhost:4000");

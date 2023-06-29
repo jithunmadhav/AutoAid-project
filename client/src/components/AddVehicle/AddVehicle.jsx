@@ -21,6 +21,7 @@ function AddVehicle() {
 
   useEffect(() => {
     axios.get(`/user/allvehicle/${id}`).then((response) => {
+      console.log("@@@@@@",response.data);
       if (!response.data.err) {
         setVehicleResult(response.data.result[0].vehicle)
         dispatch({type:'refresh'})
