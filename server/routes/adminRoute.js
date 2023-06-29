@@ -1,13 +1,14 @@
 import express from 'express'
-import { adminLogin, adminLogout, allMechanics, appliedMechanics, approveApplication, banMechanic, bannedMechanics, bannedUsers, banUser, dashboardRevenue, filterDateRevenue, getAllUsers, mechanics, monthlyRevenue, rejectApplication, reveueReport, unbanMechanic, unBanUser } from '../controller/adminController.js'
+import { adminCheckAuth, adminLogin, adminLogout, allMechanics, appliedMechanics, approveApplication, banMechanic, bannedMechanics, bannedUsers, banUser, dashboardRevenue, filterDateRevenue, getAllUsers, mechanics, monthlyRevenue, rejectApplication, reveueReport, unbanMechanic, unBanUser } from '../controller/adminController.js'
 import { adminVerifyPayment, allPaymentRequest, allPendingPayment, allSuccessPayment, createPayment } from '../controller/paymentController.js'
 import { addServices, allServices, deleteService } from '../controller/serviceController.js'
 import upload from '../helper/multer.js'
-import { adminCheckAuth } from '../middleware/adminAuth.js'
+import { verifyAdmin } from '../middleware/adminAuth.js'
 const router=express.Router()
 
 router.get('/auth',adminCheckAuth)
 router.post('/login',adminLogin).get('/logout',adminLogout)
+router.use(verifyAdmin)
 router.get('/mechanics',allMechanics).get('/bannedmechnics',bannedMechanics)
 router.patch('/banmechanic',banMechanic).patch('/unbanmechanic',unbanMechanic)
 router.get('/applied',appliedMechanics)
