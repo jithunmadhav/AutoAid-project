@@ -10,7 +10,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function AddVehicle() {
   const location = useLocation()
-  console.log(location);
    const [mechanic, setmechanic] = useState(location.state)
   const { user, refresh } = useSelector(state => state)
   const id = user.details._id
@@ -24,9 +23,10 @@ function AddVehicle() {
     axios.get(`/user/allvehicle/${id}`).then((response) => {
       if (!response.data.err) {
         setVehicleResult(response.data.result[0].vehicle)
+        dispatch({type:'refresh'})
       }
     })
-  }, [id, refresh])
+  }, [id])
 
   const [openForm, setOpenForm] = useState(false)
   const [openEdit, setopenEdit] = useState(false)

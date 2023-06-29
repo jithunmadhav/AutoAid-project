@@ -39,17 +39,25 @@ function App() {
     axios.get('/admin/auth').then((response) => {
       console.log("ADMIN: ", response.data);
       dispatch({ type: 'admin', payload: { adminLog: response.data.logged, details: response.data.details } });
-    });
+    }).catch((error)=>{
+      console.log(error);
+    })
 
     axios.get('/user/auth/').then((response) => {
       console.log("USER:", response.data);
       dispatch({ type: 'user', payload: { login: response.data.logged, details: response.data.details } });
-    });
+    }).catch((error)=>{
+      console.log(error);
+    })
+
 
     axios.get('/mechanic/auth').then((response) => {
       console.log("MECHANICS:", response.data);
       dispatch({ type: 'mechanic', payload: { mechLog: response.data.logged, details: response.data.details } });
-    });
+    }).catch((error)=>{
+      console.log(error);
+    })
+
   }, [refresh, dispatch]);
   return (
     <div>
