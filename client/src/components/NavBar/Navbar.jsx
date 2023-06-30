@@ -36,7 +36,7 @@ function Navbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div  style={{ justifyContent:'flex-end' }}  className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
+          <div  style={{ justifyContent:'flex-end' }}  className={` nav-background collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
             <ul  className="navbar-nav ml-auto ">
               <li  className="nav-item">
                 <Link className="nav-link" to="/" onClick={()=>{closeNavbar();}}>

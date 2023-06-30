@@ -37,7 +37,7 @@ function UserLogin() {
         <div className="signup">
           <div className="signup-connect"></div>
           <div className="signup-classic">
-            <p className="errorMessage">{err}</p>
+            <p className="errorMessage-login">{err}</p>
             <form onSubmit={handleSubmit} className="form">
               <fieldset className="email">
                 <input

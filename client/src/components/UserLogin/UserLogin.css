@@ -154,7 +154,7 @@
 
 @media(max-width:700px) {
     .signup{
-        width: 360px;
+        width: 350px;
         height: 330px;
     }
     .signup-connect{
@@ -168,6 +168,19 @@
      .signup-classic {
        width: 101%;
        padding: 38px 50px;
+    }
+    .gray-background  {
+        background: linear-gradient(to right, #111111,#0e1136) !important;
+        height: 90vh;
+        animation: colorChange 10s ease-in-out infinite;
+      }
+      .errorMessage-login{
+        margin-top: -15px;
+        height: 19px;
+        text-align: center;
+        font-size: 14px;
+        font-family: monospace;
+        color: orangered;
     }
     
   }

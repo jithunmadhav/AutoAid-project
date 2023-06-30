@@ -4,16 +4,16 @@ height: 88px;
 }
 .Logo{
     height: 88px;
-    position: relative;
+    position: absolute;
     left: 50%;
     top: 41px;
 }
 @media(max-width:700px) {
    .Logo{
-   height: 36px;
-    position: relative;
-    left: 50%;
-    top: 10%;
+   height: 76px;
+    position: absolute;
+    left: 43%;
+    top: 4%;
    }
     
   }

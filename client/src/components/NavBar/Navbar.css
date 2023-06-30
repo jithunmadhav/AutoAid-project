@@ -46,3 +46,20 @@
     color: #888;
   }
   
+  @media(max-width:700px) {
+ 
+    .container{
+      margin-top: -56px;
+    }
+    .LogoName{
+      margin-left: 29px;
+      color: #f8f9fa;
+      margin-top: 5px;
+      font-size: 25px;
+      font-family: monospace;
+      font-weight: bolder;
+  }
+  .nav-background{
+    background: linear-gradient(to right, #111111,#0e1136) !important;
+  }
+  }

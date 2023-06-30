@@ -24,7 +24,14 @@
   height:70vh;
 }
 .Third-page{
-  height:45vh;
+  height:40vh;
+}
+.home-para{
+  margin: 20px;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 18px;
+  font-family: 'Merienda', cursive;
 }
 .home-quotes{
   margin-top: 230px;
@@ -80,7 +87,120 @@
     margin-top: 50px;
     font-family: 'Merienda', cursive;
   }
+ 
   .footer{
     height: 25vh;
     background-color: #000000e0;
+}
+
+
+@media (max-width: 991px) {
+  .background-img {
+    width: 150px;
+    left: 15%;
+  }
+
+  .quotesStyle {
+    top: 38%;
+    left: 10%;
+    font-size: 24px;
+    line-height: 40px;
+  }
+
+  .home-quotes {
+    margin-top: 150px;
+    font-size: 36px;
+  }
+
+  .animated-text {
+    top: 68%;
+    left: 7%;
+    font-size: 24px;
+    line-height: 40px;
+  }
+
+  .services {
+    padding-top: 15px;
+  }
+
+  .cards {
+    flex-wrap: wrap;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 50px;
+    gap: 20px;
+  }
+
+  .whyAutoAid {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .background {
+    flex-direction: column;
+    height: 370px;
+  }
+  .secondPage{
+    background: #f6ad55;
+    height:1390px;
+  }
+  .Third-page{
+    height:250px;
+  }
+  .background-img {
+    width: 85px;
+    left: 10%;
+    top: 18%;
+  }
+
+  .quotesStyle {
+    top: 15%;
+    left: 10%;
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  .home-quotes {
+    position: absolute;
+    right: 9%;
+    line-height: 130%;
+    top: -2%;
+    font-size: 20px;
+  }
+
+  .animated-text {
+    top: 38%;
+    left: 8%;
+    font-size: 23.4px;
+    line-height: 30px;
+  }
+
+  .services {
+    padding-top: 15px;
+  }
+
+  .cards {
+    margin-left: px;
+    margin-right: 25px;
+    margin-top: 30px;
+    gap: 10px;
+  }
+
+  .whyAutoAid {
+    font-size: 16px;
+  }
+  .home-para{
+    margin: 20px;
+    text-align: center;
+    font-size: 10px;
+    font-family: 'Merienda', cursive;
+  }
+  .card-size{
+    max-width: 10px;
+  }
+  .footer{
+    height: 15vh;
+    background-color: #000000e0;
+}
 }

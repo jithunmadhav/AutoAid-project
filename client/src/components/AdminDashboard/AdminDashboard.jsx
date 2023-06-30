@@ -24,6 +24,7 @@ function AdminDashboard() {
       console.log(error);
     })
     axios.get('/admin/dashboardRevenue').then((response)=>{
+      console.log(response.data);
        if(!response.data.err){
         settotalRevenue(response.data.totalRevenue)
         setcompletedApp(response.data.completedAppointments)
