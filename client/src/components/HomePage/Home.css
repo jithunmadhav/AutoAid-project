@@ -139,7 +139,7 @@
 @media (max-width: 600px) {
   .background {
     flex-direction: column;
-    height: 370px;
+    height: 390px;
   }
   .secondPage{
     background: #f6ad55;
