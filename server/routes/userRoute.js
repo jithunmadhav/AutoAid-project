@@ -1,4 +1,5 @@
 import  express  from 'express';
+import { mechanics } from '../controller/adminController.js';
 import {  cancelBooking, completedBookingHistory, emergencySchedule, generateRazorpay, newBooking, stripePayment, verifyPayment, webhookHandler }  from '../controller/appointmentController.js';
 import { refund } from '../controller/paymentController.js';
 import { addVehicle, allVehicle, deleteVehicle, editVehicle, editVehicleDetails } from '../controller/serviceController.js';
@@ -11,7 +12,7 @@ router.post('/forgotPassword',forgotPassword).post('/resetPassword',resetpasswor
 router.get('/auth',userCheckAuth)
 
 router.use(verifyUser)
-
+router.get('/allmechanics/:service',mechanics)
 router.post('/addvehicle',addVehicle).get('/allvehicle/:id',allVehicle).patch('/deletevehicle',deleteVehicle)
 router.get('/vehicleDetails',editVehicleDetails).patch('/editvehicle',editVehicle)
 router.post('/appointment',emergencySchedule)

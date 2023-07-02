@@ -68,7 +68,7 @@ function UserLogin() {
                 justifyContent: 'center',
                 fontFamily: 'monospace',
               }}
-              to="/user/signup"
+              to="/signup"
             >
               Signup
             </Link>

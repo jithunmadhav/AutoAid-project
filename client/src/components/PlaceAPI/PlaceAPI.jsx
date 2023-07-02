@@ -62,8 +62,9 @@ export default function PlaceAPI() {
       .addTo(map);
       
       map.on('load', () => {
-        Axios.get(`/admin/allmechanics/${service}`).then((response) => {
+        Axios.get(`/user/allmechanics/${service}`).then((response) => {
           const mechanics = response.data.mechanic;
+          console.log(mechanics);
           mechanics.forEach((mechanic) => {
             const location = mechanic.location;
 
@@ -106,7 +107,7 @@ export default function PlaceAPI() {
                 }
               });
           });
-        });
+        }).catch(err=>console.log(err))
       });
     }
   }, [latitude, longitude,service]);

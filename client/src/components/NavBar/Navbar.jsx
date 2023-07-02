@@ -49,15 +49,15 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/user/booking" onClick={closeNavbar}>
+                <Link className="nav-link" to="/booking" onClick={closeNavbar}>
                 Bookings
                 </Link>
               </li>
               <li className="nav-item">
-                {user.login ?(<Link className="nav-link" to="/user/profile" onClick={closeNavbar}>
+                {user.login ?(<Link className="nav-link" to="/profile" onClick={closeNavbar}>
                   {user.details.name}
                 </Link>)
-                :(<Link className="nav-link" to="/user/login" onClick={closeNavbar}>
+                :(<Link className="nav-link" to="/login" onClick={closeNavbar}>
                   Login / signup
                 </Link>) }
                 

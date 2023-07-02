@@ -24,8 +24,8 @@ const navigate=useNavigate()
     navigate('/error')
    })
   },[navigate,refresh])
-// const imgUrl='http://localhost:4000/uploads/' 
-const imgUrl=' http://192.168.0.73:4000/uploads/'
+const imgUrl='http://localhost:4000/uploads/' 
+// const imgUrl=' http://192.168.0.73:4000/uploads/'
 const openMap=(name)=>{
   navigate('/location', { state: { serviceName: name } });
 

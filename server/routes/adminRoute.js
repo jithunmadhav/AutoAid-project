@@ -23,7 +23,6 @@ router.post('/createpayment',createPayment).post('/verifyPayment',adminVerifyPay
 router.delete('/deleteservice/:id',deleteService)
 router.get('/monthlyrevenue',monthlyRevenue).get('/dashboardRevenue',dashboardRevenue).get('/revenuereport',reveueReport)
 router.post('/filterdaterevenue',filterDateRevenue)
-router.get('/allmechanics/:service',mechanics)
 
 
 export default router
