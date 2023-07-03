@@ -14,8 +14,10 @@ import {
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
+import ChatPage from '../../Chat/Chat';
 function BookingProfile(props) {
   const navigate=useNavigate()
+  const [openChat, setopenChat] = useState(false)
   const firstWord = props.data.location.split(' ')[0].trim();
   const [visible, setVisible] = useState(false)
   const [visibleSchedule, setVisibleSchedule] = useState(false)
@@ -39,6 +41,7 @@ function BookingProfile(props) {
  };
 
   return (
+    openChat ? <ChatPage data={{selectedName:props.data.name, mechanicName:'sarath',userName:'jithun'}}/> :
     <div className='profile-background'>
     <div className='Booking-innder-div'>
       <div className='Booking-inner-div2'>
@@ -53,7 +56,7 @@ function BookingProfile(props) {
           <Stack  spacing={1}>
                <Rating style={{ display:'flex',justifyContent:'center' }} name="size-small" defaultValue={props.data.rating} size="small" readOnly />
            </Stack>
-
+           <Button onClick={()=>setopenChat(true)} variant='outlined'>Chat with {props.data.name}</Button>
           </div>
         </div>
       </div>

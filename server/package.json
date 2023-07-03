@@ -12,8 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@vonage/server-sdk": "^3.5.1",
+    "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
+    "chat-engine": "^0.9.21",
     "cookie-parser": "^1.4.6",
     "cookieparser": "^0.1.0",
     "cors": "^2.8.5",

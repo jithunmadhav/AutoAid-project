@@ -64,7 +64,6 @@ export default function PlaceAPI() {
       map.on('load', () => {
         Axios.get(`/user/allmechanics/${service}`).then((response) => {
           const mechanics = response.data.mechanic;
-          console.log(mechanics);
           mechanics.forEach((mechanic) => {
             const location = mechanic.location;
 
@@ -81,6 +80,7 @@ export default function PlaceAPI() {
                 }
               )
               .then((geocodingResponse) => {
+                console.log(geocodingResponse);
                 const features = geocodingResponse.data.features;
                 if (features.length > 0) {
                   const coordinates = features[0].geometry.coordinates;
