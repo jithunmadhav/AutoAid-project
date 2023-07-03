@@ -1,7 +1,8 @@
 import  express  from 'express';
 import { mechanics } from '../controller/adminController.js';
 import {  cancelBooking, completedBookingHistory, emergencySchedule, generateRazorpay, newBooking, stripePayment, verifyPayment, webhookHandler }  from '../controller/appointmentController.js';
-import { createChannel } from '../controller/chatController.js';
+import { createChat, findChat, getMechanic, userChats } from '../controller/chatController.js';
+import { addMessage, getMessages } from '../controller/messageController.js';
 import { refund } from '../controller/paymentController.js';
 import { addVehicle, allVehicle, deleteVehicle, editVehicle, editVehicleDetails } from '../controller/serviceController.js';
 import { forgotPassword, rating, resendOtp, resetpassword, userCheckAuth, userLogin, userLogout, userSignup, VerifyResetOtp, verifyUserSignup } from '../controller/userController.js';
@@ -24,5 +25,11 @@ router.patch('/rating',rating)
 router.post('/refund',refund)
 router.post('/cancelbooking',cancelBooking)
 router.get('/bookinghistory',completedBookingHistory).get('/newbooking',newBooking)
-router.get('/channel',createChannel)
+
+router.post('/chat', createChat);
+router.get('/chat/:userId', userChats);
+router.get('/find/:firstId/:secondId', findChat);
+router.post('/message', addMessage);
+router.get('/message/:chatId', getMessages);
+router.get('/getmechanic/:id',getMechanic)
 export default router                                  

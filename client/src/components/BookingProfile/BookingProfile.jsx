@@ -14,8 +14,13 @@ import {
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
-import ChatPage from '../../Chat/Chat';
+import axios from '../../axios';
+import { useSelector } from 'react-redux';
+import ChatPage from '../../Pages/chat/ChatPage';
+
+
 function BookingProfile(props) {
+  const {user} = useSelector(state => state)
   const navigate=useNavigate()
   const [openChat, setopenChat] = useState(false)
   const firstWord = props.data.location.split(' ')[0].trim();
@@ -39,9 +44,21 @@ function BookingProfile(props) {
  const handleOpen = () => {
    setOpen(true);
  };
+ const createChat=()=>{
+  const senderId=user.details._id;
+  const receiverId=props.data._id;
+  axios.post('/user/chat',{senderId,receiverId}).then((response)=>{
+    console.log(response);
+    if(!response.data.err){
+      setopenChat(true)
+    }
+  }).catch(err=>{
+    console.log(err);
+  })
+ }
 
   return (
-    openChat ? <ChatPage data={{selectedName:props.data.name, mechanicName:'sarath',userName:'jithun'}}/> :
+    openChat ? <ChatPage/> :
     <div className='profile-background'>
     <div className='Booking-innder-div'>
       <div className='Booking-inner-div2'>
@@ -56,7 +73,7 @@ function BookingProfile(props) {
           <Stack  spacing={1}>
                <Rating style={{ display:'flex',justifyContent:'center' }} name="size-small" defaultValue={props.data.rating} size="small" readOnly />
            </Stack>
-           <Button onClick={()=>setopenChat(true)} variant='outlined'>Chat with {props.data.name}</Button>
+           <Button onClick={()=>createChat()} variant='outlined'>Chat with {props.data.name}</Button>
           </div>
         </div>
       </div>
