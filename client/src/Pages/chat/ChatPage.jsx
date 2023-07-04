@@ -5,7 +5,8 @@ import './ChatPage.css'
 import ChatBox from '../../components/ChatBox/ChatBox';
 import Conversation from '../../components/Conversation/Conversation';
 
-function ChatPage() {
+function ChatPage({data}) {
+  const mechanicId=data._id;
   const { user } = useSelector((state) => state);
 
   const [chats, setChats] = useState([]);
@@ -25,7 +26,7 @@ function ChatPage() {
       }
     };
     getChats();
-  }, [user._id]);
+  }, [user.details._id]);
   return (
     <div className="Chat">
     {/* Left Side */}
@@ -58,6 +59,7 @@ function ChatPage() {
       </div>
       <ChatBox
         chat={currentChat}
+        mechanicId={mechanicId}
         currentUser={user.details._id}
         setSendMessage={setSendMessage}
         receivedMessage={receivedMessage}

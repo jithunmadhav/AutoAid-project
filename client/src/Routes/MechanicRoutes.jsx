@@ -9,6 +9,7 @@ import MechanicPaymentPage from '../Pages/MechanicPaymentPage';
 import MechanicProfilePage from '../Pages/MechanicProfilePage';
 import MechanicSchedulePage from '../Pages/MechanicSchedulePage';
 import MechanicSignupPage from '../Pages/MechanicSignupPage';
+import MechanicChatPage from '../Pages/MechanicChatPage/MechanicChatPage';
 function MechanicRoutes() {
     const { refresh, mechanic } = useSelector((state) => state);
     const dispatch = useDispatch();
@@ -35,7 +36,7 @@ function MechanicRoutes() {
               <Route element={<Navigate to={'/mechanic/schedule'} />} path="/login" />
               <Route element={<Navigate to={'/mechanic/schedule'} />} path="/signup" />
               <Route element={<Navigate to={'/mechanic/schedule'} />} path="/forgotMechanicPassword" />
-
+              <Route element={<MechanicChatPage/>} path={'/chat'}/>
 
 
             </>
@@ -48,6 +49,8 @@ function MechanicRoutes() {
               <Route element={<Navigate to={'/mechanic/login'} />} path="/profile" />
               <Route element={<Navigate to={'/mechanic/login'} />} path="/payment" />
               <Route element={<Navigate to={'/mechanic/login'} />} path="/appoinmentManage" />
+              <Route element={<Navigate to={'/mechanic/login'} />} path={'/chat'}/>
+
               <Route element={<MechanicLoginPage />} path="/login" />
               <Route element={<MechanicSignupPage />} path="/signup" />
               <Route element={<ForgotMechanicPage />} path="/forgotMechanicPassword" />

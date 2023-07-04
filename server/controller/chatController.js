@@ -1,5 +1,6 @@
 import ChatModel from "../model/chatModel.js";
 import mechanicModel from "../model/mechanicModel.js";
+import userModel from "../model/userModel.js";
 
 export const createChat = async (req, res) => {
   try {
@@ -25,7 +26,7 @@ export const createChat = async (req, res) => {
 export const userChats = async (req, res) => {
   try {
     const chat = await ChatModel.find({
-      members: { $in: [req.params.userId] },
+      members: { $in: [req.params.Id] },
     });
     res.status(200).json(chat);
   } catch (error) {
@@ -54,4 +55,17 @@ export const getMechanic=async(req,res)=>{
   } catch (error) {
     res.status(500).json({err:true})
   }
+}
+
+export const getUser=async(req,res)=>{
+  try {
+    const user= await userModel.findOne({_id:req.params.id})
+    if(user){
+     res.status(200).json({err:false,user})
+    }else{
+     res.status(404).json({err:true})
+    }
+   } catch (error) {
+     res.status(500).json({err:true})
+   } 
 }

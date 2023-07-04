@@ -1,6 +1,8 @@
 import express  from 'express';
 import { cancelBookingMechanic, cancelRequest, customerDetails, getEmergencyApp, getscheduledApp, updateStatus } from '../controller/appointmentController.js';
+import { getUser, userChats } from '../controller/chatController.js';
 import { mechanicLogin, mechanicLogout, mechanicSignup1, mechanicSignup2, mechCheckAuth, mechResetpassword, mechVerifyResetOtp, scheduledDate, updateProfile, verifyMechanicSignup } from '../controller/mechanicController.js'
+import { addMessage, getMessages } from '../controller/messageController.js';
 import { allPaymentRequest, paymentRequest } from '../controller/paymentController.js';
 import upload from '../helper/multer.js';
 import verifyMech from '../middleware/mechAuth.js';
@@ -21,6 +23,8 @@ router.patch('/updatestatus',updateStatus)
 router.patch('/updateProfile',updateProfile)
 router.get('/paymentrequest',allPaymentRequest).post('/paymentrequest',paymentRequest)
 router.get('/cancelrequest',cancelRequest).post('/cancelbooking',cancelBookingMechanic)
-
+router.get('/getuser/:id',getUser)
+router.get('/message/:chatId',getMessages).post('/message', addMessage);
+router.get('/chat/:Id', userChats);
 
 export default router

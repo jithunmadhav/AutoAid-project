@@ -58,7 +58,7 @@ function BookingProfile(props) {
  }
 
   return (
-    openChat ? <ChatPage/> :
+    openChat ? <ChatPage data={{...props.data}}/> :
     <div className='profile-background'>
     <div className='Booking-innder-div'>
       <div className='Booking-inner-div2'>

@@ -27,7 +27,7 @@ router.post('/cancelbooking',cancelBooking)
 router.get('/bookinghistory',completedBookingHistory).get('/newbooking',newBooking)
 
 router.post('/chat', createChat);
-router.get('/chat/:userId', userChats);
+router.get('/chat/:Id', userChats);
 router.get('/find/:firstId/:secondId', findChat);
 router.post('/message', addMessage);
 router.get('/message/:chatId', getMessages);

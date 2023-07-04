@@ -19,7 +19,7 @@ function MechanicChatBox({ chat, currentUser, setSendMessage,  receivedMessage }
       const getUserData = async () => {
         try {
           const response = await axios.get(`/mechanic/getuser/${userId}`);
-          setUserData(response.data.mechanic);
+          setUserData(response.data.user);
         } catch (error) {
           console.log(error);
         }
@@ -33,7 +33,7 @@ function MechanicChatBox({ chat, currentUser, setSendMessage,  receivedMessage }
       const fetchMessages = async () => {
         try {
           const chatId=chat._id
-          const { data } = await axios.get(`/user/message/${chatId}`)
+          const { data } = await axios.get(`/mechanic/message/${chatId}`)
           setMessages(data);
         } catch (error) {
           console.log(error);
@@ -57,7 +57,7 @@ function MechanicChatBox({ chat, currentUser, setSendMessage,  receivedMessage }
   setSendMessage({...message, receiverId})
   // send message to database
   try {
-    const { data } = await axios.post('/user/message',{message});
+    const { data } = await axios.post('/mechanic/message',{message});
     console.log(data);
     setMessages([...messages, data]);
     setNewMessage("");
