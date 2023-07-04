@@ -4,8 +4,18 @@ import { dbconnect } from './config.js';
 import cors from 'cors';
 import 'dotenv/config';
 import cookieparser from 'cookie-parser';
+import http from 'http';
+import { Server } from 'socket.io';
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:3000"]
+  },
+});
+
+
 dbconnect();
 app.use(cors({
   origin: ['http://localhost:3000', 'https://checkout.stripe.com','http://192.168.0.73:3000','http://192.168.133.127:3000'],

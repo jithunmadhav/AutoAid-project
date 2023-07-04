@@ -50,6 +50,11 @@ function MechanicNav() {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link className="nav-link" to="/mechanic/chat" onClick={closeNavbar}>
+                  Chats
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to="/mechanic/payment" onClick={closeNavbar}>
                 payment
                 </Link>

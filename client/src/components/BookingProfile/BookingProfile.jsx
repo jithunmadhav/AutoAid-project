@@ -33,7 +33,7 @@ function BookingProfile(props) {
     handleOpen()
     setTimeout(() => {
       handleClose()
-      navigate('/user/schedule',{state:{...props.data,booking:'scheduled booking'}})
+      navigate('/schedule',{state:{...props.data,booking:'scheduled booking'}})
     }, 1000);
   }
  }

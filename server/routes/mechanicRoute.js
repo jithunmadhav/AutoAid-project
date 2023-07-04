@@ -22,4 +22,5 @@ router.patch('/updateProfile',updateProfile)
 router.get('/paymentrequest',allPaymentRequest).post('/paymentrequest',paymentRequest)
 router.get('/cancelrequest',cancelRequest).post('/cancelbooking',cancelBookingMechanic)
 
+
 export default router
