@@ -1,7 +1,7 @@
 import axios from "../../axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
-function Conversation({ data, currentUser, online }) {
+function Conversation({ data,mechanicId, currentUser, online }) {
   const [userData, setUserData] = useState(null)
 
   useEffect(()=> {

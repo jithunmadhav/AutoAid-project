@@ -10,6 +10,7 @@ function MechanicConversation({ data, currentUser, online }) {
     const getUserData = async ()=> {
       try
       {
+        console.log("$$$$$$$$$$$$$$",userId);
         const response = await axios.get(`/mechanic/getuser/${userId}`);
         setUserData(response.data.user)
       }

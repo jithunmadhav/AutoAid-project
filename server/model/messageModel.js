@@ -8,6 +8,7 @@ const MessageSchema = new mongoose.Schema(
     senderId: {
       type: String,
     },
+    
     text: {
       type: String,
     },

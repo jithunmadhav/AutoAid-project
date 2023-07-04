@@ -27,6 +27,15 @@ function ChatPage({data}) {
     };
     getChats();
   }, [user.details._id]);
+
+   // Connect to Socket.io
+   useEffect(() => {
+    socket.current = io("ws://localhost:8800");
+    socket.current.emit("new-user-add", user._id);
+    socket.current.on("get-users", (users) => {
+      setOnlineUsers(users);
+    });
+  }, [user]);
   return (
     <div className="Chat">
     {/* Left Side */}
@@ -42,6 +51,7 @@ function ChatPage({data}) {
             >
               <Conversation
                 data={chat}
+                mechanicId={mechanicId}
                 currentUser={user.details._id}
                 online={'online'}
               />

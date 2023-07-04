@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { format } from "timeago.js";
 import InputEmoji from 'react-input-emoji'
 import axios from "../../axios";
-function ChatBox({ chat, currentUser, setSendMessage,  receivedMessage }) {
+function ChatBox({ chat, mechanicId,currentUser, setSendMessage,  receivedMessage }) {
     const [userData, setUserData] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
