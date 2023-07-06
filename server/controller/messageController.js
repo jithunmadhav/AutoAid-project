@@ -2,7 +2,6 @@ import MessageModel from "../model/messageModel.js";
 
 export const addMessage = async (req, res) => {
   const { chatId, senderId, text } = req.body.message;
-  console.log(req.body);
   const message = new MessageModel({
     chatId,
     senderId,
