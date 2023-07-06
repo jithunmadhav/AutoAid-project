@@ -138,7 +138,9 @@ useEffect(()=> {
                 value={newMessage}
                 onChange={handleChange}
               />
-              <div className="send-button button" onClick = {handleSend}>Send</div>
+              <div className="send-button button" onClick = {handleSend}>
+              <img className="send" src="https://icon-library.com/images/send-icon-png/send-icon-png-19.jpg" alt="" />
+              </div>
               {/* <input
                 type="file"
                 name=""

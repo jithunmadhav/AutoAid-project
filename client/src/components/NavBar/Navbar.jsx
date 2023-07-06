@@ -21,7 +21,7 @@ function Navbar() {
    
   
     return (
-      <nav className="navbar navBG navbar-expand-lg navbar-light bg-light" style={{position:'fixed',width:'100%' ,height:'50px', zIndex:'10'}}>
+      <nav className="navbar navBG navbar-expand-lg navbar-light bg-light" style={{position:'fixed',width:'100%' ,height:'70px', zIndex:'10'}}>
             {/* <img src="/images/autoaid.png" alt="" /> */}
             <h1 className='LogoName'>AUTO AID</h1>
         <div className="container">

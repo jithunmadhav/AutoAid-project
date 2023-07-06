@@ -101,3 +101,10 @@
     width: 50px;
     cursor: pointer;
 }
+.empty-img{
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    height: 500px;
+    width: 500px;
+}

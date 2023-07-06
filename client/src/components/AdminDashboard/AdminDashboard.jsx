@@ -37,13 +37,16 @@ function AdminDashboard() {
 console.log(monthlyRevenue);
   const [chartSeries, setChartSeries] = useState([]);
   useEffect(() => {
-    setChartSeries([
-      {
-        name: 'Monthly Revenue',
-        data: monthlyRevenue,
-      },
-    ]);
+    if (monthlyRevenue.length > 0) {
+      setChartSeries([
+        {
+          name: 'Monthly Revenue',
+          data: monthlyRevenue,
+        },
+      ]);
+    }
   }, [monthlyRevenue]);
+  
 
   const colors = ['#FF4560', '#008FFB', '#FEB019', '#00E396', '#775DD0'];
 
