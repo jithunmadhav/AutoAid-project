@@ -42,33 +42,49 @@ function MechanicChatBox({ chat, currentUser, setSendMessage,  receivedMessage }
   
       if (chat !== null) fetchMessages();
     }, [chat]);
-    console.log("data+++++",messages);
 
+    useEffect(()=> {
+      scroll.current?.scrollIntoView({ behavior: "smooth" });
+    },[messages])
+  
 
   // Send Message
   const handleSend = async(e)=> {
     e.preventDefault()
-    const message = {
-      senderId : currentUser,
-      text: newMessage,
-      chatId: chat._id,
-  }
-  const receiverId = chat.members.find((id)=>id!==currentUser);
-  console.log('@@@@@@@@@@@@',receiverId);
-  // send message to socket server
-  setSendMessage({...message, receiverId})
-  // send message to database
-  try {
-    const { data } = await axios.post('/mechanic/message',{message});
-    console.log(data);
-    setMessages([...messages, data]);
-    setNewMessage("");
-  }
-  catch
-  {
-    console.log("error")
-  }
+    console.log('5555555555',newMessage);
+
+    if(newMessage.trim()){
+      const message = {
+        senderId : currentUser,
+        text: newMessage,
+        chatId: chat._id,
+    }
+    const receiverId = chat.members.find((id)=>id!==currentUser);
+    // send message to socket server
+    setSendMessage({...message, receiverId})
+    // send message to database
+    try {
+        const { data } = await axios.post('/mechanic/message',{message});
+        setMessages([...messages, data]);
+        setNewMessage("");
+    }
+    catch
+    {
+      console.log("error")
+    }
+    }
 }
+console.log(receivedMessage,"Recieved message");
+
+// Receive Message from parent component
+useEffect(()=> {
+  console.log("Message Arrived: ", receivedMessage)
+  if (receivedMessage !== null && receivedMessage.chatId === chat._id) {
+    setMessages([...messages, receivedMessage]);
+  }
+
+},[receivedMessage])
+
 
   const scroll = useRef();
   const imageRef = useRef();
@@ -114,7 +130,6 @@ function MechanicChatBox({ chat, currentUser, setSendMessage,  receivedMessage }
                   : "message "
                 }
                   >
-                    {console.log(message.senderId,currentUser)}
                     <span>{message.text}</span>{" "}
                     <span>{format(message.createdAt)}</span>
                   </div>
@@ -123,7 +138,6 @@ function MechanicChatBox({ chat, currentUser, setSendMessage,  receivedMessage }
             </div>
             {/* chat-sender */}
             <div className="chat-sender">
-              <div onClick={() => imageRef.current.click()}>+</div>
               <InputEmoji
                 value={newMessage}
                 onChange={handleChange}

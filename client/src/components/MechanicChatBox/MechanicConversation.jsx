@@ -10,7 +10,6 @@ function MechanicConversation({ data, currentUser, online }) {
     const getUserData = async ()=> {
       try
       {
-        console.log("$$$$$$$$$$$$$$",userId);
         const response = await axios.get(`/mechanic/getuser/${userId}`);
         setUserData(response.data.user)
       }
@@ -35,7 +34,7 @@ function MechanicConversation({ data, currentUser, online }) {
         />
         <div className="name" style={{fontSize: '0.8rem'}}>
           <span>{userData?.name} </span>
-          {/* <span style={{color: online?"#51e200":""}}>{online? "Online" : "Offline"}</span> */}
+          <span style={{color: online?"#51e200":""}}>{online? "Online" : "Offline"}</span>
         </div>
       </div>
     </div>

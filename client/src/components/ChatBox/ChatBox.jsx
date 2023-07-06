@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { format } from "timeago.js";
 import InputEmoji from 'react-input-emoji'
 import axios from "../../axios";
-function ChatBox({ chat, mechanicId,currentUser, setSendMessage,  receivedMessage }) {
+function ChatBox({ chat,currentUser, setSendMessage,  receivedMessage }) {
     const [userData, setUserData] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
@@ -43,7 +43,10 @@ function ChatBox({ chat, mechanicId,currentUser, setSendMessage,  receivedMessag
       if (chat !== null) fetchMessages();
     }, [chat]);
 
-
+    useEffect(()=> {
+      scroll.current?.scrollIntoView({ behavior: "smooth" });
+    },[messages])
+  
   // Send Message
   const handleSend = async(e)=> {
     e.preventDefault()
@@ -68,8 +71,19 @@ function ChatBox({ chat, mechanicId,currentUser, setSendMessage,  receivedMessag
   }
 }
 
+// Receive Message from parent component
+useEffect(()=> {
+  console.log("Message Arrived: ", receivedMessage)
+  if (receivedMessage !== null && receivedMessage.chatId === chat._id) {
+    setMessages([...messages, receivedMessage]);
+  }
+
+},[receivedMessage])
+
+
+
   const scroll = useRef();
-  const imageRef = useRef();
+  // const imageRef = useRef();
   return (
     <>
       <div className="ChatBox-container">
@@ -119,19 +133,19 @@ function ChatBox({ chat, mechanicId,currentUser, setSendMessage,  receivedMessag
             </div>
             {/* chat-sender */}
             <div className="chat-sender">
-              <div onClick={() => imageRef.current.click()}>+</div>
+              {/* <div onClick={() => imageRef.current.click()}>+</div> */}
               <InputEmoji
                 value={newMessage}
                 onChange={handleChange}
               />
               <div className="send-button button" onClick = {handleSend}>Send</div>
-              <input
+              {/* <input
                 type="file"
                 name=""
                 id=""
                 style={{ display: "none" }}
                 ref={imageRef}
-              />
+              /> */}
             </div>{" "}
           </>
         ) : (

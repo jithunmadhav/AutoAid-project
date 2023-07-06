@@ -34,7 +34,7 @@ function Conversation({ data,mechanicId, currentUser, online }) {
         />
         <div className="name" style={{fontSize: '0.8rem'}}>
           <span>{userData?.name} </span>
-          {/* <span style={{color: online?"#51e200":""}}>{online? "Online" : "Offline"}</span> */}
+          <span style={{color: online?"#51e200":""}}>{online? "Online" : "Offline"}</span>
         </div>
       </div>
     </div>

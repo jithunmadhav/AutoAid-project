@@ -1,12 +1,14 @@
 import axios from '../../axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import './ChatPage.css'
 import ChatBox from '../../components/ChatBox/ChatBox';
 import Conversation from '../../components/Conversation/Conversation';
+import { io} from "socket.io-client";
 
 function ChatPage({data}) {
   const mechanicId=data._id;
+  const socket = useRef();
   const { user } = useSelector((state) => state);
 
   const [chats, setChats] = useState([]);
@@ -30,12 +32,34 @@ function ChatPage({data}) {
 
    // Connect to Socket.io
    useEffect(() => {
-    socket.current = io("ws://localhost:8800");
-    socket.current.emit("new-user-add", user._id);
+    socket.current = io("http://localhost:4000");
+    socket.current.emit("new-user-add", user.details._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
+      console.log(onlineUsers);
     });
   }, [user]);
+   // Send Message to socket server
+   useEffect(() => {
+    if (sendMessage!==null) {
+      socket.current.emit("send-message", sendMessage);}
+  }, [sendMessage]);
+
+    // Get the message from socket server
+    useEffect(() => {
+      socket.current.on("recieve-message", (data) => {
+        console.log("&&&&&&&&&",data)
+        setReceivedMessage(data);
+      }
+  
+      );
+    }, []);
+    const checkOnlineStatus = (chat) => {
+      const chatMember = chat.members.find((member) => member !== user.details._id);
+      const online = onlineUsers.find((user) => user.userId === chatMember);
+      return online ? true : false;
+    };
+    
   return (
     <div className="Chat">
     {/* Left Side */}
@@ -53,8 +77,7 @@ function ChatPage({data}) {
                 data={chat}
                 mechanicId={mechanicId}
                 currentUser={user.details._id}
-                online={'online'}
-              />
+                online={checkOnlineStatus(chat)}              />
             </div>
           ))}
         </div>
