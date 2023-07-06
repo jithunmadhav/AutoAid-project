@@ -6,7 +6,7 @@ import './MechanicChatPage.css'
 import MechanicChatBox from '../../components/MechanicChatBox/MechanicChatBox';
 import MechanicConversation from '../../components/MechanicChatBox/MechanicConversation';
 import { io} from "socket.io-client";
-
+import MechanicNav from '../../components/MechanicNav/MechanicNav'
 function MechanicChatPage() {
   const { mechanic } = useSelector((state) => state);
   const socket = useRef();
@@ -59,7 +59,9 @@ function MechanicChatPage() {
         return online ? true : false;
       };
   return (
-    <div className="Chat">
+    <>
+    <MechanicNav/>
+    <div className="Chat-mechanic">
     {/* Left Side */}
     <div className="Left-side-chat">
       <div className="Chat-container">
@@ -95,6 +97,8 @@ function MechanicChatPage() {
       />
     </div>
   </div>
+  </>
+
   )
 }
 

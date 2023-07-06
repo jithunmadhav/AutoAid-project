@@ -142,7 +142,9 @@ useEffect(()=> {
                 value={newMessage}
                 onChange={handleChange}
               />
-              <div className="send-button button" onClick = {handleSend}>Send</div>
+              <div className="send-button button" onClick = {handleSend}>
+                <img className="send" src="https://cdn-icons-png.flaticon.com/512/1159/1159724.png?w=826&t=st=1688640758~exp=1688641358~hmac=88d34ce0ce1f393ed6ed884373c731fdb1b83c8200150054994fb27a07f3e5f6" alt="" />
+              </div>
               <input
                 type="file"
                 name=""

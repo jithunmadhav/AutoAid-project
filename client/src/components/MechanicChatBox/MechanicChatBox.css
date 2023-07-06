@@ -6,9 +6,13 @@
 }
 
 .chat-header {
+    margin-top: -22px;
+    height: 93px;
     padding: 1rem 1rem 0rem 1rem;
     display: flex;
     flex-direction: column;
+    background-color: #adb5bd73;
+
 }
 
 .chat-body {
@@ -17,6 +21,9 @@
     gap: 0.5rem;
     padding: 1.5rem;
     overflow: scroll;
+    background: #dee2e630;
+    margin-top: -66px;
+    height: 685px;
 }
 .chat-body::-webkit-scrollbar {
     display: none;
@@ -24,8 +31,8 @@
 
 .message {
 
-    background: linear-gradient(98.63deg, #b9c1c2 0%, #9da1a7 100%);
-    color: white;
+    background: linear-gradient(98.63deg, #f06124 0%, #f935b1 100%);
+        color: white;
   padding: 0.7rem;
   border-radius: 1rem 1rem 1rem 0;
   max-width: 28rem;
@@ -84,4 +91,13 @@
 .chat-sender>div{
     height: 70%;
     padding: 0px 15px 0px 15px;
+}
+.send{
+    object-fit: contain;
+    height: 50px;
+    position: absolute;
+    margin-top: -11px;
+    right: 2%;
+    width: 50px;
+    cursor: pointer;
 }
