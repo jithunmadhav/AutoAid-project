@@ -89,7 +89,7 @@ console.log("Selected",selectedVehicle);
                 vehicleResult.map((item) => {
                   return (
                     <div className='vehicle-table' key={item.Id}>
-                      <div style={{ width: '10%', height: '100px', paddingLeft: '20px', display: 'flex', alignItems: 'center' }}>
+                      <div className='radio'>
                         <input
                           type="radio"
                           name="vehicleSelection"
@@ -99,12 +99,12 @@ console.log("Selected",selectedVehicle);
                           required
                         />
                       </div>
-                      <div style={{ width: '50%', height: '100px', textAlign: 'left', paddingLeft: '60px' }}>
+                      <div className='table-mid1'>
                         <p style={{ marginBottom: '0px' }}>{item.vehicleName}</p>
                         <p style={{ marginBottom: '0px' }}>{item.regNo}</p>
                         <p style={{ marginBottom: '0px' }}>{item.manufactureYear}</p>
                       </div>
-                      <div style={{ width: '40%', height: '100px', textAlign: 'right', paddingRight: '80px' }}>
+                      <div className='table-mid2'>
                         <p style={{ marginBottom: '0px' }}>{item.kilometer} KM</p>
                         <p style={{ marginBottom: '0px' }}>
                           {item.fuel}
