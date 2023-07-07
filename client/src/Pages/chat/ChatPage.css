@@ -3,7 +3,7 @@
     display: grid;
     grid-template-columns: 22% auto;
     gap: 1rem;
-    padding-top: 74px;
+    padding-top: 90px;
   }
   
   .Left-side-chat {
