@@ -21,6 +21,9 @@
     text-align: right;
     padding-right: 80px;
 }
+.Edit-btn{
+    padding-top: 30px;
+}
 .vehicle-inner-div{
     position: absolute;
     top: 52%;
@@ -239,36 +242,65 @@
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1;
-        width: 559px;
+        width: 339px;
         background: linear-gradient(to right, #111111,#0e1136) !important;
         border-radius: 10px;
         box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
         overflow: hidden;
-        height: 700px;
+        height: 90vh;
     }
     .table-mid1{
         width: 50%;
-        height: 100px;
-        font-size: 14px;
+        height: 62px;
+        font-size: 11px;
+        padding-top: 25px;
         text-align: left;
-        padding-left: 60px;
+        padding-left: 15px;
     }
     .table-mid2{
         width: 40%;
         height: 100px;
         text-align: right;
-        padding-right: 80px;
-        font-size: 14px;
+        padding-right: 56px;
+        font-size: 11px;
+        padding-top: 25px;
     }
     .vehicle-table {
         display: flex;
-        margin: 30px 0px -14px 113px;
-        width: 60%;
+        margin: 30px 0px -14px 16px;
+        width: 92%;
         height: 93px;
         background: #fff;
         border-radius: 10px;
         box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
         overflow: hidden;
+    }
+    .Edit-btn{
+        padding-top: 13px;
+        margin-left: -14px;
+    }
+    .vehicle-btn{
+        width: 8%;
+        outline: none !important;
+        background: white;
+        border: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: black;
+        position: absolute;
+        right: 3%;
+        top: 4%;
+        cursor: pointer;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 20px;
+    }
+    .vehicle-heading{
+        margin-bottom: -11px;
+        text-align: center;
+        font-family: 'Monomaniac One', sans-serif;
+        margin-top: 20px;
+        color: white;
     }
  
   }
