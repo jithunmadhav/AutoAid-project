@@ -47,3 +47,49 @@
     font-family: monospace;
     font-size: 24px;
 }
+
+@media (max-width: 800px) {
+    .viewDetails-inner-div {
+        position: absolute;
+        top: 52%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        width: 316px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        height: 460px;
+    }
+    .viewDetails-para{
+        font-family: monospace;
+        font-size: 12px;
+        font-weight: 400;
+        text-align: center;
+    }
+    .viewDetails-head {
+        margin-top: 50px;
+        text-align: center;
+        font-family: monospace;
+        font-weight: 800;
+        font-size: 22px;
+    }
+    .viewDetails-btn {
+        width: 10%;
+        outline: none !important;
+        background: linear-gradient(to right, #111111,#0e1136) !important;
+        border: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: rgb(245, 241, 241);
+        position: absolute;
+        right: 3%;
+        top: 2%;
+        cursor: pointer;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 16px;
+    }
+
+}
