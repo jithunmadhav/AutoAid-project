@@ -29,5 +29,52 @@
 .cards-place button:first-child {
   margin-right: 10px;
 }
-
-
+.card-text{
+font-size: 35px !important;
+font-family: Monomaniac One, sans-serif !important;
+text-align: center;
+}
+.card-text-sp{
+  font-size: 35px !important;
+  font-family: Monomaniac One, sans-serif !important;
+  text-align: center;
+  }
+.card-body{
+  border-radius: 15px;
+  width: 280px;
+  margin-right: 50px;
+  margin-left: 50px;
+}
+@media (max-width:800px){
+  .card-text{
+    font-size: 15px !important;
+    font-family: Monomaniac One, sans-serif !important;
+    text-align: center;
+    }
+    .card-text-sp{
+      font-size: 14px !important;
+      font-family: Monomaniac One, sans-serif !important;
+      text-align: center;
+      }
+    .cards-place {
+      display: flex;
+      justify-content: space-between;
+      margin-left: -2px;
+      margin-right: 3px;
+      margin-top: 82px;
+      border-radius: 30px;
+      margin-bottom: 150px;
+      position: absolute;
+      top: 63%;
+      left: 0;
+      right: 0;
+  }
+  .cards-place button {
+    padding: 0px 20px !important;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    color: #000000;
+    cursor: pointer;
+}
+}

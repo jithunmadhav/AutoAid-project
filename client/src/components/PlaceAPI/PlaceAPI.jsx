@@ -16,21 +16,22 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZze
 
 export default function PlaceAPI() {
   const location = useLocation();
-  const service=location.state.serviceName
+  const service = location.state.serviceName;
   console.log(service);
   const mapContainer = useRef(null);
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [nearMechanic, setNearMechanic] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const cardsPerPage = 4;
-  const [openProfile, setopenProfile] = useState(false)
-  const [data, setdata] = useState('')
+  const [openProfile, setOpenProfile] = useState(false);
+  const [data, setData] = useState('');
+  const [cardsPerPage, setCardsPerPage] = useState(4); // Initial value set to 4
 
-  const viewProfile=(data)=>{
-    setdata(data)
-    setopenProfile(true)
-  }
+  const viewProfile = (data) => {
+    setData(data);
+    setOpenProfile(true);
+  };
+
   useEffect(() => {
     // axios.get('https://ipapi.co/json').then((response)=>{
     //   console.log(response);
@@ -148,26 +149,44 @@ export default function PlaceAPI() {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 800) {
+        setCardsPerPage(1);
+      } else {
+        setCardsPerPage(4);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     openProfile ? <BookingProfile data={{...data}} /> :
     <div>
       <div ref={mapContainer} style={{ height: '100vh' }} />
 
       <div className='cards-place'>
-      <button    onClick={handlePrevPage} disabled={currentPage === 1}>
-          Prev
-        </button>
+        <div onClick={handlePrevPage} disabled={currentPage === 1}>
+        <img style={{ width:'50px',marginTop:'27px',cursor:'pointer' }} src="https://cdn-icons-png.flaticon.com/512/467/467274.png" alt="" />
+        </div>
+       
         {currentCards.map((card, index) => (
-          <Card key={index} sx={{ maxWidth: 345 }} style={{ borderRadius: '15px', width: '280px', marginRight: '50px', marginLeft:'50px' }}>
+          <Card key={index} sx={{ maxWidth: 345 }} className='card-body'>
             <CardActionArea  onClick={()=>viewProfile(card)} style={{ backgroundColor:'#21252900' }}>
-              <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center', fontSize: '35px' }}>
+              <Typography gutterBottom variant="h5" component="div" className='card-text'>
                 {card.name}
               </Typography>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center' }}>
+              <CardContent style={{ padding:'0' }}>
+                <Typography gutterBottom variant="h5" component="div" className='card-text-sp'>
                   {card.experience} years exp
                 </Typography>
-                <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center' }}>
+                <Typography gutterBottom variant="h5" component="div" className='card-text'>
                   {card.distance} KM
                 </Typography>
                 <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', display:'flex', justifyContent:'center' }}>
@@ -179,9 +198,10 @@ export default function PlaceAPI() {
             </CardActionArea>
           </Card>
         ))}
-         <button   onClick={handleNextPage} disabled={indexOfLastCard >= nearMechanic.length}>
-          Next
-        </button>
+        <div onClick={handleNextPage} disabled={indexOfLastCard >= nearMechanic.length}>
+        <img style={{ width:'50px',marginTop:'27px',cursor:'pointer' }} src="https://cdn-icons-png.flaticon.com/512/467/467282.png" alt="" />
+        </div >
+       
       </div>
       
     </div> 
