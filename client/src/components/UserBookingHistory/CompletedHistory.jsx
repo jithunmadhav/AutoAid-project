@@ -82,11 +82,10 @@ function CompletedHistory() {
   <Box
           component="form"
           sx={{
-            '& > :not(style)': { m: 1, width: '25ch' },
-            position: 'absolute',
-            right: '22%',
-            top: '11%',
+            '& > :not(style)': { m: 1, width: '12ch' },
+           
           }}
+          className='search'
           noValidate
           autoComplete="off"
         >
@@ -102,7 +101,7 @@ function CompletedHistory() {
   variant="standard"
 />   
         </Box>
-    <Button className='serviceschedule-btn' style={{ position:'absolute' }} onClick={()=>setopenHistory(true)}  variant='outlined' color='secondary' >Back</Button>
+    <Button className='view-btn' style={{ position:'absolute' }} onClick={()=>setopenHistory(true)}  variant='outlined' color='secondary' >Back</Button>
    
         <div className='table-div'>
         {result.length!==0 ?

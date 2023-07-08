@@ -1,0 +1,28 @@
+.search{
+    position: absolute;
+    right: 22%;
+    top: 11%;
+}
+.view-btn{
+    position: absolute !important;
+    right: 7%;
+    top: 13%;
+ 
+}
+@media (max-width: 800px) {
+    .search{
+        position: absolute;
+        right: 53%;
+        top: 10%;
+    }
+    .view-btn{
+        position: absolute;
+        width: 112px;
+        top: 15%;
+        font-size: 10px !important;
+    }
+    .table-div{
+        margin: 10px !important;
+        margin-top: 180px !important;
+    }
+}

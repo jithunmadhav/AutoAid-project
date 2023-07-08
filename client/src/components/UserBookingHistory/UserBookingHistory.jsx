@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
+import './UserBookingHistory.css'
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -80,11 +81,10 @@ function UserBookingHistory() {
   <Box
           component="form"
           sx={{
-            '& > :not(style)': { m: 1, width: '25ch' },
-            position: 'absolute',
-            right: '22%',
-            top: '11%',
+            '& > :not(style)': { m: 1, width: '12ch' },
+            
           }}
+          className='search'
           noValidate
           autoComplete="off"
         >
@@ -100,7 +100,7 @@ function UserBookingHistory() {
   variant="standard"
 />   
         </Box>
-    <Button className='serviceschedule-btn' style={{ position:'absolute' }} onClick={()=>setopenHistory(true)}  variant='outlined' color='secondary' >View History</Button>
+    <Button className=' view-btn'   onClick={()=>setopenHistory(true)}  variant='outlined' color='secondary' >View History</Button>
    
         <div className='table-div'>
         {result.length!==0 ?

@@ -280,27 +280,30 @@
         margin-left: -14px;
     }
     .vehicle-btn{
-        width: 8%;
-        outline: none !important;
-        background: white;
-        border: none;
-        text-transform: uppercase;
-        font-weight: bold;
-        color: black;
-        position: absolute;
-        right: 3%;
-        top: 4%;
-        cursor: pointer;
-        border-radius: 5px;
-        font-family: monospace;
-        font-size: 20px;
-    }
+     width: 8%;
+    outline: none !important;
+    background: white;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: black;
+    position: absolute;
+    right: 4%;
+    top: 4%;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 20px;
+}
     .vehicle-heading{
         margin-bottom: -11px;
-        text-align: center;
-        font-family: 'Monomaniac One', sans-serif;
-        margin-top: 20px;
+        text-align: left;
+        font-family: 'Rajdhani';
+        margin-top: 26px;
+        margin-left: 21px;
         color: white;
+        font-size: 20px;
+
     }
  
   }
