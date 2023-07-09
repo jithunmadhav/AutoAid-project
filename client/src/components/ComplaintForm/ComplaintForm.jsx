@@ -228,11 +228,11 @@ function ComplaintForm(props) {
         <h3 className="Complaint-heading">Complaint Form</h3>
         <form onSubmit={handleSubmit} style={{ display: 'flex' }}>
           {/* Vehicle Details */}
-          <div style={{ display: 'flex' }}>
+          <div className='outer-form'>
             <div className="form-div1">
-              <label>Manufacturer:</label>
+              <label>Manufacture:</label>
               <input className="input-field" value={vehicleDetails?.manufacture || ''} type="text" readOnly />
-              <label>Registration Number:</label>
+              <label>Reg No:</label>
               <input className="input-field" value={vehicleDetails?.regNo || ''} type="text" readOnly />
               <label>Fuel:</label>
               <input className="input-field" value={vehicleDetails?.fuel || ''} type="text" readOnly />

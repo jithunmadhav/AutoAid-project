@@ -48,3 +48,54 @@
     box-shadow: 0 3px 0px rgba(115, 136, 89, 0.2);
     text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
+
+@media(max-width:800px){
+    .success-img {
+        width: 129px;
+        height: 300px;
+        object-fit: contain;
+        position: absolute;
+        left: 35%;
+        top: 24%;
+    }
+    .success-header {
+        font-family: monospace;
+        font-weight: bolder;
+        top: 11%;
+        left: 14%;
+        font-size: 32px;
+        position: absolute;
+        color: #0e1136;
+    }
+    .first-para {
+        font-family: monospace;
+        font-weight: bold;
+        font-size: 12px;
+        position: absolute;
+        top: 23%;
+        left: 15%;
+    }
+    .second-para {
+        font-family: monospace;
+        font-weight: bold;
+        font-size: 12px;
+        position: absolute;
+        top: 66%;
+        left: 15%;
+    }
+    .coninue-button {
+        position: absolute;
+        top: 80%;
+        left: 15%;
+        width: 74%;
+        height: 45px;
+        outline: none !important;
+        background: linear-gradient(-5deg, #111111,#0e1136);
+        border: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: white;
+        box-shadow: 0 3px 0px rgba(115, 136, 89, 0.2);
+        text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    }
+}
