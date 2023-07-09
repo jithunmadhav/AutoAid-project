@@ -177,7 +177,7 @@ export default function PlaceAPI() {
         </div>
        
         {currentCards.map((card, index) => (
-          <Card key={index} sx={{ maxWidth: 345 }} className='card-body'>
+          <Card key={index} sx={{ maxWidth: 345 }} className='card-body-place'>
             <CardActionArea  onClick={()=>viewProfile(card)} style={{ backgroundColor:'#21252900' }}>
               <Typography gutterBottom variant="h5" component="div" className='card-text'>
                 {card.name}

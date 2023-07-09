@@ -146,28 +146,28 @@ function UserSchedule() {
         <h5 className='date-heading'>Date :</h5>
         <div className='cards-mechanics'>
           {cardData.map((card, index) => (
+            <div className='card-inner'>
             <Card
               key={index}
-              sx={{ maxWidth: 180 }}
+               
               style={{
-                borderRadius: '15px',
-                width: '280px',
-                height: '160px',
                 border: selectedCardIndex === index ? '4px solid #1df11d' : 'none'
               }}
+              className='card-body'
               onClick={() => handleDateCardClick(index, card.date)}
             >
               <CardActionArea>
-                <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center', fontSize: '35px' }}>
+                <Typography gutterBottom variant="h5" component="div" className='card-title'>
                   {card.title}
                 </Typography>
                 <CardContent>
-                  <Typography gutterBottom variant="h3" component="div" style={{ fontFamily: 'Monomaniac One, sans-serif', textAlign: 'center', marginTop: '-17px' }}>
+                  <Typography gutterBottom variant="h3" component="div" className='card-value'>
                     {card.value}
                   </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
+            </div>
           ))}
         </div>
         <div className='cards-mechanics-time'>
@@ -176,18 +176,17 @@ function UserSchedule() {
               <Card
                 key={index}
                 sx={{ maxWidth: 180 }}
+                className='card-time-body'
                 style={{
-                  borderRadius: '15px',
-                  width: '280px',
-                  height: '70px',
+                  
                   backgroundColor: card.backgroundColor,
                   border: selectedTimeSlots.includes(index) ? '4px solid #1df11d' : 'none',
                 }}
                 onClick={() => handleTimeSlotClick(index, card)}
               >
                 <CardActionArea>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: 'unset', textAlign: 'center', fontSize: '25px' }}>
+                  <CardContent style={{ padding:'12px' }}>
+                    <Typography gutterBottom variant="h5" component="div" className='card-time-font'>
                       {card.value}
                     </Typography>
                   </CardContent>

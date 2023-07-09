@@ -64,7 +64,7 @@ function BookingProfile(props) {
       <div className='Booking-inner-div2'>
         <div >
           <div className='Booking-profile-img'>
-          <img src= 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1680295524~exp=1680296124~hmac=02e23136e23578ef52071ce6ce8be6ecd2a32c6bef946fcacd4e6e788ed33360' style={{objectFit:'cover'}} alt='' width="100"  className="rounded-circle" />
+          <img src= 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1680295524~exp=1680296124~hmac=02e23136e23578ef52071ce6ce8be6ecd2a32c6bef946fcacd4e6e788ed33360' style={{objectFit:'cover'}} alt='' width="100"  className="rounded-circle Booking-profile-Img" />
           </div>
           <div>
           <p  className='name'>{props.data.name}</p>
@@ -73,15 +73,15 @@ function BookingProfile(props) {
           <Stack  spacing={1}>
                <Rating style={{ display:'flex',justifyContent:'center' }} name="size-small" defaultValue={props.data.rating} size="small" readOnly />
            </Stack>
-           <Button onClick={()=>createChat()} variant='outlined'>Chat with {props.data.name}</Button>
+           <Button className='chat-btn' onClick={()=>createChat()} variant='outlined'>Chat with {props.data.name}</Button>
           </div>
         </div>
       </div>
     </div>
       <div className='Booking-maindiv-2'>
-      <div className='services'>
+      <div className='services-booking'>
   <h5  >Services</h5>
-  <ul style={{ paddingLeft: '268px' }}>
+  <ul className='ul-style'>
     {
       props.data.service.map((item) => {
         return <li style={{ textAlign: 'left' }}>{item}</li>
