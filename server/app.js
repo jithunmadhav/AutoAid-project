@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
 
 dbconnect();
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://checkout.stripe.com','http://192.168.0.73:3000','http://192.168.133.127:3000'],
+  origin: ['http://localhost:3000', 'https://checkout.stripe.com','http://autoaid.online/'],
   credentials: true,
 }));
 
