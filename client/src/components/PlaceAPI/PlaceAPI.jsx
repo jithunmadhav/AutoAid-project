@@ -12,7 +12,7 @@ import { useLocation } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw';
+mapboxgl.accessToken = process.env.REACT_APP_MAP_BOX;
 
 export default function PlaceAPI() {
   const location = useLocation();

@@ -179,13 +179,14 @@ function MechanicDashboard() {
         <h5 className='date-heading'>Date :</h5>
         <div className='cards-mechanics'>
           {cardData.map((card, index) => (
+             <div className='card-inner'>
             <Card
               key={index}
               sx={{ maxWidth: 180 }}
               style={{
                 border: selectedCardIndex === index ? '4px solid #1df11d' : 'none'
               }}
-              className='card-body'
+              className='card-body-schedule'
               onClick={() => handleDateCardClick(index, card.date)}
             >
               <CardActionArea>
@@ -199,6 +200,7 @@ function MechanicDashboard() {
                 </CardContent>
               </CardActionArea>
             </Card>
+            </div>
           ))}
         </div>
         <div className='cards-mechanics-time'>

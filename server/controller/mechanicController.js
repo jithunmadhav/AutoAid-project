@@ -42,7 +42,7 @@ export const mechanicSignup2=async(req,res)=>{
                 otp:otp,
 
             },
-            "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+            process.env.JWT_SECRET_KEY);
             return res.cookie("mechanicSignupToken", mechanicToken, {
                 httpOnly: true,
                 secure: true,
@@ -70,7 +70,7 @@ export const verifyMechanicSignup = async (req, res) => {
   let mechanicToken = req.cookies.mechanicSignupToken;
   const OtpToken = jwt.verify(
     mechanicToken,
-    '00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa'
+    process.env.JWT_SECRET_KEY
   );
   let bcrypPassword = await bcrypt.hash(password, 10);
   console.log(otp);
@@ -93,7 +93,7 @@ export const verifyMechanicSignup = async (req, res) => {
       {
         id: user._id,
       },
-      '00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa'
+      process.env.JWT_SECRET_KEY
     );
     return res
       .cookie('mechanicSignupToken', mechanicToken, {
@@ -118,7 +118,7 @@ export const mechanicLogin=async(req,res)=>{
                 if(status){
                     const token=jwt.sign({
                         id:account._id
-                    },"00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+                    },process.env.JWT_SECRET_KEY);
                     return res.cookie("mechanictoken", token, {
                         httpOnly: true,
                         secure: true,
@@ -142,7 +142,7 @@ export const mechanicLogin=async(req,res)=>{
         let otp=req.body.OTP;
         let userToken=req.cookies.resetToken;
         console.log(userToken);
-         const OtpToken = jwt.verify(userToken,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa')
+         const OtpToken = jwt.verify(userToken,process.env.JWT_SECRET_KEY)
         if(otp==OtpToken.otp){
             res.json({err:false})
         }else{
@@ -272,7 +272,7 @@ export const mechanicLogin=async(req,res)=>{
       export const mechCheckAuth=async(req,res)=>{
         const token = req.cookies.mechanictoken;
         if(token){
-        const verifyJwt= jwt.verify(token,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa');
+        const verifyJwt= jwt.verify(token,process.env.JWT_SECRET_KEY);
         let ID=verifyJwt.id;
         const mechanic=await mechanicModel.find({_id:ID})
         res.json({logged:true,details:mechanic})

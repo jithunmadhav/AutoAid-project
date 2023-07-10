@@ -72,10 +72,10 @@ const handleSubmit=(e)=>{
                className="card-stepper text-black"
                style={{ borderRadius: "16px" }}
              >
-               <MDBCardBody className="p-5">
+               <MDBCardBody className="p-5 technician-font">
                  <div className="d-flex justify-content-between align-items-center mb-5">
-                   <div>
-                     <MDBTypography tag="h5" className="mb-0">
+                   <div className='technician-div'>
+                     <MDBTypography tag="h5" className="mb-0 technician-name">
                        Technician Info :{" "}
                        <span className="text-primary font-weight-bold">
                          {props.data.mechanic_name}
@@ -93,13 +93,13 @@ const handleSubmit=(e)=>{
                     props.data.cancelStatus==='rejected' ?
                     <Button variant='outlined' color='error'>Cancel request Rejected</Button> :
 
-                    <Button  onClick={() => {setVaryingModal(!varyingModal);}} variant='outlined' color='error'>Cancel booking</Button>
+                    <Button  className='cancel-booking' onClick={() => {setVaryingModal(!varyingModal);}} variant='outlined' color='error'>Cancel booking</Button>
                   }
                    </div>
                  </div>
                  <ul
                    id="progressbar-2"
-                   className="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2"
+                   className="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2 order-ball"
                  >
                    <li
                      className={`step0 ${
@@ -127,7 +127,7 @@ const handleSubmit=(e)=>{
                    ></li>
                  </ul>
 
-                 <div className="d-flex justify-content-between">
+                 <div className="d-flex justify-content-between order-status">
                    <div className="d-lg-flex align-items-center">
                      <MDBIcon
                        fas

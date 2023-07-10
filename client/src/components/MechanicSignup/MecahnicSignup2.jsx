@@ -55,7 +55,7 @@ function MechanicSignup2(props) {
   const fetchSuggestions = async (value) => {
     try {
       const response = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(value)}.json?access_token=pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw`
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(value)}.json?access_token=${process.env.REACT_APP_MAP_BOX}`
       );
       const suggestions = response.data.features.map((feature) => feature.place_name);
       setSuggestions(suggestions);

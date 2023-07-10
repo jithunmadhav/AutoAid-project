@@ -118,3 +118,55 @@
     font-family: monospace;
     font-size: 24px;
 }
+
+@media(max-width:800px){
+  .bookingstatus-bg{
+    background: linear-gradient(to right, #111111,#0e1136) !important;
+    height: 109vh !important;
+}
+.bookingstatus-btn {
+  width: 10%;
+  outline: none !important;
+  background: linear-gradient(-5deg, #ebe7e7,#e6e7ec);
+  border: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: rgb(17, 17, 17);
+  position: absolute;
+  right: 5%;
+  top: 23%;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 18px;
+}
+  .technician-font{
+    font-size: 10px;
+  }
+  .technician-name{
+    font-size: 14px;
+  }
+  .order-status {
+    font-size: 10px;
+    margin-left: -43px;
+    margin-right: -41px;
+    margin-top: 6px;
+}
+.order-ball{
+  width: 298px;
+  position: absolute;
+  top: 38%;
+  left: 7%;
+}
+.technician-div{
+  position: absolute;
+  left: 10%;
+  top: 10%;
+}
+.cancel-booking{
+  font-size: 9px !important;
+  position: absolute !important;
+  right: 4%;
+  top: 14%;
+}
+}

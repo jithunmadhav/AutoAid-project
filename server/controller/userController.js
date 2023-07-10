@@ -25,7 +25,7 @@ import mechanicModel from '../model/mechanicModel.js';
                     otp:otp,
 
                 },
-                "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+                process.env.JWT_SECRET_KEY);
                 return res.cookie("signupToken", userToken, {
                     httpOnly: true,
                     secure: true,
@@ -47,7 +47,7 @@ import mechanicModel from '../model/mechanicModel.js';
         const {name,email,mobile,password}=req.body
         let otp=req.body.OTP;
         let userToken=req.cookies.signupToken;
-         const OtpToken = jwt.verify(userToken,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa')
+         const OtpToken = jwt.verify(userToken,process.env.JWT_SECRET_KEY)
         let bcrypPassword=await bcrypt.hash(password,10)
         if(otp==OtpToken.otp){
 
@@ -60,7 +60,7 @@ import mechanicModel from '../model/mechanicModel.js';
             const userToken=jwt.sign({
                 id:user._id
             },
-            "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+            process.env.JWT_SECRET_KEY);
             return res.cookie("userToken", userToken, {
                 httpOnly: true,
                 secure: true,
@@ -83,7 +83,7 @@ import mechanicModel from '../model/mechanicModel.js';
                     otp:otp,
 
                 },
-                "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+                process.env.JWT_SECRET_KEY);
                 return res.cookie("signupToken", userToken, {
                     httpOnly: true,
                     secure: true,
@@ -103,7 +103,7 @@ import mechanicModel from '../model/mechanicModel.js';
                     otp:otp,
 
                 },
-                "00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+                process.env.JWT_SECRET_KEY);
                 return res.cookie("resetToken", userToken, {
                     httpOnly: true,
                     secure: true,
@@ -120,7 +120,7 @@ import mechanicModel from '../model/mechanicModel.js';
         let otp=req.body.OTP;
         let userToken=req.cookies.resetToken;
         console.log(userToken);
-         const OtpToken = jwt.verify(userToken,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa')
+         const OtpToken = jwt.verify(userToken,process.env.JWT_SECRET_KEY)
         if(otp==OtpToken.otp){
             res.json({err:false})
         }else{
@@ -151,7 +151,7 @@ import mechanicModel from '../model/mechanicModel.js';
                 if(status){
                     const userToken=jwt.sign({
                         id:user._id
-                    },"00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+                    },process.env.JWT_SECRET_KEY);
                     return res.cookie("userToken", userToken, {
                         httpOnly: true,
                         secure: true,
@@ -202,7 +202,7 @@ import mechanicModel from '../model/mechanicModel.js';
       export const userCheckAuth=async(req,res)=>{
         const token = req.cookies.userToken;
         if(token){
-        const verifyJwt= jwt.verify(token,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa');
+        const verifyJwt= jwt.verify(token,process.env.JWT_SECRET_KEY);
         let ID=verifyJwt.id;
         const user=await userModel.findOne({_id:ID})
         if(user.ban==true){

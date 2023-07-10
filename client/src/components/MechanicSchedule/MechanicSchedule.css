@@ -16,7 +16,7 @@
     margin-bottom: 150px;
   }
   
-  .card-body {
+  .card-body-schedule {
     border-radius: 15px;
     width: 280px;
     height: 160px;
@@ -85,7 +85,7 @@
       display: flex;
       align-items: center;
     }
-    .card-body {
+    .card-body-schedule {
       margin-bottom: 0;
       scroll-snap-align: start;
       border-radius: 15px;

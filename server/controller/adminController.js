@@ -16,7 +16,7 @@ import appiontmentModel from "../model/appointmentModel.js"
                 if(status){
                     const adminToken=jwt.sign({
                         id:account._id
-                    },"00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa");
+                    },process.env.JWT_SECRET_KEY);
                     return res.cookie("adminToken", adminToken, {
                         httpOnly: true,
                         secure: true,
@@ -282,7 +282,7 @@ import appiontmentModel from "../model/appointmentModel.js"
        export const adminCheckAuth=async(req,res)=>{
         const token = req.cookies.adminToken;
         if(token){
-        const verifyJwt= jwt.verify(token,'00f3f20c9fc43a29d4c9b6b3c2a3e18918f0b23a379c152b577ceda3256f3ffa');
+        const verifyJwt= jwt.verify(token,process.env.JWT_SECRET_KEY);
         const admin=await adminModel.find({_id:verifyJwt.id})
         res.json({logged:true,details:admin})
         }else{

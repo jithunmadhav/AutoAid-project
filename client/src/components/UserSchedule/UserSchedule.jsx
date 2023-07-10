@@ -153,7 +153,7 @@ function UserSchedule() {
               style={{
                 border: selectedCardIndex === index ? '4px solid #1df11d' : 'none'
               }}
-              className='card-body'
+              className='card-body-schedule'
               onClick={() => handleDateCardClick(index, card.date)}
             >
               <CardActionArea>
