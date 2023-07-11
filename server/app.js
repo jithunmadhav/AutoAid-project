@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000",'http://autoaid.online/']
+    origin: ["http://localhost:3000",'https://autoaid.online/']
   },
 });
 
@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
 
 dbconnect();
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://checkout.stripe.com','http://autoaid.online/'],
+  origin: ['http://localhost:3000', 'https://checkout.stripe.com','https://autoaid.online/'],
   credentials: true,
 }));
 
