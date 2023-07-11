@@ -51,6 +51,10 @@ app.use(cors({
   credentials: true,
 }));
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://autoaid.online');
+  next();
+});
 import userRoute from './routes/userRoute.js';
 import mechanicRoute from './routes/mechanicRoute.js';
 import adminRoute from './routes/adminRoute.js';
