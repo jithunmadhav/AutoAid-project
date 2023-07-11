@@ -9,7 +9,6 @@ import AdminRoutes from './Routes/AdminRoutes';
  
 
 function App() {
-  console.log(axios);
 
   axios.defaults.withCredentials = true;
   return (
