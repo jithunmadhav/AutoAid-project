@@ -2,7 +2,7 @@ import axios from "axios";
  
 
 const instance = axios.create({
-    baseURL:'http://server.autoaid.online/',
+    baseURL:'https://server.autoaid.online/',
      
   });
 
