@@ -84,7 +84,7 @@ useEffect(() => {
       boxShadow: 24,
       p: 4,
     };
-    const imgURL='http://localhost:4000/uploads/'
+    const imgURL='https://server.autoaid.online/uploads/'
 
   return (
     !showAddService ?

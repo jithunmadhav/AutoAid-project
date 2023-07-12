@@ -33,7 +33,7 @@ function AppointmentSuccess() {
             <p className='first-para'>Your Service Request has been submitted. Please call and confirm.</p>
           </div>
           <div>
-            <img className='success-img' src="http://www.clipartbest.com/cliparts/niX/8Mp/niX8MpbGT.png" alt="success logo" />
+            <img className='success-img' src="https://clipart-library.com/images/Lcd5doyqi.png" alt="success logo" />
           </div>
           <p className='second-para'>We will notify you when the technician accepts your request.</p>
           <Link to={'/booking'}>
