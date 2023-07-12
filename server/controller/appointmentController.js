@@ -309,7 +309,7 @@ const webhookHandler = async (req, res) => {
  export const getscheduledApp = async (req, res) => {
   try {
     const { search, page } = req.query;
-    const perPage = 8;
+    const perPage = 4;
     const currentPage = parseInt(page) || 1;
     const id = req.query.id;
     const query = {
@@ -338,7 +338,7 @@ const webhookHandler = async (req, res) => {
 export const getEmergencyApp = async (req, res) => {
   try {
     const { search, page } = req.query;
-    const perPage = 8;
+    const perPage = 4;
     const currentPage = parseInt(page) || 1;
     const id = req.query.id;
     const query = {
@@ -388,7 +388,7 @@ export const getEmergencyApp = async (req, res) => {
 export const completedBookingHistory = async (req, res) => {
   try {
     const { search, page } = req.query;
-    const perPage = 8;
+    const perPage = 4;
     const currentPage = parseInt(page) || 1;
     const id = req.query.id;
     const query = {
@@ -417,7 +417,7 @@ export const completedBookingHistory = async (req, res) => {
 export const newBooking = async (req, res) => {
   try {
     const { search, page } = req.query;
-    const perPage = 8;
+    const perPage = 4;
     const currentPage = parseInt(page) || 1;
     const id = req.query.id;
     const query = {
