@@ -108,3 +108,20 @@
     height: 500px;
     width: 500px;
 }
+@media (max-width:800px){
+    .chat-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        overflow: scroll;
+        background: #dee2e630;
+        margin-top: -24px !important;
+        height: 455px !important;
+        width: 249px;
+        margin-left: 69px;
+    }
+    .follower{
+        padding-left: 65px !important;
+    }
+}

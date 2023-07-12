@@ -87,11 +87,11 @@
   }
   
   
-  @media screen and (max-width: 768px) {
+  /* @media screen and (max-width: 768px) {
    .Chat {
       grid-template-columns: 16% auto;
     }
      .follower.conversation>div>.name{
       display: none;
      }
-  }
+  } */

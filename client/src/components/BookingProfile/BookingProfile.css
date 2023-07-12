@@ -76,7 +76,7 @@
 @media(max-width:800px){
     .Booking-maindiv-2 {
         position: absolute;
-        top: 87%;
+        top: 78%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1;
@@ -85,7 +85,7 @@
         border-radius: 10px;
         box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
         overflow: hidden;
-        height: 430px;
+        height: 315px;
     }
 
     .Booking-innder-div {
@@ -130,14 +130,14 @@
     }
     .quick-btn{
         position: absolute !important;
-        bottom: 25%;
-        left: 22%;
+        bottom: 27%;
+        left: 29%;
     }
     
     .schedule-btn{
         position: absolute !important;
-        bottom:11%;
-        left: 15%;
+        bottom: 13%;
+        left: 23%;
     
     }
     .services-booking {
