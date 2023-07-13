@@ -215,7 +215,7 @@ const handleSubmit=(e)=>{
                   )}
                 </div>
                 <div style={{ display:'flex',justifyContent:'space-evenly',marginTop:'80px' }}>
-                  <Button variant='outlined' color='error'>close</Button>
+                  <Button onClick={() => {setVaryingModal(!varyingModal);}} variant='outlined' color='error'>close</Button>
                   <Button type='submit' variant='outlined' color='success'>confirm</Button>
                 </div>
               </form>

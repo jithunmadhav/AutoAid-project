@@ -2,36 +2,35 @@
     background: linear-gradient(to right, #111111,#0e1136) !important;
     height: 100vh;
 }
-.inner-div{
+.inner-div {
     position: absolute;
-    top: 52%;
+    top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-    width: 1200px;
+    width: 636px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-     
-    height: 700px ;
+    height: 515px;
 }
 .heading{
     text-align: center;
     font-family: 'Monomaniac One', sans-serif;
     margin-top: 20px;
 }
-.logout-btn{
-    width: 10%;
+.logout-btn {
+    width: 18% !important;
     outline: none !important;
-    background: linear-gradient(-5deg,  #ee2525,#ee2525);
+    background: linear-gradient(-5deg, #ee2525,#ee2525);
     border: none;
     text-transform: uppercase;
     font-weight: bold;
     color: white;
     position: absolute;
-    right: 3%;
-    top: 4%;
+    right: 42% !important;
+    top: 80% !important;
     cursor: pointer;
     border-radius: 5px;
     font-family: monospace;
@@ -54,6 +53,7 @@
 }
 .inner-div2{
     display: flex;
+    flex-direction: column;
     padding: 5%;
 }
 .div2-sub1{
@@ -70,10 +70,11 @@
     display: flex;
     justify-content: center;
 }
-.edit-btn{
+.edit-btn {
     width: 11%;
     outline: none !important;
-    background: linear-gradient(-5deg, #0e1136,#0a0808);    border: none;
+    background: linear-gradient(-5deg, #0e1136,#0a0808);
+    border: none;
     text-transform: uppercase;
     font-weight: bold;
     color: white;
@@ -81,8 +82,8 @@
     border-radius: 5px;
     font-family: monospace;
     position: absolute;
-    left: 13%;
-    top: 53%;
+    left: 44%;
+    top: 69%;
 }
 .edit-btn::after {
     content: '';
@@ -103,4 +104,54 @@
 .name{
     font-family: 'Monomaniac One', sans-serif;
     text-align: center;
+}
+@media (max-width:800px){
+    .inner-div {
+        position: absolute;
+        top: 48%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        width: 309px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        height: 345px;
+    }
+    .profile-img {
+        margin-top: -12px;
+        display: flex;
+        justify-content: center;
+    }
+    .logout-btn {
+        width: 35%;
+        outline: none !important;
+        background: linear-gradient(-5deg, #ee2525,#ee2525);
+        border: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: white;
+        position: absolute;
+        right: 32%;
+        top: 84%;
+        cursor: pointer;
+        border-radius: 5px;
+        font-family: monospace;
+    }
+    .edit-btn {
+        width: 21%;
+        outline: none !important;
+        background: linear-gradient(-5deg, #0e1136,#0a0808);
+        border: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        font-family: monospace;
+        position: absolute;
+        left: 39%;
+        top: 69%;
+    }    
 }
