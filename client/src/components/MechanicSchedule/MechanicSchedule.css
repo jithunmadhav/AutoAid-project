@@ -76,6 +76,11 @@
       border-radius: 0px;
       margin-bottom: 150px;
   }
+  .no-slot {
+    position: absolute;
+    left: 28% !important;
+    color: white;
+}
   .cards-mechanics::-webkit-scrollbar {
     display: none;
 }

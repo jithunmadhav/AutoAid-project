@@ -125,7 +125,7 @@
         justify-content: center;
     }
     .logout-btn {
-        width: 35%;
+        width: 35% !important;
         outline: none !important;
         background: linear-gradient(-5deg, #ee2525,#ee2525);
         border: none;
@@ -133,8 +133,8 @@
         font-weight: bold;
         color: white;
         position: absolute;
-        right: 32%;
-        top: 84%;
+        right: 33% !important;
+        top: 83% !important;
         cursor: pointer;
         border-radius: 5px;
         font-family: monospace;

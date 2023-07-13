@@ -12,6 +12,7 @@ import UserBookingHistoryPage from '../Pages/UserBookingHistoryPage';
 import UserLoginPage from '../Pages/UserLoginPage';
 import UserSchedulePage from '../Pages/UserSchedulePage';
 import UserSignupPage from '../Pages/UserSignupPage';
+import ErrorPage from '../Pages/ErrorPage'
 function UserRoutes() {
     const { user, refresh } = useSelector((state) => state);
     const dispatch = useDispatch();
@@ -58,7 +59,9 @@ function UserRoutes() {
               <Route element={<UserBookingHistoryPage/>} path={'/booking'}/>
             </>
           )}
+        <Route element={<ErrorPage/>} path={'*'} />        
         </Routes>
+
     </div>
   )
 }
