@@ -214,3 +214,14 @@ import mechanicModel from '../model/mechanicModel.js';
          res.json({logged:false,err:true,message:'No token',ban:false})
         }
      }
+
+     export const userEditProfile=async(req,res)=>{
+        try {     
+            const {name,mobile,id}=req.body;
+            await userModel.updateOne({_id:id},{$set:{name:name,mobile:mobile}}) 
+            res.status(200).json({err:false})
+        } catch (error) {
+            res.status(500).json({err:true})
+        }
+
+    }

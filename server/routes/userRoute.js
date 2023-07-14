@@ -5,7 +5,7 @@ import { createChat, findChat, getMechanic, userChats } from '../controller/chat
 import { addMessage, getMessages } from '../controller/messageController.js';
 import { refund } from '../controller/paymentController.js';
 import { addVehicle, allVehicle, deleteVehicle, editVehicle, editVehicleDetails } from '../controller/serviceController.js';
-import { forgotPassword, rating, resendOtp, resetpassword, userCheckAuth, userLogin, userLogout, userSignup, VerifyResetOtp, verifyUserSignup } from '../controller/userController.js';
+import { forgotPassword, rating, resendOtp, resetpassword, userCheckAuth, userEditProfile, userLogin, userLogout, userSignup, VerifyResetOtp, verifyUserSignup } from '../controller/userController.js';
 import { verifyUser } from '../middleware/userAuth.js';
 const router=express.Router()
 router.post('/login',userLogin).get('/logout',userLogout)
@@ -25,7 +25,7 @@ router.patch('/rating',rating)
 router.post('/refund',refund)
 router.post('/cancelbooking',cancelBooking)
 router.get('/bookinghistory',completedBookingHistory).get('/newbooking',newBooking)
-
+router.patch('/editprofile',userEditProfile)
 router.post('/chat', createChat);
 router.get('/chat/:Id', userChats);
 router.get('/find/:firstId/:secondId', findChat);
