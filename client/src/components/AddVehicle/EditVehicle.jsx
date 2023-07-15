@@ -58,7 +58,9 @@ function EditVehicle(props) {
           } else {
             setErr(response.data.message);
           }
-        });
+        }).catch((error)=>{
+          console.log(error);
+        })
     } else {
       setErr('All fields are required');
     }
