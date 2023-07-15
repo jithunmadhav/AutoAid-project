@@ -32,7 +32,7 @@ function ChatPage({data}) {
 
    // Connect to Socket.io
    useEffect(() => {
-    socket.current = io("https://server.autoaid.online");
+    socket.current = io("https://server.autoaid.online/");
     socket.current.emit("new-user-add", user.details._id);
     socket.current.on("get-users", (users) => {
       setOnlineUsers(users);
