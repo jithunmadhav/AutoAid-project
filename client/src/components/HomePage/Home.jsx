@@ -47,14 +47,14 @@ const openMap=(name)=>{
      
   <div className='cards'>
   {result.map((card, index) => (
-    <Card key={index} sx={{ maxWidth: 365 }} className='card-size' style={{ borderRadius: '15px' }}>
+    <Card key={index}  className='card-size' style={{ borderRadius: '15px' }}>
       <CardActionArea>
         {card.image.map((img, imgIndex) => (
           <CardMedia
           onClick={()=>openMap(card.serviceName)}
             key={imgIndex}
             component="img"
-           className='card-img'
+           className='card-image'
             
             image={imgUrl+img.filename}
             alt={card.serviceName}

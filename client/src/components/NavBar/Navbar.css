@@ -10,12 +10,13 @@
   z-index: 10;
 }
 .LogoName{
-    margin-left: 62px;
-    color: #f8f9fa;
-    margin-top: 5px;
-    font-size: 28px;
-    font-family: monospace;
-    font-weight: bolder;
+  margin-left: 62px;
+  color: #f8f9fa;
+  margin-top: 5px;
+  font-size: 28px;
+  font-family: monospace;
+  width: 173px;
+  font-weight: bolder;
 }
 .navbar {
     transition: all 0.3s;
@@ -51,7 +52,19 @@
   .nav-link:hover {
     color: #888;
   }
-  
+  @media(max-width:1500px) {
+
+  .LogoName {
+    margin-left: 62px;
+    color: #f8f9fa;
+    margin-top: 5px;
+    font-size: 21px;
+    font-family: monospace;
+    font-weight: bolder;
+    width: 150px;
+ }
+  }
+
   @media(max-width:700px) {
  
     .container{
