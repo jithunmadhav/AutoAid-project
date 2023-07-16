@@ -54,7 +54,7 @@ function ComplaintForm(props) {
   const handleStripe = async () => {
       const stripe = await stripePromise;
         const minAmount = props.data.mechanic.minAmount;
-      const response = await axios.post('http://localhost:4000/user/stripepayment', {
+      const response = await axios.post('/user/stripepayment', {
         minAmount: minAmount,
         ...props.data,
         location,
