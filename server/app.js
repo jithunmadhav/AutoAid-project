@@ -6,7 +6,7 @@ import 'dotenv/config';
 import cookieparser from 'cookie-parser';
 import http from 'http';
 import { Server } from 'socket.io';
-
+import morgan from 'morgan';
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -58,6 +58,7 @@ import adminRoute from './routes/adminRoute.js';
 
 app.use(express.static(path.resolve() + "/public"));
 app.use(express.json());
+app.use(morgan('dev'))
 app.use(cookieparser());
 app.use(express.urlencoded({ extended: true }));
 app.use('/admin', adminRoute);

@@ -235,9 +235,11 @@ import appiontmentModel from "../model/appointmentModel.js"
             let total= await appiontmentModel.aggregate([{$match:{status:'completed'}},{$group:{_id:null,total:{$sum:"$amount"}}}])
             let completedAppointments=await appiontmentModel.countDocuments({status:'completed'})
             let pendingAppointments=await appiontmentModel.countDocuments({ status: { $ne: 'completed' }})
-            const totalRevenue=total[0].total ?? 0;
+            let  totalRevenue;
+            total.length !=0 ? totalRevenue=total[0].total :totalRevenue=0
             res.status(200).json({err:false,totalRevenue,completedAppointments,pendingAppointments})
         } catch (error) {
+          console.log(error);
             res.status(500).json({err:true,error})
         }
        }
