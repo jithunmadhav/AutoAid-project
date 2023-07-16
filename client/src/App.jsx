@@ -14,9 +14,9 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route element={<UserRoutes/>} path={'/*'}/>   
-          <Route element={<MechanicRoutes/>} path={'/mechanic/*'}/>          
           <Route element={<AdminRoutes/>} path={'/admin/*'}/>          
+          <Route element={<MechanicRoutes/>} path={'/mechanic/*'}/>          
+          <Route element={<UserRoutes/>} path={'/*'}/>   
         </Routes>
       </Router>
     </div>
