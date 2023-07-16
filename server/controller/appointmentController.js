@@ -103,7 +103,7 @@ const stripePayment = async (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:3000/success',
+      success_url: 'http://server.autoaid./success',
       cancel_url: 'http://localhost:3000/*',
       billing_address_collection: 'auto',
       customer: customer.id,
@@ -120,8 +120,9 @@ export default stripePayment;
 
 
 const webhookHandler = async (req, res) => {
+  console.log("gvhjvjhb5545444555555555555555555");
   const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
-  const webhookSecret = 'whsec_fb9d505f85f524747faef83b563bb193cde3b7dfbf55eea84a3a82cfdd19b4fa'; // Replace with your webhook signing secret
+  const webhookSecret = 'whsec_tJpTV0RQdScNHCdFZBAjfvRus43pKIjF'; // Replace with your webhook signing secret
   const payload = req.body;
   const payloadString = JSON.stringify(payload, null, 2);
   const header = stripe.webhooks.generateTestHeaderString({
