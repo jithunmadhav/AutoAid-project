@@ -24,6 +24,21 @@ function Profile() {
   const {user} =useSelector((state)=>{
     return state
   })
+  const [name, setName] = useState('');
+  const [editname, seteditname] = useState(user.details.name)
+const [mobile, setMobile] = useState('')
+const [refresh, setRefresh] = useState(false)
+  useEffect(() => {
+   axios.get('/user/auth').then((response)=>{
+    if(!response.data.err){
+console.log(response.data);
+    setName(response.data.details.name)
+    setMobile(response.data.details.mobile)
+    }
+  }).catch((error)=>{
+    console.log(error);
+   })
+  }, [refresh])
   const handleLogout=()=>{
     axios.get('/user/logout').then((response)=>{
       if(!response.data.err){
@@ -33,19 +48,18 @@ function Profile() {
       }
     })
   }
-  const [refresh, setRefresh] = useState(false)
 const [varyingModal, setVaryingModal] = useState(false);
-const [name, setName] = useState(user.details.name);
-const [mobile, setMobile] = useState(user.details.mobile)
+
 const handleSubmit=(e)=>{
   e.preventDefault()
+  console.log(mobile,name);
   const id=user.details._id;
-  if(mobile.trim() && name.trim()){
+  if(mobile.toString().trim() && name.trim()){
     axios.patch('/user/editprofile',{name,mobile,id}).then((response)=>{
-      console.log(response.data);
       if(!response.data.err){
-        setRefresh(!refresh)
+        seteditname(name)
         setVaryingModal(!varyingModal);
+        setRefresh(!refresh)
             }
     }).catch((err)=>{
       console.log(err);
@@ -67,7 +81,7 @@ useEffect(() => {
             <img src= 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=826&t=st=1680295524~exp=1680296124~hmac=02e23136e23578ef52071ce6ce8be6ecd2a32c6bef946fcacd4e6e788ed33360' style={{objectFit:'cover'}} alt='' width="100"  className="rounded-circle" />
             </div>
             <div>
-            <p  className='name'>{user.details.name}</p>
+            <p  className='name'>{editname}</p>
             <p style={{ marginTop:'-17px' }} className='name'>{user.details.email}</p>
             <button onClick={() => {setVaryingModal(!varyingModal);}} className='edit-btn'>Edit</button>
 
