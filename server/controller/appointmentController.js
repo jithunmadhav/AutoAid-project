@@ -201,7 +201,7 @@ const webhookHandler = async (req, res) => {
            id: `BA-${result._id}`,
            totalAmount: customer.metadata.minAmount,
          }
-         createInvoice(invoice,`/home/jithun/Desktop/AutoAid/server/helper/invoice/invoice${num}.pdf`)
+         createInvoice(invoice,`/helper/invoice/invoice${num}.pdf`)
          setTimeout(() => {
            sendInvoice(result.email,`invoice${num}.pdf`)
          }, 2000);
@@ -209,7 +209,7 @@ const webhookHandler = async (req, res) => {
        })
         break;
       default:
-        console.log(`Unhandled event type: ${event.type}`);
+        console.log(`Unhandled event type: ${event.type}`);  
     }
 
     res.json({ received: true });
@@ -296,7 +296,7 @@ const webhookHandler = async (req, res) => {
             id: req.body.payment.razorpay_payment_id,
             totalAmount: req.body.mechanic.minAmount,
           }
-          createInvoice(invoice,`/home/jithun/Desktop/AutoAid/server/helper/invoice/invoice${num}.pdf`)
+          createInvoice(invoice,`/helper/invoice/invoice${num}.pdf`)
          setTimeout(() => {
            sendInvoice(result.email,`invoice${num}.pdf`)
          }, 2000);
