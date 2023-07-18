@@ -174,11 +174,11 @@ import mechanicModel from '../model/mechanicModel.js';
     export const rating=async(req,res)=>{
         const {rating,mechanic_id} =req.body;
         console.log(req.body);
-      let count=  await mechanicModel.findOne({_id:mechanic_id},{ratingCount:1,rating:1})
-      const ratingCount=count.ratingCount;
-      const currRating=count.rating;
-      const newRating = Math.floor((rating + currRating) / (ratingCount + 1));
-      await mechanicModel.updateOne({_id:mechanic_id},{$set:{rating:parseInt(newRating)},$inc:{'ratingCount':1}})
+      let count=  await mechanicModel.findOne({_id:mechanic_id},{ratingCount:1,rating:1,totalRating:1})
+      let {ratingCount,totalRating}=count
+      const newRating = Math.floor((totalRating + rating) / (ratingCount + 1));
+      totalRating=totalRating+rating;
+      await mechanicModel.updateOne({_id:mechanic_id},{$set:{rating:parseInt(newRating),totalRating:totalRating},$inc:{'ratingCount':1}})
     }
 
     

@@ -44,6 +44,10 @@ const mechanicSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  totalRating:{
+    type: Number,
+    default: 0,
+  },
   ratingCount: {
     type: Number,
     default: 0,
