@@ -67,8 +67,9 @@ function UserBookingHistory() {
         setTotalPages(response.data.totalPages);
     }
    })
-  }, [search])
+  }, [search,currentPage])
   const handlePageChange = (event, page) => {
+    console.log(page);
     setCurrentPage(page);
   };
 
