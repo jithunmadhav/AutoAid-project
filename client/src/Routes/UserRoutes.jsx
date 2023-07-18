@@ -39,7 +39,7 @@ function UserRoutes() {
               <Route element={<Navigate to={'/login'} />} path={'/location'} />
               <Route element={<Navigate to={'/login'} />} path='/addvehicle'/>
               <Route element={<Navigate to={'/login'} />} path='/success'/>
-              <Route element={<Navigate to={'/login'} />} path='/user/booking'/>
+              <Route element={<Navigate to={'/login'} />} path='/booking'/>
 
             </>
           )}

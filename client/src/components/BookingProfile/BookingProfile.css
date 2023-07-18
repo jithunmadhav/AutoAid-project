@@ -72,7 +72,34 @@
     padding-top: 30px;
     font-family: 'Rajdhani', sans-serif;
   }
- 
+  @media(max-width:1700px){
+    .Booking-innder-div{
+        position: absolute;
+        top: 52%;
+        left: 28%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        width: 400px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        height: 500px ;
+    }
+    .Booking-maindiv-2{
+        position: absolute;
+        top: 52%;
+        left: 68%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        width: 700px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 3px 25px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        height: 500px ;
+    }
+  }
 @media(max-width:800px){
     .Booking-maindiv-2 {
         position: absolute;

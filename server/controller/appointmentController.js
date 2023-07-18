@@ -103,7 +103,7 @@ const stripePayment = async (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: 'http://autoaid.netlify.app/success',
+      success_url: 'https://autoaid.online/success',
       cancel_url: 'http://localhost:3000/*',
       billing_address_collection: 'auto',
       customer: customer.id,
@@ -120,7 +120,6 @@ export default stripePayment;
 
 
 const webhookHandler = async (req, res) => {
-  console.log("gvhjvjhb5545444555555555555555555");
   const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
   const webhookSecret = 'whsec_tJpTV0RQdScNHCdFZBAjfvRus43pKIjF'; // Replace with your webhook signing secret
   const payload = req.body;
