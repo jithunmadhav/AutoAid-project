@@ -9,13 +9,16 @@ function ForgotMechanic() {
   const dispatch = useDispatch()
   const navigate=useNavigate()
     const [Otp, SetOtp] = useState(false)
+    const [err, seterr] = useState('')
     const [email, setemail] = useState('')
     const handleSubmit=(e)=>{
         e.preventDefault()
         console.log("hello");
         axios.post('/user/forgotPassword',{email}).then((response)=>{
-            if(!response.data.errr){
+            if(!response.data.err){
                 SetOtp(true)
+            }else{
+              seterr(response.data.message)
             }
         }).catch((error)=>{
           console.log(error);
@@ -29,6 +32,7 @@ function ForgotMechanic() {
     <div className='inner-Div'>
     <div className="signup-connect-forgot"></div>
         <div className="signup-classic">
+        <p className='errorMessage'>{err}</p>
         <p className="paraStyle-forgot">Please enter your email.</p>
           <form onSubmit={handleSubmit} className="form">
             <fieldset className="email">
