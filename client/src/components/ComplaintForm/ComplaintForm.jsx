@@ -62,7 +62,6 @@ function ComplaintForm(props) {
         userId,username
       });
       const { sessionId, metadata } = response.data;
-      console.log(sessionId, metadata);
 
       stripe.redirectToCheckout({
         sessionId: sessionId,
@@ -79,7 +78,6 @@ function ComplaintForm(props) {
           setVehicleDetails(response.data.result.vehicle[0]);
         }
         navigator.geolocation.getCurrentPosition((position) => {
-          console.log(position);
           const accessToken = 'pk.eyJ1Ijoiaml0aHVuIiwiYSI6ImNsaWEzZjg1NzBuMngzZHBnOWZzeTJ3eDMifQ.QUWNrEcjjYw_-HbBUDquhw';
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
@@ -115,7 +113,6 @@ function ComplaintForm(props) {
     } else {
       setLoading(true);
       axios.post('/user/appointment', { ...props.data, location, complaint, userId,username }).then((response) => {
-        console.log(response.data);
         handleCloseModal()
         setOpen(true);
         dispatch({ type: 'refresh' });
