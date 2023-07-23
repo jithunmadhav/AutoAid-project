@@ -6,7 +6,7 @@ import axios from '../../axios'
 function MechanicDetails(props) {
   console.log(props.data._id);
   const [showUserManagement, setShowUserManagement] = useState(false);
-  const imgURL='https://server.autoaid.online/uploads/'
+  const imgURL='https://autoaid.onrender.com/uploads/'
   const id=props.data._id;
   const handleApprove=()=>{
     axios.post('/admin/approve',{id}).then((response)=>{

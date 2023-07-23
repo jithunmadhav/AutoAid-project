@@ -14,17 +14,15 @@ function Home() {
 const [result, setresult] = useState([])
 const navigate=useNavigate()
   useEffect(() => {
-    console.log("///////");
    axios.get('/admin/allservices').then((response)=>{
     if(!response.data.err){
-      console.log("*****************",response.data);
       setresult(response.data.result)
     }
    }).catch(()=>{
     navigate('/error')
    })
   },[navigate,refresh])
-const imgUrl='https://server.autoaid.online/uploads/' 
+const imgUrl='https://autoaid.onrender.com/uploads/' 
 const openMap=(name)=>{
   navigate('/location', { state: { serviceName: name } });
 

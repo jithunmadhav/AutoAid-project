@@ -31,11 +31,10 @@ function MechanicChatPage() {
 
     // Connect to Socket.io
     useEffect(() => {
-      socket.current = io("https://server.autoaid.online/");
+      socket.current = io("https://autoaid.onrender.com/");
       socket.current.emit("new-user-add", mechanic.details[0]._id);
       socket.current.on("get-users", (mechanic) => {
         setOnlineUsers(mechanic);
-        console.log("++++++////",onlineUsers);
       });
     }, [mechanic]);
      // Send Message to socket server
@@ -47,7 +46,6 @@ function MechanicChatPage() {
       // Get the message from socket server
       useEffect(() => {
         socket.current.on("recieve-message", (data) => {
-          console.log("222222222222222",data)
           setReceivedMessage(data);
         }
     

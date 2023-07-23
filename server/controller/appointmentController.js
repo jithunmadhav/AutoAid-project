@@ -103,7 +103,7 @@ const stripePayment = async (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: 'https://autoaid.online/success',
+      success_url: 'https://autoaid.netlify.app/success',
       cancel_url: 'http://localhost:3000/*',
       billing_address_collection: 'auto',
       customer: customer.id,
