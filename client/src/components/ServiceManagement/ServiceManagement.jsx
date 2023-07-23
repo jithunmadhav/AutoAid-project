@@ -70,7 +70,7 @@ useEffect(() => {
     dispatch({type:'refresh'})
     navigate('/error')
   })
-})
+},[result])
 
 
     const style = {
