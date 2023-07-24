@@ -22,7 +22,7 @@ const navigate=useNavigate()
     navigate('/error')
    })
   },[navigate,refresh])
-const imgUrl='https://autoaid.onrender.com/uploads/' 
+const imgUrl='https://server.autoaid.online/uploads/' 
 const openMap=(name)=>{
   navigate('/location', { state: { serviceName: name } });
 

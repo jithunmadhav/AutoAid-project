@@ -31,7 +31,7 @@ function MechanicChatPage() {
 
     // Connect to Socket.io
     useEffect(() => {
-      socket.current = io("https://autoaid.onrender.com/");
+      socket.current = io("https://server.autoaid.online/");
       socket.current.emit("new-user-add", mechanic.details[0]._id);
       socket.current.on("get-users", (mechanic) => {
         setOnlineUsers(mechanic);
