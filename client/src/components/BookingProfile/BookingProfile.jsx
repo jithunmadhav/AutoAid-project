@@ -48,7 +48,6 @@ function BookingProfile(props) {
   const senderId=user.details._id;
   const receiverId=props.data._id;
   axios.post('/user/chat',{senderId,receiverId}).then((response)=>{
-    console.log(response);
     if(!response.data.err){
       setopenChat(true)
     }
