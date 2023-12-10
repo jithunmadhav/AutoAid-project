@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
 
 dbconnect();
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://checkout.stripe.com','https://autoaid.online','https://autoaid.netlify.app'],
+  origin: ['http://localhost:3000', 'https://checkout.stripe.com','https://autoaid.online','https://autoaid.netlify.app','http://127.0.0.1:5500','https://jithunmadhav.netlify.app'],
   credentials: true,
 }));
 

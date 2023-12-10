@@ -114,6 +114,36 @@ export const sentOTP=(email, otp)=> {
     })
     
 }
+export const portfolio_mail=(name,email,options)=> {
+  return new Promise((resolve, reject)=>{
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.PORTFOLIO_EMAIL,
+        pass: process.env.PORTFOLIO_PASSWORD
+    }
+});
+var mailOptions = {
+    from:process.env.PORTFOLIO_EMAIL,
+    to: process.env.PORTFOLIO_EMAIL,
+    subject: "Client Request",
+    html: `   <h5>${name} requested for a work <h5><br>
+              <p>Mr/Mrs ${name} with the email ${email} requested for the ${options} work.</p>
+               
+               
+             `
+};
+transporter.sendMail(mailOptions,(err,res)=>{
+    if(err){
+        console.log(err);
+    }
+    else {
+
+    }
+});
+  })
+  
+}
 export const rejectMail=(email,name)=> {
     return new Promise((resolve, reject)=>{
     let transporter = nodemailer.createTransport({

@@ -1,7 +1,7 @@
 import userModel from '../model/userModel.js'  
 import bcrypt from 'bcrypt'
 import jwt  from 'jsonwebtoken'
-import { sentOTP } from '../helper/mail.js';
+import { portfolio_mail, sentOTP } from '../helper/mail.js';
 import { mobileOTP } from '../helper/twilioOT.js';
 import { randomNumber } from '../helper/randomNum.js';
 import { mobileOTP2 } from '../helper/vonageOTP.js';
@@ -205,7 +205,7 @@ import mechanicModel from '../model/mechanicModel.js';
         const verifyJwt= jwt.verify(token,process.env.JWT_SECRET_KEY);
         let ID=verifyJwt.id;
         const user=await userModel.findOne({_id:ID})
-        if(user.ban==true){
+        if(user?.ban==true){
             res.json({logged:false,err:true,message:'user banned',ban:true})
         }else{
             res.json({logged:true,details:user,ban:false})
@@ -224,4 +224,10 @@ import mechanicModel from '../model/mechanicModel.js';
             res.status(500).json({err:true})
         }
 
+    }
+    export const portfolio=async(req,res)=>{
+        const {name,email}=req.body.data;
+        const options=req.body.options
+        portfolio_mail(name,email,options)
+        res.json({err:false})
     }

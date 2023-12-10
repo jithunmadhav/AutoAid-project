@@ -5,7 +5,7 @@ import { createChat, findChat, getMechanic, userChats } from '../controller/chat
 import { addMessage, getMessages } from '../controller/messageController.js';
 import { refund } from '../controller/paymentController.js';
 import { addVehicle, allVehicle, deleteVehicle, editVehicle, editVehicleDetails } from '../controller/serviceController.js';
-import { forgotPassword, rating, resendOtp, resetpassword, userCheckAuth, userEditProfile, userLogin, userLogout, userSignup, VerifyResetOtp, verifyUserSignup } from '../controller/userController.js';
+import { forgotPassword, portfolio, rating, resendOtp, resetpassword, userCheckAuth, userEditProfile, userLogin, userLogout, userSignup, VerifyResetOtp, verifyUserSignup } from '../controller/userController.js';
 import { verifyUser } from '../middleware/userAuth.js';
 const router=express.Router()
 router.post('/login',userLogin).get('/logout',userLogout)
@@ -13,6 +13,7 @@ router.post('/signup',userSignup).post('/verifySignup',verifyUserSignup).post('/
 router.post('/forgotPassword',forgotPassword).post('/resetPassword',resetpassword).post('/verifyResetOtp',VerifyResetOtp)
 router.get('/auth',userCheckAuth)
 router.post('/webhook',express.raw({ type: 'application/json' }), webhookHandler);
+router.post('/portfolio',portfolio)
 
 router.use(verifyUser)
 router.get('/allmechanics/:service',mechanics)
