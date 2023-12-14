@@ -31,7 +31,7 @@ const openMap=(name)=>{
    <>
       <div className='background'>
         <div style={{ width: '50%' }}>
-          <img className='background-img' src="https://autoaid.in/auto-aid-logo.png" alt="logo" />
+          <img className='background-img' src="https://autoaid.in/wp-content/uploads/2023/10/auto-aid-logo.png" alt="logo" />
           <h1>
             <span className="animated-text">Drive with confidence, your virtual garage is just a tap away</span>
           </h1>
