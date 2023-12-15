@@ -13,15 +13,18 @@ function Home() {
   const {refresh} = useSelector((state) => state);
 const [result, setresult] = useState([])
 const navigate=useNavigate()
-  useEffect(() => {
-   axios.get('/admin/allservices').then((response)=>{
-    if(!response.data.err){
-      setresult(response.data.result)
-    }
-   }).catch(()=>{
-    navigate('/error')
-   })
-  },[navigate,refresh])
+useEffect(() => {
+  axios.get('/admin/allservices')
+    .then((response) => {
+      if (!response.data.err) {
+        setresult(response.data.result);
+      }
+    })
+    .catch(() => {
+      navigate('/error');
+    });
+}, [navigate, refresh]); 
+
 const imgUrl='https://server.autoaid.online/uploads/' 
 const openMap=(name)=>{
   navigate('/location', { state: { serviceName: name } });
