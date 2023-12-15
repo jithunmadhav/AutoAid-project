@@ -84,7 +84,7 @@ useEffect(() => {
       boxShadow: 24,
       p: 4,
     };
-    const imgURL='https://autoaid.onrender.com/uploads/'
+    const imgURL='https://server.autoaid.online/uploads/'
 
   return (
     !showAddService ?
