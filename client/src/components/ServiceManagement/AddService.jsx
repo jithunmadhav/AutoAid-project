@@ -14,13 +14,13 @@ function AddService() {
     const navigate= useNavigate()
 
     const handleSubmit=(e)=>{
+      e.preventDefault()
         if(name.trim()){
         axios.post('/admin/addservice',{name,file},{headers:{
             'content-type': 'multipart/form-data'
         }}).then((response)=>{
             if(!response.data.err){
-                dispatch({type:'refresh'})
-                navigate('/admin/servicemanagement')
+              setshowServiceMang(!showServiceMang)
             }
         }).catch((err)=>{
             console.log(err);

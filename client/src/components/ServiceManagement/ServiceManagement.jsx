@@ -45,6 +45,7 @@ function ServiceManagement() {
   const handleOpen = (id) => setSelectedImageId(id);
   const handleClose = () => setSelectedImageId(null);
   const [result, setResult] = useState([]);
+  const [refresh, setrefresh] = useState(false)
   const [showAddService, setshowAddService] = useState(false)
   const dispatch = useDispatch()
   const navigate =useNavigate()
@@ -54,6 +55,7 @@ const handleDelete=(id)=>{
   axios.delete(`/admin/deleteservice/${id}`).then((response)=>{
     console.log(response);
     if(!response.data.err){
+      setrefresh(!refresh)
       dispatch({type:'refresh'})
       handleCancel()
     }
@@ -70,7 +72,7 @@ useEffect(() => {
     dispatch({type:'refresh'})
     navigate('/error')
   })
-},[result])
+},[refresh])
 
 
     const style = {
@@ -172,7 +174,7 @@ useEffect(() => {
               </Table>
             </TableContainer>
           ) : (
-            <Typography variant="h6" style={{ textAlign: 'center', marginTop: '20px' }}>No users found</Typography>
+            <Typography variant="h6" style={{ textAlign: 'center', marginTop: '20px' }}>No data found</Typography>
           )}
         </div>
     </div>
