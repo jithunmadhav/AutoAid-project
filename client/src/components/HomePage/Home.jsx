@@ -14,6 +14,7 @@ function Home() {
 const [result, setresult] = useState([])
 const navigate=useNavigate()
 useEffect(() => {
+  console.log("Hellpp");
   axios.get('/admin/allservices')
     .then((response) => {
       if (!response.data.err) {
